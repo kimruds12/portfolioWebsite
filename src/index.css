@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-bg: #050B14;
+  --color-cyber-card: #0A1220;
+  --color-cyber-border: #1E2D4A;
+  --color-cyber-cyan: #00E5FF;
+  --color-cyber-textPrimary: #F8FAFC;
+  --color-cyber-textMuted: #94A3B8;
+  --color-cyber-terminalDark: #0D1117;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", "JetBrains Mono", monospace;
+
+  --shadow-cyan-glow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+body {
+  @apply bg-cyber-bg text-cyber-textPrimary font-sans antialiased;
+}
+
+.bg-cyber-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 1.5px);
+  background-size: 40px 40px, 40px 40px, 40px 40px;
+  background-position: -1px -1px, -1px -1px, -1px -1px;
+}
+
+.bg-cyber-glow {
+  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, transparent 60%);
+}
+
+@media (max-width: 480px) {
+  .nav-desktop { display: none !important; }
+  .nav-mobile-btn { display: inline-block !important; }
+}
+@media (min-width: 481px) {
+  .nav-desktop { display: flex !important; }
+  .nav-mobile-btn { display: none !important; }
+}
