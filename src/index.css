@@ -1,42 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Sora:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-cyber-bg: #050B14;
-  --color-cyber-card: #0A1220;
-  --color-cyber-border: #1E2D4A;
-  --color-cyber-cyan: #00E5FF;
-  --color-cyber-textPrimary: #F8FAFC;
-  --color-cyber-textMuted: #94A3B8;
-  --color-cyber-terminalDark: #0D1117;
-
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "Fira Code", "JetBrains Mono", monospace;
+}
 
-  --shadow-cyan-glow: 0 0 15px rgba(0, 229, 255, 0.4);
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-cyber-bg text-cyber-textPrimary font-sans antialiased;
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 24%),
+    linear-gradient(180deg, #050b14 0%, #071427 48%, #050b14 100%);
+  color: #f5f5f5;
+  font-family: "Inter", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.bg-cyber-grid {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 1.5px);
-  background-size: 40px 40px, 40px 40px, 40px 40px;
-  background-position: -1px -1px, -1px -1px, -1px -1px;
+a {
+  text-decoration: none;
 }
 
-.bg-cyber-glow {
-  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, transparent 60%);
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 480px) {
-  .nav-desktop { display: none !important; }
-  .nav-mobile-btn { display: inline-block !important; }
+::selection {
+  background: rgba(56, 189, 248, 0.22);
+  color: #ffffff;
 }
-@media (min-width: 481px) {
-  .nav-desktop { display: flex !important; }
-  .nav-mobile-btn { display: none !important; }
+
+.ambient-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, black 48%, transparent 100%);
+}
+
+.ambient-spotlight {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14), rgba(56, 189, 248, 0.02) 42%, transparent 72%);
+  filter: blur(18px);
+}
+
+.ambient-blur {
+  opacity: 0.7;
+  filter: blur(60px);
+}
+
+.ambient-blur-one {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 70%);
+  animation: pulseGlow 10s ease-in-out infinite;
+}
+
+.ambient-blur-two {
+  background: radial-gradient(circle, rgba(14, 116, 144, 0.28), transparent 68%);
+  animation: pulseGlow 14s ease-in-out infinite reverse;
+}
+
+.floating-particle {
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+  animation: floatParticle 9s ease-in-out infinite;
+}
+
+.hero-name-glow {
+  filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.18));
+}
+
+.profile-float {
+  animation: profileFloat 8s ease-in-out infinite;
+}
+
+.terminal-cursor {
+  animation: blinkCursor 1s steps(1) infinite;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.55);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050b14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.55), rgba(14, 116, 144, 0.8));
+  border: 2px solid #050b14;
+  border-radius: 999px;
+}
+
+@keyframes floatParticle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) scale(1.25);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.82;
+  }
+}
+
+@keyframes blinkCursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes profileFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
