@@ -250,73 +250,65 @@ const Home = () => {
                   <span className="h-3 w-3 rounded-full bg-[#FFBE2E]" />
                   <span className="h-3 w-3 rounded-full bg-[#2ED573]" />
                 </div>
-                <span className="font-mono text-xs uppercase tracking-[0.28em] text-cyan-100/60">terminal - build</span>
+                <span className="font-mono text-xs uppercase tracking-[0.28em] text-cyan-100/60">root@portfolio:~/mission</span>
               </div>
-              <div className="space-y-4 px-5 py-6 font-mono text-sm leading-7">
-                <div className="flex flex-wrap gap-2 text-cyan-200">
-                  <span className="text-white/55">user@portfolio:~$</span>
-                  <span>npm run build</span>
+              <div className="space-y-6 px-5 py-6 font-mono text-sm leading-8 text-[#D8D8D8]">
+                <div>
+                  <p className="flex flex-wrap gap-2 text-cyan-200">
+                    <span className="text-cyan-300">-&gt; ~</span>
+                    <span>whoami</span>
+                  </p>
+                  <div className="mt-4 border-l border-cyan-300/35 pl-5 text-[#D3D9E7]">
+                    <p>
+                      I combine development, design, and systems thinking to create polished digital products that feel premium,
+                      perform smoothly, and stay maintainable as they grow.
+                    </p>
+                  </div>
                 </div>
-                <div className="space-y-2 text-[#D8D8D8]">
-                  <p>
-                    <span className="mr-2 text-cyan-300">+</span>
-                    Deploying AI-powered experiences...
+
+                <div>
+                  <p className="flex flex-wrap gap-2 text-cyan-200">
+                    <span className="text-cyan-300">-&gt; ~</span>
+                    <span>./list_objectives.sh</span>
                   </p>
-                  <p>
-                    <span className="mr-2 text-cyan-300">+</span>
-                    Initializing secure systems...
-                  </p>
-                  <p className="flex items-center">
-                    <span className="mr-2 text-cyan-300">+</span>
-                    Rendering modern UI/UX...
-                    <span className="terminal-cursor ml-2 inline-block h-5 w-2 rounded-sm bg-cyan-300" />
-                  </p>
+                  <ul className="mt-4 space-y-2 text-[#B8C5D8]">
+                    {[
+                      'AI-assisted workflows',
+                      'Futuristic UI systems',
+                      'Secure product mindset',
+                      'Clean responsive builds',
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <span className="mt-[11px] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+
+                <p className="flex items-center gap-2 text-cyan-200">
+                  <span className="text-cyan-300">-&gt; ~</span>
+                  <span className="terminal-cursor inline-block h-5 w-2 rounded-sm bg-cyan-300" />
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/20 shadow-[0_0_90px_rgba(56,189,248,0.12)]" />
-            <div className="absolute left-1/2 top-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/10" />
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative flex h-[20rem] w-[20rem] items-center justify-center sm:h-[14rem] sm:w-[24rem] lg:h-[28rem] lg:w-[28rem]">
+              <div className="hero-orbit absolute inset-0 rounded-full border border-cyan-300/20" />
+              <div className="hero-orbit-reverse absolute inset-[1.25rem] rounded-full border border-dashed border-cyan-300/20" />
+              <div className="absolute inset-[2.5rem] rounded-full border border-cyan-300/15 shadow-[0_0_45px_rgba(56,189,248,0.18)]" />
+              <div className="absolute left-1/2 top-1/2 h-[75%] w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.12),transparent_65%)] blur-2xl" />
+              <span className="hero-signal absolute right-[8%] top-[16%] h-4 w-4 rounded-full bg-cyan-300 shadow-[0_0_22px_rgba(34,211,238,0.95)]" />
 
-            <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(7,20,39,0.88))] p-3 shadow-[0_24px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-              <div className="flex items-center rounded-[1.25rem] border border-cyan-300/10 bg-black/20 px-4 py-3 text-[11px] uppercase tracking-[0.28em] text-cyan-100/55">
-                <div className="flex gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FF6258]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FFBE2E]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#2ED573]" />
-                </div>
-              </div>
-
-              <div className="relative mt-3 overflow-hidden rounded-[1.5rem] border border-cyan-300/10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_35%),#071427] p-4">
-                <div className="pointer-events-none absolute inset-4 rounded-[1.2rem] border border-cyan-300/15" />
-                <div className="pointer-events-none absolute right-6 top-6 h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_22px_rgba(34,211,238,0.95)]" />
-                <div className="absolute inset-x-8 top-6 h-10 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.18),transparent_70%)] blur-2xl" />
-
+              <div className="relative z-10 flex h-[70%] w-[70%] items-center justify-center overflow-hidden rounded-full border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(7,20,39,0.95),rgba(5,11,20,0.98))] shadow-[0_0_60px_rgba(56,189,248,0.16)]">
                 <img
-                  src="/Assets/NewHomeProfile.png"
+                  src="/Assets/NewAboutMe.png"
                   alt="Kim Guston profile"
-                  className="profile-float relative z-10 mx-auto h-[25rem] w-full max-w-sm rounded-[1.2rem] object-cover object-center shadow-[0_20px_45px_rgba(0,0,0,0.5)]"
+                  className="profile-float h-full w-full object-cover object-center scale-[1.06]"
                 />
               </div>
-            </div>
-
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {[
-                { label: 'AI-Enabled Builds', value: 'Modern workflows' },
-                { label: 'Secure Systems', value: 'Reliable foundations' },
-                { label: 'Premium UI', value: 'Cleaner interfaces' },
-                { label: 'Responsive UX', value: 'Balanced on every screen' },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-[1.5rem] border border-cyan-300/10 bg-white/[0.03] p-4 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_30px_rgba(56,189,248,0.12)]"
-                >
-                  <p className="text-sm font-semibold text-white">{item.label}</p>
-                  <p className="mt-1 text-sm text-[#B0B0B0]">{item.value}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -324,8 +316,8 @@ const Home = () => {
 
       <section id="identity" className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 rounded-[2rem] border border-cyan-300/10 bg-white/[0.03] p-5 shadow-[0_0_40px_rgba(56,189,248,0.08)] backdrop-blur-xl xl:grid-cols-[auto_1fr_auto] xl:items-center md:p-6">
-            <div className="flex flex-wrap items-center gap-4 rounded-[1.25rem] border border-cyan-300/12 bg-[#071427]/80 px-4 py-3">
+          <div className="flex justify-center rounded-[2rem] border border-cyan-300/10 bg-white/[0.03] p-5 shadow-[0_0_40px_rgba(56,189,248,0.08)] backdrop-blur-xl md:p-6">
+            <div className="flex w-full max-w-md flex-wrap items-center gap-4 rounded-[1.25rem] border border-cyan-300/12 bg-[#071427]/80 px-4 py-3">
               <img
                 src="/Assets/NewAboutMe.png"
                 alt="Kim Guston identity"
@@ -338,24 +330,6 @@ const Home = () => {
                   Metro Manila, Philippines
                 </p>
               </div>
-            </div>
-
-            <div className="max-w-xl">
-              <p className="text-base leading-8 text-[#D3D3D3]">
-                I combine development, design, and systems thinking to create polished digital products that feel premium, perform smoothly,
-                and stay maintainable as they grow.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3 xl:flex-col xl:items-start xl:justify-center">
-              {['AI-assisted workflows', 'Futuristic UI systems', 'Secure product mindset', 'Clean responsive builds'].map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center rounded-full border border-cyan-300/12 bg-black/20 px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-white/70"
-                >
-                  {tag}
-                </span>
-              ))}
             </div>
           </div>
         </div>
