@@ -83,6 +83,19 @@ textarea {
   animation: profileFloat 8s ease-in-out infinite;
 }
 
+.hero-orbit {
+  animation: orbitSpin 16s linear infinite;
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.08);
+}
+
+.hero-orbit-reverse {
+  animation: orbitSpinReverse 22s linear infinite;
+}
+
+.hero-signal {
+  animation: signalPulse 2.8s ease-in-out infinite;
+}
+
 .terminal-cursor {
   animation: blinkCursor 1s steps(1) infinite;
   box-shadow: 0 0 18px rgba(56, 189, 248, 0.55);
@@ -144,6 +157,36 @@ textarea {
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitSpinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes signalPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
   }
 }
 
