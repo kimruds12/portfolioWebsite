@@ -11,6 +11,7 @@ const navItems = [
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const sections = navItems
@@ -41,83 +42,92 @@ const Navbar = () => {
       }
     };
 
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (windowHeight > 0) {
+        const progress = Math.min(1, Math.max(0, totalScroll / windowHeight));
+        setScrollProgress(progress);
+      } else {
+        setScrollProgress(0);
+      }
+    };
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call to set correct progress
 
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
-      <div className="mx-auto flex max-w-7xl items-start justify-center md:justify-between">
-        <a
-          href="#home"
-          className="hidden items-center gap-3 rounded-full border border-cyan-300/12 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/40 hover:text-white md:inline-flex"
-        >
-          <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
-          Kim Guston
-        </a>
+    <header className={`fixed inset-x-0 top-0 z-50 flex flex-col transition-all duration-300 ${scrollProgress > 0 ? 'bg-[rgba(5,11,20,0.85)] border-b border-cyan-300/10 backdrop-blur-xl shadow-lg' : 'bg-transparent border-transparent'}`}>
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-6 sm:px-6 relative">
+        <nav className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`group relative py-2 text-sm font-semibold uppercase tracking-[0.1em] transition duration-300 ${isActive
+                  ? 'text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]'
+                  : 'text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]'
+                  }`}
+              >
+                {item.label}
+                <span 
+                  className={`absolute bottom-0 left-0 h-[2px] bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} 
+                />
+              </a>
+            );
+          })}
+        </nav>
 
-        <div className="relative">
-          <nav className="hidden items-center gap-1 rounded-full border border-cyan-300/12 bg-[rgba(10,10,20,0.45)] px-2 py-2 shadow-[0_0_40px_rgba(56,189,248,0.12)] backdrop-blur-xl md:flex">
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen((value) => !value)}
+          className="absolute right-4 inline-flex items-center justify-center h-10 w-10 rounded-full border border-cyan-300/20 bg-cyan-300/5 text-white/80 transition hover:border-cyan-300/50 hover:text-cyan-200 md:hidden sm:right-6"
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'} text-lg`} />
+        </button>
+
+        {isMenuOpen && (
+          <nav className="absolute right-4 top-[calc(100%+0.5rem)] flex w-56 flex-col gap-2 rounded-2xl border border-cyan-300/20 bg-[rgba(10,10,20,0.95)] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden sm:right-6">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
-
               return (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`group relative rounded-full px-4 py-2 text-sm font-medium transition duration-300 ${
-                    isActive ? 'text-cyan-300' : 'text-white/65 hover:-translate-y-0.5 hover:text-white'
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <span
-                    className={`absolute inset-x-4 -bottom-[2px] h-px rounded-full bg-cyan-300 transition-opacity duration-300 ${
-                      isActive ? 'opacity-100 shadow-[0_0_14px_rgba(34,211,238,0.95)]' : 'opacity-0 group-hover:opacity-80'
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`rounded-xl px-4 py-3 text-sm font-medium uppercase tracking-wider transition ${isActive
+                    ? 'bg-cyan-300/10 text-cyan-300'
+                    : 'text-white/75 hover:bg-white/5 hover:text-white'
                     }`}
-                  />
+                >
+                  {item.label}
                 </a>
               );
             })}
           </nav>
+        )}
+      </div>
 
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen((value) => !value)}
-            className="inline-flex items-center gap-2 rounded-full border border-cyan-300/12 bg-[rgba(10,10,20,0.45)] px-4 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(56,189,248,0.12)] backdrop-blur-xl transition hover:border-cyan-300/50 hover:text-cyan-200 md:hidden"
-            aria-expanded={isMenuOpen}
-            aria-label="Toggle navigation menu"
-          >
-            <span>{isMenuOpen ? 'Close' : 'Menu'}</span>
-            <span className="text-cyan-300">
-              <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`} />
-            </span>
-          </button>
-
-          {isMenuOpen && (
-            <nav className="absolute right-0 top-[calc(100%+0.75rem)] flex w-64 flex-col gap-1 rounded-[1.5rem] border border-cyan-300/10 bg-[rgba(10,10,20,0.88)] p-2 shadow-[0_20px_80px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden">
-              {navItems.map((item) => {
-                const isActive = activeSection === item.id;
-
-                return (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`rounded-2xl px-4 py-3 text-sm transition ${
-                      isActive ? 'bg-cyan-300/10 text-cyan-200' : 'text-white/75 hover:bg-white/5 hover:text-white'
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </nav>
-          )}
-        </div>
+      {/* Scroll Progress Line */}
+      <div className={`absolute bottom-0 left-0 h-[2px] w-full bg-transparent transition-opacity duration-300 ${scrollProgress > 0 ? 'opacity-100' : 'opacity-0'}`}>
+        <div
+          className="h-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)] transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress * 100}%` }}
+        />
       </div>
     </header>
   );

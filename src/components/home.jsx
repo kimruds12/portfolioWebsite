@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 const featureCards = [
   {
     icon: 'code',
@@ -200,6 +202,26 @@ function Icon({ name, className = '' }) {
 }
 
 const Home = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('section').forEach((el) => {
+      if (!el.classList.contains('scroll-reveal-init')) {
+        el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-1000', 'ease-out', 'scroll-reveal-init');
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <section id="home" className="scroll-mt-32 px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pt-36">
@@ -218,7 +240,7 @@ const Home = () => {
             </h1>
 
             <p className="mt-6 max-w-2xl font-['Space_Grotesk',_sans-serif] text-[clamp(1.05rem,2.4vw,1.5rem)] font-medium leading-relaxed text-white/90">
-              AI-Enabled Developer | UI/UX Designer | Cybersecurity &amp; Networking
+              UI/UX Designer | Software Developer | Networking
             </p>
 
             <p className="mt-6 max-w-2xl text-[clamp(1rem,1.8vw,1.1rem)] leading-8 text-[#B0B0B0]">
@@ -231,15 +253,14 @@ const Home = () => {
                 href="#contact"
                 className="group inline-flex items-center gap-3 rounded-full border border-cyan-300/40 bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_0_28px_rgba(56,189,248,0.34)] transition duration-300 hover:-translate-y-1 hover:px-7 hover:shadow-[0_0_42px_rgba(56,189,248,0.46)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050B14]"
               >
-                Get In Touch
+                Let's Connect
                 <i className="fa-solid fa-arrow-right text-xs transition group-hover:translate-x-0.5" />
               </a>
               <a
                 href="#projects"
-                className="inline-flex items-center gap-3 rounded-full border border-cyan-300/15 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:text-white hover:shadow-[0_0_30px_rgba(56,189,248,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050B14]"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-cyan-300/15 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:text-white hover:shadow-[0_0_30px_rgba(56,189,248,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050B14]"
               >
-                View Projects
-                <i className="fa-solid fa-grid-2 text-xs" />
+                Explore Projects
               </a>
             </div>
 
@@ -256,19 +277,6 @@ const Home = () => {
                 <div>
                   <p className="flex flex-wrap gap-2 text-cyan-200">
                     <span className="text-cyan-300">-&gt; ~</span>
-                    <span>whoami</span>
-                  </p>
-                  <div className="mt-4 border-l border-cyan-300/35 pl-5 text-[#D3D9E7]">
-                    <p>
-                      I combine development, design, and systems thinking to create polished digital products that feel premium,
-                      perform smoothly, and stay maintainable as they grow.
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="flex flex-wrap gap-2 text-cyan-200">
-                    <span className="text-cyan-300">-&gt; ~</span>
                     <span>./list_objectives.sh</span>
                   </p>
                   <ul className="mt-4 space-y-2 text-[#B8C5D8]">
@@ -276,7 +284,6 @@ const Home = () => {
                       'AI-assisted workflows',
                       'Futuristic UI systems',
                       'Secure product mindset',
-                      'Clean responsive builds',
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <span className="mt-[11px] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
@@ -285,11 +292,6 @@ const Home = () => {
                     ))}
                   </ul>
                 </div>
-
-                <p className="flex items-center gap-2 text-cyan-200">
-                  <span className="text-cyan-300">-&gt; ~</span>
-                  <span className="terminal-cursor inline-block h-5 w-2 rounded-sm bg-cyan-300" />
-                </p>
               </div>
             </div>
           </div>
@@ -304,7 +306,7 @@ const Home = () => {
 
               <div className="relative z-10 flex h-[70%] w-[70%] items-center justify-center overflow-hidden rounded-full border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(7,20,39,0.95),rgba(5,11,20,0.98))] shadow-[0_0_60px_rgba(56,189,248,0.16)]">
                 <img
-                  src="/Assets/NewAboutMe.png"
+                  src="/Assets/homeKimImage.jpg"
                   alt="Kim Guston profile"
                   className="profile-float h-full w-full object-cover object-center scale-[1.06]"
                 />
@@ -314,26 +316,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="identity" className="px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex justify-center rounded-[2rem] border border-cyan-300/10 bg-white/[0.03] p-5 shadow-[0_0_40px_rgba(56,189,248,0.08)] backdrop-blur-xl md:p-6">
-            <div className="flex w-full max-w-md flex-wrap items-center gap-4 rounded-[1.25rem] border border-cyan-300/12 bg-[#071427]/80 px-4 py-3">
-              <img
-                src="/Assets/NewAboutMe.png"
-                alt="Kim Guston identity"
-                className="h-16 w-16 rounded-full border border-white/10 object-cover"
-              />
-              <div>
-                <p className="text-lg font-semibold text-white">Kim Ruds C. Guston</p>
-                <p className="flex items-center gap-2 text-sm text-[#B0B0B0]">
-                  <i className="fa-solid fa-location-dot text-cyan-300" />
-                  Metro Manila, Philippines
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <section id="skills" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
@@ -416,9 +399,8 @@ const Home = () => {
             {projectCards.map((project, index) => (
               <article
                 key={project.title}
-                className={`group overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(7,20,39,0.95))] shadow-[0_18px_70px_rgba(0,0,0,0.3)] backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/35 hover:shadow-[0_24px_90px_rgba(56,189,248,0.12)] ${
-                  index === 0 ? 'xl:col-span-2' : ''
-                }`}
+                className={`group overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(7,20,39,0.95))] shadow-[0_18px_70px_rgba(0,0,0,0.3)] backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/35 hover:shadow-[0_24px_90px_rgba(56,189,248,0.12)] ${index === 0 ? 'xl:col-span-2' : ''
+                  }`}
               >
                 <div className="relative">
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(6,8,22,0.7))] opacity-70" />
@@ -469,7 +451,7 @@ const Home = () => {
       <section id="credentials" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-              <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Credentials</span>
+            <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Credentials</span>
             <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.3rem,5vw,3rem)] font-bold tracking-[-0.03em] text-white">
               Professional foundation backed by learning, delivery, and growth.
             </h2>
