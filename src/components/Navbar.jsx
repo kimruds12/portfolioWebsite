@@ -1,79 +1,126 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'credentials', label: 'Credentials' },
+  { id: 'contact', label: 'Contact' },
+];
 
 const Navbar = () => {
-    const [activeSection, setActiveSection] = useState('home');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            // Update scroll progress bar
-            const totalScroll = document.documentElement.scrollTop || document.body.scrollTop;
-            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scroll = (totalScroll / windowHeight) * 100;
-            setScrollProgress(scroll);
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean);
 
-            // Update active section
-            const sections = ['home', 'about', 'projects', 'skills', 'achievements', 'contact'];
-            const scrollPosition = window.scrollY + 150; // offset for navbar height
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element && element.offsetTop <= scrollPosition && (element.offsetTop + element.offsetHeight) > scrollPosition) {
-                    setActiveSection(section);
-                }
-            }
-        };
+        if (visibleEntries[0]) {
+          setActiveSection(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-30% 0px -45% 0px',
+        threshold: [0.2, 0.4, 0.7],
+      },
+    );
 
-        window.addEventListener('scroll', handleScroll);
-        // Set initial state on load
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    sections.forEach((section) => observer.observe(section));
 
-    const isActive = (path) => {
-        return activeSection === path ? "text-cyber-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.8)] border-b border-cyber-cyan pb-1" : "text-cyber-textMuted hover:text-cyber-cyan transition-colors";
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
     };
 
-    return (
-        <header className="flex justify-center items-center py-4 px-4 md:px-12 bg-cyber-terminalDark/80 backdrop-blur-md border-b border-cyber-border sticky top-0 z-50">
-            
-            {/* Mobile Hamburger Menu */}
-            <i
-                className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'} nav-mobile-btn text-cyber-cyan text-2xl cursor-pointer w-6 text-center`}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                aria-label="Menu"
-            ></i>
+    window.addEventListener('resize', handleResize);
 
-            {/* Desktop Nav */}
-            <nav className="nav-desktop gap-3 md:gap-6 font-mono text-[10px] sm:text-xs md:text-sm items-center">
-                <a href="#home" className={isActive('home')}>Home</a>
-                <a href="#about" className={isActive('about')}>About</a>
-                <a href="#projects" className={isActive('projects')}>Projects</a>
-                <a href="#skills" className={isActive('skills')}>Skills</a>
-                <a href="#achievements" className={isActive('achievements')}>Achievements</a>
-                <a href="#contact" className={isActive('contact')}>Contact</a>
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <header className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-start justify-center md:justify-between">
+        <a
+          href="#home"
+          className="hidden items-center gap-3 rounded-full border border-cyan-300/12 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/40 hover:text-white md:inline-flex"
+        >
+          <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
+          Kim Guston
+        </a>
+
+        <div className="relative">
+          <nav className="hidden items-center gap-1 rounded-full border border-cyan-300/12 bg-[rgba(10,10,20,0.45)] px-2 py-2 shadow-[0_0_40px_rgba(56,189,248,0.12)] backdrop-blur-xl md:flex">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`group relative rounded-full px-4 py-2 text-sm font-medium transition duration-300 ${
+                    isActive ? 'text-cyan-300' : 'text-white/65 hover:-translate-y-0.5 hover:text-white'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  <span
+                    className={`absolute inset-x-4 -bottom-[2px] h-px rounded-full bg-cyan-300 transition-opacity duration-300 ${
+                      isActive ? 'opacity-100 shadow-[0_0_14px_rgba(34,211,238,0.95)]' : 'opacity-0 group-hover:opacity-80'
+                    }`}
+                  />
+                </a>
+              );
+            })}
+          </nav>
+
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((value) => !value)}
+            className="inline-flex items-center gap-2 rounded-full border border-cyan-300/12 bg-[rgba(10,10,20,0.45)] px-4 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(56,189,248,0.12)] backdrop-blur-xl transition hover:border-cyan-300/50 hover:text-cyan-200 md:hidden"
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            <span>{isMenuOpen ? 'Close' : 'Menu'}</span>
+            <span className="text-cyan-300">
+              <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`} />
+            </span>
+          </button>
+
+          {isMenuOpen && (
+            <nav className="absolute right-0 top-[calc(100%+0.75rem)] flex w-64 flex-col gap-1 rounded-[1.5rem] border border-cyan-300/10 bg-[rgba(10,10,20,0.88)] p-2 shadow-[0_20px_80px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`rounded-2xl px-4 py-3 text-sm transition ${
+                      isActive ? 'bg-cyan-300/10 text-cyan-200' : 'text-white/75 hover:bg-white/5 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </nav>
-
-            {/* Mobile Nav */}
-            {isMenuOpen && (
-                <nav className="absolute top-full left-0 right-0 bg-cyber-terminalDark/95 backdrop-blur-md border-b border-cyber-border flex flex-col p-6 gap-6 font-mono text-base md:hidden shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-                    <a href="#home" onClick={() => setIsMenuOpen(false)} className={isActive('home')}>Home</a>
-                    <a href="#about" onClick={() => setIsMenuOpen(false)} className={isActive('about')}>About</a>
-                    <a href="#projects" onClick={() => setIsMenuOpen(false)} className={isActive('projects')}>Projects</a>
-                    <a href="#skills" onClick={() => setIsMenuOpen(false)} className={isActive('skills')}>Skills</a>
-                    <a href="#achievements" onClick={() => setIsMenuOpen(false)} className={isActive('achievements')}>Achievements</a>
-                    <a href="#contact" onClick={() => setIsMenuOpen(false)} className={isActive('contact')}>Contact</a>
-                </nav>
-            )}
-
-            {/* Scroll Progress Bar */}
-            <div 
-                className="absolute bottom-0 left-0 h-[2px] bg-cyber-cyan shadow-[0_0_10px_rgba(0,229,255,1)] transition-all duration-150 ease-out"
-                style={{ width: `${scrollProgress}%` }}
-            ></div>
-        </header>
-    );
+          )}
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default Navbar;
