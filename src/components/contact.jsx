@@ -15,7 +15,7 @@ const Contact = () => {
                         I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.
                     </p>
 
-                    <a href="/A2_GUSTON.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
+                    <a href="/Assets/Guston_CV.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
                         <i className="fa-solid fa-file-lines"></i>
                         Get Resume
                     </a>

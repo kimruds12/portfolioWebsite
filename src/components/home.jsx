@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Projects from './Projects';
 
 const featureCards = [
   {
@@ -33,39 +34,14 @@ const featureCards = [
   },
 ];
 
-const projectCards = [
-  {
-    title: "Drake's Sugary Treats",
-    type: 'Full-Stack Platform',
-    description:
-      'A modern ordering and menu management experience built for a food business, focused on accessibility, speed, and a smoother customer journey.',
-    image: '/Assets/Project1.jpg',
-    stack: ['React', 'Node.js', 'MongoDB'],
-  },
-  {
-    title: 'Survey Management Analytics',
-    type: 'Data-Driven Web App',
-    description:
-      'An enterprise-style survey platform with response handling, administrative workflows, and reporting-ready data organization.',
-    image: '/Assets/Project2.png',
-    stack: ['React', 'ASP.NET', 'SQL Server'],
-  },
-  {
-    title: 'Cyber-Futuristic Portfolio',
-    type: 'Design + Development',
-    description:
-      'A premium portfolio interface that blends technical storytelling, responsive interaction design, and AI-forward branding.',
-    image: '/Assets/Project4.png',
-    stack: ['Vite', 'React', 'Tailwind'],
-  },
-];
-
 const credentials = [
   {
     title: 'ITLympics 2025 - Web Design Champion',
     description: 'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
     tags: ['Web Design', 'UI/UX', 'Competition'],
     href: '#',
+    image: '/Assets/Project2.png',
+    imageAlt: 'Certificate showcase visual',
   },
   {
     title: 'UMAK 14th IT Skills Olympics 2025',
@@ -107,8 +83,8 @@ const contactLinks = [
     icon: 'fa-brands fa-facebook-f',
   },
   {
-    label: 'Gmail',
-    value: 'Kim Ruds Guston',
+    label: 'Email',
+    value: '@kimrudsguston@gmail.com',
     href: 'https://mail.google.com/mail/u/0/#inbox',
     icon: 'fa-solid fa-envelope',
   },
@@ -220,6 +196,10 @@ function Icon({ name, className = '' }) {
 }
 
 const Home = () => {
+  const credentialViewportRef = useRef(null);
+  const credentialCardRefs = useRef([]);
+  const [activeCredential, setActiveCredential] = useState(0);
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -238,6 +218,63 @@ const Home = () => {
     });
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const viewport = credentialViewportRef.current;
+    if (!viewport) {
+      return undefined;
+    }
+
+    let frameId = null;
+
+    const updateActiveCredential = () => {
+      frameId = null;
+
+      const viewportRect = viewport.getBoundingClientRect();
+      const viewportCenter = viewportRect.top + viewportRect.height / 2;
+
+      let nextIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      credentialCardRefs.current.forEach((card, index) => {
+        if (!card) {
+          return;
+        }
+
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextIndex = index;
+        }
+      });
+
+      setActiveCredential((current) => (current === nextIndex ? current : nextIndex));
+    };
+
+    const handleCredentialScroll = () => {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+      }
+
+      frameId = window.requestAnimationFrame(updateActiveCredential);
+    };
+
+    handleCredentialScroll();
+    viewport.addEventListener('scroll', handleCredentialScroll, { passive: true });
+    window.addEventListener('resize', handleCredentialScroll);
+
+    return () => {
+      viewport.removeEventListener('scroll', handleCredentialScroll);
+      window.removeEventListener('resize', handleCredentialScroll);
+
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+      }
+    };
   }, []);
 
   return (
@@ -399,145 +436,119 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="projects" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Projects</span>
-              <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.3rem,5vw,3rem)] font-bold tracking-[-0.03em] text-white">
-                Selected work with strong technical and visual direction.
-              </h2>
-            </div>
-            <p className="max-w-xl text-base leading-8 text-[#B0B0B0]">
-              Each card emphasizes structure, clarity, and interaction polish while keeping the futuristic atmosphere subtle and professional.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 xl:grid-cols-3">
-            {projectCards.map((project, index) => (
-              <article
-                key={project.title}
-                className={`group overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(7,20,39,0.95))] shadow-[0_18px_70px_rgba(0,0,0,0.3)] backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/35 hover:shadow-[0_24px_90px_rgba(56,189,248,0.12)] ${index === 0 ? 'xl:col-span-2' : ''
-                  }`}
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(6,8,22,0.7))] opacity-70" />
-                  <img src={project.image} alt={project.title} className="h-72 w-full object-cover transition duration-500 group-hover:scale-105" />
-                </div>
-                <div className="space-y-5 p-7">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs uppercase tracking-[0.22em] text-cyan-200">
-                      {project.type}
-                    </span>
-                    <span className="text-xs uppercase tracking-[0.24em] text-white/40">0{index + 1}</span>
-                  </div>
-                  <h3 className="text-[1.45rem] font-semibold text-white">{project.title}</h3>
-                  <p className="text-sm leading-7 text-[#B0B0B0]">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.stack.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs uppercase tracking-[0.18em] text-white/65"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-4 pt-2">
-                    <a
-                      href="#contact"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-200 transition hover:text-white"
-                    >
-                      Discuss Project
-                      <i className="fa-solid fa-arrow-up-right-from-square text-xs" />
-                    </a>
-                    <a
-                      href="#credentials"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-white/60 transition hover:text-white"
-                    >
-                      View Credentials
-                      <i className="fa-solid fa-arrow-right text-xs" />
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Projects />
 
       <section id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr] items-start">
-            
-            {/* Sticky Left Sidebar */}
-            <div className="lg:sticky lg:top-32 space-y-6">
+          <div className="grid gap-10 xl:grid-cols-[0.7fr_1.1fr_0.34fr] xl:items-center">
+            <div className="space-y-6">
               <div className="font-mono text-sm tracking-wider text-cyan-300/60">
-                [ /root/credentials ] <span className="text-cyan-300">#</span>
+                [ /root/certificates ] <span className="text-cyan-300">#</span>
               </div>
-              
-              <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.03em] text-white">
-                Featured Credentials
+
+              <h2 className="font-['Sora',_sans-serif] text-[clamp(2.3rem,4.5vw,3.4rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white">
+                Featured Certificates
               </h2>
-              
+
               <div className="h-[2px] w-16 bg-white/20" />
-              
+
               <p className="max-w-md text-base leading-8 text-[#B0B0B0]">
-                A collection of my recent achievements, certifications, and technical milestones focusing on web development, networking, and system security.
+                Scroll vertically through the certificate list. The centered card stays sharp while the others soften for a cleaner and more focused credentials section.
               </p>
-              
-              <div className="pt-2">
-                <a href="#contact" className="inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-cyan-300 group">
-                  View More Credentials
-                  <i className="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1" />
-                </a>
+
+              <div className="flex items-center gap-3">
+                {credentials.map((item, index) => (
+                  <span
+                    key={item.title}
+                    className={`h-2 rounded-full transition-all duration-300 ${activeCredential === index ? 'w-8 bg-cyan-300 shadow-[0_0_18px_rgba(34,211,238,0.8)]' : 'w-2 bg-white/20'
+                      }`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Right Column: Scrolling List */}
-            <div className="flex flex-col gap-12 lg:gap-16">
-              {credentials.map((item, index) => (
-                <div key={index} className="flex flex-col gap-6 sm:flex-row sm:items-start group">
-                  
-                  {/* Stylized Visual Box (Mimics the image block) */}
-                  <div className="w-full sm:w-[220px] shrink-0 h-[140px] rounded-2xl border border-cyan-300/10 bg-[#0A0F1A] shadow-lg overflow-hidden relative flex items-center justify-center transition-all duration-500 group-hover:border-cyan-300/30 group-hover:shadow-[0_0_40px_rgba(56,189,248,0.1)]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.15),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <i className="fa-solid fa-award text-4xl text-cyan-200/40 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-500" />
-                  </div>
+            <div className="relative mx-auto w-full max-w-[40rem]">
+              <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/12 
+                              bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(5,11,20,0.96))] 
+                              p-3 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl
+                              min-h-[750px]">
+                <div className="pointer-events-none absolute inset-x-3 top-3 z-10 h-12 rounded-t-[1.7rem] bg-[linear-gradient(180deg,rgba(5,11,20,0.94),rgba(5,11,20,0.4),transparent)]" />
+                <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 h-14 rounded-b-[1.7rem] bg-[linear-gradient(0deg,rgba(5,11,20,0.94),rgba(5,11,20,0.4),transparent)]" />
 
-                  {/* Content block */}
-                  <div className="flex-1 space-y-4 pt-1">
-                    <h3 className="text-[1.4rem] leading-tight font-semibold text-white group-hover:text-cyan-100 transition-colors">
-                      {item.title}
-                    </h3>
-                    
-                    <p className="text-sm leading-7 text-[#A0A0A0]">
-                      {item.description}
-                    </p>
-                    
-                    {/* Tags matching the reference styling */}
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {item.tags.map(tag => (
-                        <span key={tag} className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1.5 text-xs font-mono tracking-wide text-white/60 flex items-center gap-2">
-                          <span className="h-1 w-1 rounded-full bg-cyan-300/50" />
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                <div
+                  ref={credentialViewportRef}
+                  className="relative h-[34rem] overflow-y-auto rounded-[1.7rem] border border-cyan-300/10 bg-black/10 px-3 [scroll-snap-type:y_mandatory] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:h-[45rem] md:px-4"
+                >
+                  <div className="space-y-5 py-24 md:py-32">
+                    {credentials.map((item, index) => {
+                      const distance = Math.abs(activeCredential - index);
+                      const stateClass =
+                        distance === 0
+                          ? 'scale-100 opacity-100 blur-0 border-cyan-300/28 shadow-[0_0_42px_rgba(56,189,248,0.14)]'
+                          : distance === 1
+                            ? 'scale-[0.972] opacity-65 blur-[1px] border-white/10'
+                            : 'scale-[0.94] opacity-35 blur-[2.5px] border-white/8';
 
-                    {/* View Certificate Link */}
-                    <div className="pt-2">
-                      <a href={item.href} className="inline-flex items-center gap-2 text-[13px] font-bold text-white transition-colors hover:text-cyan-300 group/link">
-                        View Certificate
-                        <i className="fa-solid fa-arrow-right text-xs transition-transform group-hover/link:translate-x-1" />
-                      </a>
-                    </div>
+                      return (
+                        <article
+                          key={item.title}
+                          ref={(node) => {
+                            credentialCardRefs.current[index] = node;
+                          }}
+                          className={`snap-center rounded-[1.7rem] border bg-[linear-gradient(180deg,rgba(10,18,35,0.96),rgba(5,11,20,0.98))] p-6 transition-all duration-300 ease-out ${stateClass}`}
+                        >
+                          {item.image && (
+                            <div className="mb-6 overflow-hidden rounded-[1.35rem] bg-white/5">
+                              <img
+                                src={item.image}
+                                alt={item.imageAlt}
+                                className="h-80 w-full object-cover object-top sm:h-[23rem]"
+                              />
+                            </div>
+                          )}
+
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/12 bg-cyan-300/10 text-cyan-200">
+                                <i className="fa-solid fa-award text-xl" />
+                              </div>
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/75">Certificate</p>
+                                <h3 className="mt-2 text-lg font-semibold leading-tight text-white">{item.title}</h3>
+                              </div>
+                            </div>
+                            <span className="rounded-full border border-cyan-300/16 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-cyan-200">
+                              0{index + 1}
+                            </span>
+                          </div>
+
+                          <p className="mt-5 text-sm leading-7 text-[#AEB6C8]">{item.description}</p>
+
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {item.tags.map((tag) => (
+                              <span key={tag} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-mono tracking-wide text-white/60">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <a href={item.href} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-white">
+                            View Certificate
+                            <i className="fa-solid fa-arrow-right text-xs" />
+                          </a>
+                        </article>
+                      );
+                    })}
                   </div>
-                  
                 </div>
-              ))}
+              </div>
             </div>
 
+            <aside className="flex items-center justify-center xl:justify-end xl:pr-1">
+              <p className="inline-flex items-center justify-center rounded-[999px] border border-cyan-300/12 bg-white/[0.03] px-5 py-4 text-center text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85 shadow-[0_0_24px_rgba(56,189,248,0.08)] backdrop-blur-xl xl:min-h-[21rem] xl:px-6 xl:py-7 xl:[text-orientation:mixed] xl:[writing-mode:vertical-rl] xl:rotate-180 xl:tracking-[0.34em]">
+                &lt;- Scroll the certificates vertically
+              </p>
+            </aside>
           </div>
         </div>
       </section>
@@ -581,7 +592,7 @@ const Home = () => {
                   </span>
                   <div>
                     <p className="text-base font-semibold text-white">{item.label}</p>
-                    <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-cyan-300/70 group-hover:text-cyan-300">Open profile</p>
+                    <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-cyan-300/70 group-hover:text-cyan-300"></p>
                   </div>
                 </div>
                 
