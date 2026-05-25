@@ -55,7 +55,7 @@ const Navbar = () => {
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call to set correct progress
+    handleScroll();
 
     return () => {
       observer.disconnect();
@@ -66,7 +66,12 @@ const Navbar = () => {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 flex flex-col transition-all duration-300 ${scrollProgress > 0 ? 'bg-[rgba(5,11,20,0.85)] border-b border-cyan-300/10 backdrop-blur-xl shadow-lg' : 'bg-transparent border-transparent'}`}>
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-6 sm:px-6 relative">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+
+        {/* Left spacer (mirrors button width on desktop for centering) */}
+        <div className="hidden md:flex md:w-[160px]" />
+
+        {/* Center Nav Links */}
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -80,26 +85,39 @@ const Navbar = () => {
                   }`}
               >
                 {item.label}
-                <span 
-                  className={`absolute bottom-0 left-0 h-[2px] bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300 ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} 
+                <span
+                  className={`absolute bottom-0 left-0 h-[2px] bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
                 />
               </a>
             );
           })}
         </nav>
 
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen((value) => !value)}
-          className="absolute right-4 inline-flex items-center justify-center h-10 w-10 rounded-full border border-cyan-300/20 bg-cyan-300/5 text-white/80 transition hover:border-cyan-300/50 hover:text-cyan-200 md:hidden sm:right-6"
-          aria-expanded={isMenuOpen}
-          aria-label="Toggle navigation menu"
-        >
-          <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'} text-lg`} />
-        </button>
+        {/* Right: Get Resume Button */}
+        <div className="flex items-center gap-3">
+          <a
+            href="/Assets/Guston_CV.pdf"
+            download="Guston_CV.pdf"
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.22em] text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+          >
+            <i className="fa-solid fa-download text-[10px]" />
+            Get Resume
+          </a>
 
+          {/* Mobile Hamburger */}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((value) => !value)}
+            className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-cyan-300/20 bg-cyan-300/5 text-white/80 transition hover:border-cyan-300/50 hover:text-cyan-200 md:hidden"
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'} text-lg`} />
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
           <nav className="absolute right-4 top-[calc(100%+0.5rem)] flex w-56 flex-col gap-2 rounded-2xl border border-cyan-300/20 bg-[rgba(10,10,20,0.95)] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden sm:right-6">
             {navItems.map((item) => {
@@ -118,6 +136,16 @@ const Navbar = () => {
                 </a>
               );
             })}
+            {/* Resume button in mobile menu too */}
+            <a
+              href="/Assets/Guston_CV.pdf"
+              download="Guston_CV.pdf"
+              onClick={() => setIsMenuOpen(false)}
+              className="mt-1 flex items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_0_16px_rgba(56,189,248,0.35)]"
+            >
+              <i className="fa-solid fa-download text-xs" />
+              Get Resume
+            </a>
           </nav>
         )}
       </div>
@@ -134,3 +162,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

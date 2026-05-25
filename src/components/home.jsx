@@ -62,49 +62,67 @@ const projectCards = [
 
 const credentials = [
   {
-    icon: 'sparkles',
-    title: 'BS Information Technology',
-    description: 'Recent graduate with a foundation in software engineering, systems thinking, and applied problem-solving.',
-    actionLabel: 'Core Focus',
-    actionHref: '#skills',
+    title: 'ITLympics 2025 - Web Design Champion',
+    description: 'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
+    tags: ['Web Design', 'UI/UX', 'Competition'],
+    href: '#',
   },
   {
-    icon: 'shield',
-    title: 'Curriculum Vitae',
-    description: 'Detailed background, project experience, and technical capability overview in downloadable format.',
-    actionLabel: 'Open CV',
-    actionHref: '/Assets/Guston_CV.pdf',
-    external: true,
+    title: 'UMAK 14th IT Skills Olympics 2025',
+    description: 'Demonstrated advanced technical proficiency and problem-solving skills against top peers in a rigorous competitive environment.',
+    tags: ['Programming', 'Problem Solving', 'IT Skills'],
+    href: '#',
   },
   {
-    icon: 'terminal',
-    title: 'Continuous Growth',
-    description: 'Actively refining skills across UI systems, secure development practices, and AI-enabled product work.',
-    actionLabel: 'View Projects',
-    actionHref: '#projects',
+    title: 'Network Addressing and Basic Troubleshooting',
+    description: 'Certified expertise in configuring network addresses and resolving foundational connectivity issues efficiently.',
+    tags: ['Networking', 'Troubleshooting', 'Cisco'],
+    href: '#',
+  },
+  {
+    title: 'Networking Basics',
+    description: 'Comprehensive understanding of network topologies, protocols, and the fundamental architecture of modern communications.',
+    tags: ['Fundamentals', 'Protocols', 'Architecture'],
+    href: '#',
+  },
+  {
+    title: 'Networking Devices and Initial Configuration',
+    description: 'Proven ability to set up, configure, and manage core networking hardware, ensuring stable and secure operations.',
+    tags: ['Hardware', 'Configuration', 'Routing'],
+    href: '#',
+  },
+  {
+    title: 'Network Support and Security',
+    description: 'Specialized in maintaining network health and implementing robust security measures to protect against vulnerabilities.',
+    tags: ['Security', 'Maintenance', 'Firewalls'],
+    href: '#',
   },
 ];
 
 const contactLinks = [
   {
     label: 'Facebook',
-    href: 'https://www.facebook.com/mikdurs.tugons',
+    value: 'Kim Ruds Guston',
+    href: 'https://www.facebook.com/mikdurs.tugons/',
     icon: 'fa-brands fa-facebook-f',
   },
   {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/kemiilng/',
-    icon: 'fa-brands fa-instagram',
+    label: 'Gmail',
+    value: 'Kim Ruds Guston',
+    href: 'https://mail.google.com/mail/u/0/#inbox',
+    icon: 'fa-solid fa-envelope',
   },
   {
-    label: 'YouTube',
-    href: 'https://www.youtube.com/@KimRudsGuston',
-    icon: 'fa-brands fa-youtube',
+    label: 'LinkedIn',
+    value: 'Kim Ruds Guston',
+    href: 'https://www.linkedin.com/in/kim-ruds-guston-4a1822374/',
+    icon: 'fa-brands fa-linkedin-in',
   },
   {
-    label: 'TikTok',
-    href: 'https://www.tiktok.com/@just_ruds',
-    icon: 'fa-brands fa-tiktok',
+    label: 'GitHub',
+    value: '@kimruds12',
+    href: 'https://github.com/kimruds12',
+    icon: 'fa-brands fa-github',
   },
 ];
 
@@ -215,8 +233,8 @@ const Home = () => {
     document.querySelectorAll('section').forEach((el) => {
       if (!el.classList.contains('scroll-reveal-init')) {
         el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-1000', 'ease-out', 'scroll-reveal-init');
-        observer.observe(el);
       }
+      observer.observe(el);
     });
 
     return () => observer.disconnect();
@@ -448,124 +466,133 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="credentials" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
+      <section id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Credentials</span>
-            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.3rem,5vw,3rem)] font-bold tracking-[-0.03em] text-white">
-              Professional foundation backed by learning, delivery, and growth.
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-[#B0B0B0]">
-              This section replaces the previous achievements layout with cleaner credential cards that support the new premium portfolio direction.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {credentials.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-[1.75rem] border border-cyan-300/10 bg-white/[0.03] p-7 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/35 hover:shadow-[0_0_36px_rgba(56,189,248,0.12)]"
-              >
-                <div className="flex h-13 w-13 items-center justify-center rounded-2xl border border-cyan-300/10 bg-cyan-300/10 text-cyan-200">
-                  <Icon name={item.icon} className="h-6 w-6" />
-                </div>
-                <h3 className="mt-6 text-2xl font-semibold text-white">{item.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-[#B0B0B0]">{item.description}</p>
-                <a
-                  href={item.actionHref}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noreferrer' : undefined}
-                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-cyan-300/10 bg-black/20 px-4 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 transition hover:border-cyan-300/35 hover:text-white"
-                >
-                  {item.actionLabel}
-                  <i className={`fa-solid ${item.external ? 'fa-arrow-up-right-from-square' : 'fa-arrow-right'} text-[10px]`} />
+          <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr] items-start">
+            
+            {/* Sticky Left Sidebar */}
+            <div className="lg:sticky lg:top-32 space-y-6">
+              <div className="font-mono text-sm tracking-wider text-cyan-300/60">
+                [ /root/credentials ] <span className="text-cyan-300">#</span>
+              </div>
+              
+              <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.03em] text-white">
+                Featured Credentials
+              </h2>
+              
+              <div className="h-[2px] w-16 bg-white/20" />
+              
+              <p className="max-w-md text-base leading-8 text-[#B0B0B0]">
+                A collection of my recent achievements, certifications, and technical milestones focusing on web development, networking, and system security.
+              </p>
+              
+              <div className="pt-2">
+                <a href="#contact" className="inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-cyan-300 group">
+                  View More Credentials
+                  <i className="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1" />
                 </a>
-              </article>
-            ))}
+              </div>
+            </div>
+
+            {/* Right Column: Scrolling List */}
+            <div className="flex flex-col gap-12 lg:gap-16">
+              {credentials.map((item, index) => (
+                <div key={index} className="flex flex-col gap-6 sm:flex-row sm:items-start group">
+                  
+                  {/* Stylized Visual Box (Mimics the image block) */}
+                  <div className="w-full sm:w-[220px] shrink-0 h-[140px] rounded-2xl border border-cyan-300/10 bg-[#0A0F1A] shadow-lg overflow-hidden relative flex items-center justify-center transition-all duration-500 group-hover:border-cyan-300/30 group-hover:shadow-[0_0_40px_rgba(56,189,248,0.1)]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.15),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <i className="fa-solid fa-award text-4xl text-cyan-200/40 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-500" />
+                  </div>
+
+                  {/* Content block */}
+                  <div className="flex-1 space-y-4 pt-1">
+                    <h3 className="text-[1.4rem] leading-tight font-semibold text-white group-hover:text-cyan-100 transition-colors">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-sm leading-7 text-[#A0A0A0]">
+                      {item.description}
+                    </p>
+                    
+                    {/* Tags matching the reference styling */}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {item.tags.map(tag => (
+                        <span key={tag} className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1.5 text-xs font-mono tracking-wide text-white/60 flex items-center gap-2">
+                          <span className="h-1 w-1 rounded-full bg-cyan-300/50" />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* View Certificate Link */}
+                    <div className="pt-2">
+                      <a href={item.href} className="inline-flex items-center gap-2 text-[13px] font-bold text-white transition-colors hover:text-cyan-300 group/link">
+                        View Certificate
+                        <i className="fa-solid fa-arrow-right text-xs transition-transform group-hover/link:translate-x-1" />
+                      </a>
+                    </div>
+                  </div>
+                  
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
 
       <section id="contact" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(11,16,32,0.92))] p-8 backdrop-blur-xl">
-            <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Contact</span>
-            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.2rem,4vw,3rem)] font-bold tracking-[-0.03em] text-white">
-              Let&apos;s build something clean, modern, and effective.
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+          
+          {/* Left Side: "Let's Connect" layout matching reference */}
+          <div className="max-w-xl">
+            <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">
+              Let's Connect
             </h2>
-            <p className="mt-5 text-base leading-8 text-[#B0B0B0]">
-              Open to collaboration, freelance opportunities, and future-facing product work that values strong engineering and refined user experience.
+            <p className="mt-6 text-base leading-8 text-[#B0B0B0]">
+              I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.
             </p>
-
-            <div className="mt-8 space-y-4 text-sm text-[#D4D4D4]">
-              <div className="flex items-center gap-3 rounded-[1.25rem] border border-cyan-300/10 bg-black/20 px-4 py-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 text-cyan-200">
-                  <i className="fa-solid fa-location-dot" />
-                </span>
-                <div>
-                  <p className="font-medium text-white">Location</p>
-                  <p className="text-[#B0B0B0]">Metro Manila, Philippines</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 rounded-[1.25rem] border border-cyan-300/10 bg-black/20 px-4 py-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 text-cyan-200">
-                  <i className="fa-solid fa-file-lines" />
-                </span>
-                <div>
-                  <p className="font-medium text-white">Availability</p>
-                  <p className="text-[#B0B0B0]">Available for projects, collaboration, and growth opportunities.</p>
-                </div>
-              </div>
-            </div>
+            
+            <a
+              href="/Assets/Guston_CV.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-10 inline-flex items-center gap-3 rounded-[1rem] border border-cyan-300/20 bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]"
+            >
+              <i className="fa-solid fa-file-lines text-cyan-300" />
+              Get Resume
+            </a>
           </div>
 
-          <div className="rounded-[2rem] border border-cyan-300/10 bg-white/[0.03] p-8 shadow-[0_0_42px_rgba(56,189,248,0.08)] backdrop-blur-xl">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-cyan-300/10 pb-5">
-              <div>
-                <p className="text-sm uppercase tracking-[0.28em] text-white/45">Secure Channels</p>
-                <h3 className="mt-2 text-2xl font-semibold text-white">Reach Out Through My Socials</h3>
-              </div>
+          {/* Right Side: 1-column list with Cyan rounded hover style */}
+          <div className="flex flex-col gap-4">
+            {contactLinks.map((item) => (
               <a
-                href="/Assets/Guston_CV.pdf"
+                key={item.label}
+                href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200 transition hover:border-cyan-300/40 hover:text-white"
+                className="group flex items-center justify-between rounded-[1.4rem] border border-cyan-300/10 bg-black/20 px-6 py-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/[0.03] hover:shadow-[0_8px_30px_rgba(56,189,248,0.1)]"
               >
-                Open CV
-                <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-              </a>
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {contactLinks.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center justify-between rounded-[1.4rem] border border-cyan-300/10 bg-black/20 px-5 py-4 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/35 hover:bg-white/[0.03]"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/10 bg-cyan-300/10 text-cyan-200 transition group-hover:text-white">
-                      <i className={item.icon} />
-                    </span>
-                    <div>
-                      <p className="text-sm font-semibold text-white">{item.label}</p>
-                      <p className="text-xs uppercase tracking-[0.18em] text-white/40">Open profile</p>
-                    </div>
+                <div className="flex items-center gap-5">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-cyan-300/10 bg-cyan-300/10 text-cyan-200 transition group-hover:bg-cyan-300/20 group-hover:text-white group-hover:shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                    <i className={`${item.icon} text-lg`} />
+                  </span>
+                  <div>
+                    <p className="text-base font-semibold text-white">{item.label}</p>
+                    <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-cyan-300/70 group-hover:text-cyan-300">Open profile</p>
                   </div>
-                  <i className="fa-solid fa-arrow-right text-xs text-white/45 transition group-hover:translate-x-1 group-hover:text-white" />
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-[1.5rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(56,189,248,0.08),rgba(255,255,255,0.02))] p-5">
-              <p className="text-sm uppercase tracking-[0.24em] text-cyan-300">Preferred Approach</p>
-              <p className="mt-3 text-sm leading-7 text-[#C8C8C8]">
-                Share your project goals, desired outcome, and preferred timeline. I&apos;ll respond with a clearer direction for design, development, or product support.
-              </p>
-            </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <span className="hidden font-mono text-sm text-[#B0B0B0] sm:block group-hover:text-white transition-colors">{item.value}</span>
+                  <i className="fa-solid fa-arrow-right text-sm text-white/45 transition-all duration-300 group-hover:translate-x-1 group-hover:text-cyan-300" />
+                </div>
+              </a>
+            ))}
           </div>
+
         </div>
       </section>
     </>
