@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import Projects from './Projects';
 import Skills from './Skills';
 import Credentials from './Credentials';
@@ -35,7 +36,13 @@ const Home = () => {
     <>
       <section id="home" className="scroll-mt-32 px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pt-36">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="max-w-3xl">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-3xl"
+          >
             <span className="inline-flex items-center gap-3 rounded-full border border-cyan-300/15 bg-white/[0.03] px-4 py-2 text-sm uppercase tracking-[0.3em] text-white/70 backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.85)]" />
               Hello, I&apos;m
@@ -103,9 +110,15 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="relative flex justify-center lg:justify-end">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="relative flex justify-center lg:justify-end"
+          >
             <div className="relative flex h-[20rem] w-[20rem] items-center justify-center sm:h-[14rem] sm:w-[24rem] lg:h-[28rem] lg:w-[28rem]">
               <div className="hero-orbit absolute inset-0 rounded-full border border-cyan-300/20" />
               <div className="hero-orbit-reverse absolute inset-[1.25rem] rounded-full border border-dashed border-cyan-300/20" />
@@ -121,7 +134,7 @@ const Home = () => {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -137,7 +150,13 @@ const Home = () => {
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           
           {/* Left Side: "Let's Connect" layout matching reference */}
-          <div className="max-w-xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="max-w-xl"
+          >
             <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">
               Let's Connect
             </h2>
@@ -154,10 +173,16 @@ const Home = () => {
               <i className="fa-solid fa-file-lines text-cyan-300" />
               Get Resume
             </a>
-          </div>
+          </motion.div>
 
           {/* Right Side: 1-column list with Cyan rounded hover style */}
-          <div className="flex flex-col gap-4">
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="flex flex-col gap-4"
+          >
             {contactLinks.map((item) => (
               <a
                 key={item.label}
@@ -182,7 +207,7 @@ const Home = () => {
                 </div>
               </a>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>

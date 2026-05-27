@@ -5,7 +5,7 @@ const navItems = [
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'credentials', label: 'Credentials' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'contact', label: 'Contacts' },
 ];
 
 const Navbar = () => {
@@ -51,6 +51,11 @@ const Navbar = () => {
           currentSection = section.id;
         }
       });
+
+      // If at the absolute bottom of the page, force the last section to be active
+      if (window.innerHeight + Math.round(window.scrollY) >= document.documentElement.scrollHeight - 50) {
+        currentSection = sections[sections.length - 1].id;
+      }
 
       setActiveSection(currentSection);
     };

@@ -9,7 +9,7 @@ const Contact = () => {
                         <div className="absolute -bottom-3 left-0 w-12 h-1 bg-white"></div>
                     </h2>
 
-                    <h3 className="text-white text-3xl mt-16 mb-6">Let's Connect</h3>
+                    <h3 className="text-white text-3xl mt-16 mb-6">Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Connect</span> </h3>
 
                     <p className="text-gray-400 text-sm leading-relaxed mb-10 max-w-md">
                         I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.

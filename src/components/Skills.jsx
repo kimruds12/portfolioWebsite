@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const skillCategories = [
     {
@@ -6,13 +7,12 @@ const skillCategories = [
         description: 'Core Logic & Scripting',
         icon: 'fa-solid fa-code',
         skills: [
-            { name: 'JavaScript', icon: 'fa-brands fa-js text-yellow-400' },
-            { name: 'TypeScript', icon: 'fa-brands fa-connectdevelop text-blue-400' },
-            { name: 'Python', icon: 'fa-brands fa-python text-yellow-300' },
             { name: 'Java', icon: 'fa-brands fa-java text-orange-500' },
             { name: 'C#', icon: 'fa-solid fa-c text-purple-500' },
-            { name: 'C', icon: 'fa-solid fa-c text-blue-500' },
+            { name: 'Python', icon: 'fa-brands fa-python text-yellow-300' },
             { name: 'PHP', icon: 'fa-brands fa-php text-indigo-400' },
+            { name: 'TypeScript', icon: 'fa-brands fa-connectdevelop text-blue-400' },
+            { name: 'JavaScript', icon: 'fa-brands fa-js text-yellow-400' },
         ]
     },
     {
@@ -21,8 +21,6 @@ const skillCategories = [
         icon: 'fa-solid fa-brain',
         skills: [
             { name: 'OpenCV', icon: 'fa-solid fa-camera text-green-500' },
-            { name: 'Ultralytics', icon: 'fa-solid fa-layer-group text-blue-500' },
-            { name: 'Roboflow', icon: 'fa-solid fa-robot text-purple-500' },
         ]
     },
     {
@@ -31,18 +29,10 @@ const skillCategories = [
         icon: 'fa-solid fa-layer-group',
         skills: [
             { name: 'React', icon: 'fa-brands fa-react text-cyan-400' },
-            { name: 'Node.js', icon: 'fa-brands fa-node-js text-green-500' },
-            { name: 'Express.js', icon: 'fa-brands fa-node text-gray-400' },
-            { name: '.NET', icon: 'fa-brands fa-microsoft text-purple-500' },
-            { name: 'FastAPI', icon: 'fa-solid fa-bolt text-teal-400' },
-            { name: 'Livewire', icon: 'fa-solid fa-bolt text-pink-500' },
-            { name: 'Laravel', icon: 'fa-brands fa-laravel text-red-500' },
-            { name: 'Alpine JS', icon: 'fa-solid fa-mountain text-blue-300' },
-            { name: 'Axios', icon: 'fa-solid fa-a text-purple-400' },
-            { name: 'JWT', icon: 'fa-solid fa-key text-red-400' },
-            { name: 'Spring Boot', icon: 'fa-solid fa-leaf text-green-500' },
             { name: 'Tailwind CSS', icon: 'fa-solid fa-wind text-cyan-400' },
-            { name: 'daisyUI', icon: 'fa-solid fa-flower text-purple-400' },
+            { name: 'Node.js', icon: 'fa-brands fa-node-js text-green-500' },
+            { name: 'FastAPI', icon: 'fa-solid fa-bolt text-teal-400' },
+            { name: 'Laravel', icon: 'fa-brands fa-laravel text-red-500' },
         ]
     },
     {
@@ -50,11 +40,10 @@ const skillCategories = [
         description: 'Storage & Retrieval',
         icon: 'fa-solid fa-database',
         skills: [
-            { name: 'MySQL', icon: 'fa-solid fa-database text-blue-400' },
-            { name: 'PostgreSQL', icon: 'fa-solid fa-database text-indigo-500' },
             { name: 'MongoDB', icon: 'fa-solid fa-leaf text-green-500' },
+            { name: 'MySQL', icon: 'fa-solid fa-database text-blue-400' },
             { name: 'SQL Server', icon: 'fa-solid fa-server text-red-500' },
-            { name: 'SQL Alchemy', icon: 'fa-solid fa-flask text-red-400' },
+            { name: 'PostgreSQL', icon: 'fa-solid fa-database text-indigo-500' },
         ]
     },
     {
@@ -62,19 +51,15 @@ const skillCategories = [
         description: 'Development Environment',
         icon: 'fa-solid fa-wrench',
         skills: [
-            { name: 'Git', icon: 'fa-brands fa-git-alt text-orange-500' },
             { name: 'GitHub', icon: 'fa-brands fa-github text-white' },
+            { name: 'Git', icon: 'fa-brands fa-git-alt text-orange-500' },
             { name: 'VS Code', icon: 'fa-solid fa-code text-blue-500' },
             { name: 'Visual Studio', icon: 'fa-solid fa-v text-purple-500' },
             { name: 'PyCharm', icon: 'fa-solid fa-p text-green-500' },
-            { name: 'IntelliJ IDEA', icon: 'fa-solid fa-i text-red-500' },
-            { name: 'Postman', icon: 'fa-solid fa-rocket text-orange-500' },
-            { name: 'Sentry', icon: 'fa-solid fa-bug text-purple-400' },
-            { name: 'Ubuntu', icon: 'fa-brands fa-ubuntu text-orange-500' },
             { name: 'NPM', icon: 'fa-brands fa-npm text-red-500' },
-            { name: 'Swagger', icon: 'fa-solid fa-circle-nodes text-green-500' },
             { name: 'Vite', icon: 'fa-solid fa-bolt text-purple-500' },
             { name: 'Figma', icon: 'fa-brands fa-figma text-pink-500' },
+            { name: 'Ubuntu', icon: 'fa-brands fa-ubuntu text-orange-500' },
         ]
     },
     {
@@ -83,11 +68,9 @@ const skillCategories = [
         icon: 'fa-solid fa-cloud',
         skills: [
             { name: 'Vercel', icon: 'fa-solid fa-caret-up text-white' },
-            { name: 'Render', icon: 'fa-solid fa-r text-gray-300' },
             { name: 'Cloudflare', icon: 'fa-brands fa-cloudflare text-orange-500' },
-            { name: 'Railway', icon: 'fa-solid fa-train-tram text-gray-400' },
+            { name: 'Render', icon: 'fa-solid fa-r text-gray-300' },
             { name: 'Docker', icon: 'fa-brands fa-docker text-blue-500' },
-            { name: 'Cloudinary', icon: 'fa-solid fa-cloud-arrow-up text-blue-400' },
         ]
     }
 ];
@@ -148,7 +131,13 @@ const Skills = () => {
                 <div className="grid gap-10 xl:grid-cols-[0.8fr_1.2fr] xl:items-center">
                     
                     {/* Left Side: Context / Title */}
-                    <div className="max-w-2xl">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        className="max-w-2xl"
+                    >
                         <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Tech Stack</span>
                         <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1] tracking-[-0.04em] text-white">
                             Skills &<br />Technologies
@@ -165,10 +154,16 @@ const Skills = () => {
                                 />
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Right Side: Scrollable Container */}
-                    <div className="relative">
+                    <motion.div 
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        className="relative"
+                    >
                         <div className="relative mx-auto w-full rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(7,20,39,0.4))] p-2 backdrop-blur-md sm:p-4">
                             
                             <div 
@@ -213,7 +208,7 @@ const Skills = () => {
                         </div>
 
 
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

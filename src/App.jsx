@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/home';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
 
 const particles = [
   { top: '8%', left: '12%', size: 'h-2 w-2', delay: '0s' },
@@ -31,7 +32,8 @@ function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#050B14] text-[#F5F5F5]">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#050B14] text-[#F5F5F5] custom-cursor-active">
+      <CustomCursor />
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_28%),radial-gradient(circle_at_18%_18%,rgba(14,116,144,0.28),transparent_24%),radial-gradient(circle_at_84%_24%,rgba(103,232,249,0.08),transparent_22%),radial-gradient(circle_at_50%_88%,rgba(56,189,248,0.06),transparent_30%)]" />
         <div className="ambient-grid absolute inset-0 opacity-70" />
