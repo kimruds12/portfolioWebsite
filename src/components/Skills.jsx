@@ -149,7 +149,7 @@ const Skills = () => {
                     
                     {/* Left Side: Context / Title */}
                     <div className="max-w-2xl">
-                        <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Skills</span>
+                        <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Tech Stack</span>
                         <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1] tracking-[-0.04em] text-white">
                             Skills &<br />Technologies
                         </h2>

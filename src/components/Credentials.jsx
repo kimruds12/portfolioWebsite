@@ -31,7 +31,7 @@ const credentials = [
     description: 'Comprehensive understanding of network topologies, protocols, and the fundamental architecture of modern communications.',
     tags: ['Fundamentals', 'Protocols', 'Architecture'],
     href: '#',
-    image: '/Assets/1by1.jpg',
+    image: '/Assets/Image_Network Basics.png',
     imageAlt: 'Networking Basics',
   },
   {
@@ -111,14 +111,7 @@ const Credentials = () => {
       </div>
 
       <div className="mx-auto max-w-7xl relative z-10">
-        <div className="mb-16 text-center">
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="font-mono text-cyan-300 text-sm tracking-[0.5em] uppercase mb-4"
-          >
-            [ Secure.Credentials.Vault ]
-          </motion.p>
+        <div className="mb-4 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -216,7 +209,7 @@ const Credentials = () => {
 
                   {/* Floating ID */}
                   <div className={`absolute right-6 top-6 z-20 rounded-full border border-cyan-300/30 bg-black/60 px-4 py-1.5 text-[10px] md:text-xs font-mono text-cyan-300 backdrop-blur-md transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
-                    ID_CERT_0{index + 1}
+                    CERTICATE_0{index + 1}
                   </div>
                 </motion.div>
               );
