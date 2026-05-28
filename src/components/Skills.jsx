@@ -16,14 +16,6 @@ const skillCategories = [
         ]
     },
     {
-        title: 'AI & Machine Learning',
-        description: 'Intelligent Solutions',
-        icon: 'fa-solid fa-brain',
-        skills: [
-            { name: 'OpenCV', icon: 'fa-solid fa-camera text-green-500' },
-        ]
-    },
-    {
         title: 'Frameworks & Libraries',
         description: 'Modern Application Stacks',
         icon: 'fa-solid fa-layer-group',
@@ -71,6 +63,14 @@ const skillCategories = [
             { name: 'Cloudflare', icon: 'fa-brands fa-cloudflare text-orange-500' },
             { name: 'Render', icon: 'fa-solid fa-r text-gray-300' },
             { name: 'Docker', icon: 'fa-brands fa-docker text-blue-500' },
+        ]
+    },
+    {
+        title: 'AI & Machine Learning',
+        description: 'Intelligent Solutions',
+        icon: 'fa-solid fa-brain',
+        skills: [
+            { name: 'OpenCV', icon: 'fa-solid fa-camera text-green-500' },
         ]
     }
 ];

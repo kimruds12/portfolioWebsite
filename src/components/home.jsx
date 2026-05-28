@@ -36,7 +36,7 @@ const Home = () => {
     <>
       <section id="home" className="scroll-mt-32 px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pt-36">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -87,7 +87,6 @@ const Home = () => {
                   <span className="h-3 w-3 rounded-full bg-[#FFBE2E]" />
                   <span className="h-3 w-3 rounded-full bg-[#2ED573]" />
                 </div>
-                <span className="font-mono text-xs uppercase tracking-[0.28em] text-cyan-100/60">root@portfolio:~/mission</span>
               </div>
               <div className="space-y-6 px-5 py-6 font-mono text-sm leading-8 text-[#D8D8D8]">
                 <div>
@@ -112,7 +111,7 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -148,9 +147,9 @@ const Home = () => {
 
       <section id="contact" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-          
+
           {/* Left Side: "Let's Connect" layout matching reference */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -163,7 +162,7 @@ const Home = () => {
             <p className="mt-6 text-base leading-8 text-[#B0B0B0]">
               I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.
             </p>
-            
+
             <a
               href="/Assets/Guston_CV.pdf"
               target="_blank"
@@ -176,7 +175,7 @@ const Home = () => {
           </motion.div>
 
           {/* Right Side: 1-column list with Cyan rounded hover style */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -200,7 +199,7 @@ const Home = () => {
                     <p className="mt-0.5 text-xs uppercase tracking-[0.18em] text-cyan-300/70 group-hover:text-cyan-300"></p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <span className="hidden font-mono text-sm text-[#B0B0B0] sm:block group-hover:text-white transition-colors">{item.value}</span>
                   <i className="fa-solid fa-arrow-right text-sm text-white/45 transition-all duration-300 group-hover:translate-x-1 group-hover:text-cyan-300" />

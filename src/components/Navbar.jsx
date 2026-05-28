@@ -117,17 +117,18 @@ const Navbar = () => {
           })}
         </nav>
 
-        {/* Right: Get Resume Button */}
+        {/* Right: Get Resume Button + Mobile Hamburger */}
         <div className="flex items-center gap-3">
           <a
             href="/Assets/Guston_CV.pdf"
             target="_blank"
             rel="noreferrer"
             title="Open Guston CV"
-            className="hidden md:inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.22em] text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 md:px-5 md:py-2.5 md:text-xs"
           >
             <i className="fa-solid fa-download text-[10px]" />
-            Get Resume
+            <span className="hidden sm:inline">Get Resume</span>
+            <span className="sm:hidden">Resume</span>
           </a>
 
           {/* Mobile Hamburger */}
@@ -161,18 +162,6 @@ const Navbar = () => {
                 </a>
               );
             })}
-            {/* Resume button in mobile menu too */}
-            <a
-              href="/Assets/Guston_CV.pdf"
-              target="_blank"
-              rel="noreferrer"
-              title="Open Guston CV"
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-1 flex items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_0_16px_rgba(56,189,248,0.35)]"
-            >
-              <i className="fa-solid fa-download text-xs" />
-              Get Resume
-            </a>
           </nav>
         )}
       </div>
