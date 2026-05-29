@@ -42,7 +42,7 @@ const projects = [
     description:
       'Engineered a comprehensive web-based platform for managing and tracking Senior High School student academic performance, providing educators with intuitive tools to monitor grades, attendance, and progress analytics to support data-driven instructional strategies.',
     href: 'https://github.com/kimruds12/EduManage',
-    image: '/Assets/Project3.jpg',
+    image: '/Assets/edumanage_image.png',
     tags: ['Education', 'Tracking', 'Web System'],
     category: 'web',
   },
@@ -113,8 +113,8 @@ const projects = [
     year: '2025',
     description:
       'Built a standalone Library Management System using Java and Swing, with features including book addition, editing, deletion, search, borrowing, and inventory tracking, allowing librarians to easily manage library records and improve the overall efficiency of daily library operations.',
-    href: 'https://github.com/0Glast0/LibraryManagementSystem?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPMjc1MjU0NjkyNTk4Mjc5AAEehuCS-ZTv9gClmBirV7SrLL1BCH2KDH2PUpN38CV9Zo9vQVK8m3lt26JTyLo_aem_yuOOLboykVBIWIi1lhnxpw',
-    image: '/Assets/Project2.png',
+    href: 'https://github.com/kimruds12/Library-Management-System',
+    image: '/Assets/LibraryManagementSystem_Image.png',
     tags: ['Java', 'Swing', 'Inventory'],
     category: 'java',
   },

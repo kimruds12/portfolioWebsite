@@ -237,3 +237,17 @@ textarea {
     opacity: 1;
   }
 }
+
+/* ── Mobile Nav Overlay Transitions ── */
+.mobile-nav-overlay-enter {
+  opacity: 0;
+}
+.mobile-nav-overlay-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+.mobile-nav-overlay-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+

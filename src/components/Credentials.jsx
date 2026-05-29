@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const credentials = [
@@ -52,9 +52,47 @@ const credentials = [
   },
 ];
 
+const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+
 const Credentials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  // Timer ref
+  const autoSlideTimer = useRef(null);
+
+  // Interaction tracking refs
+  // isHolding: true when user has pointer/finger down on center card (touch, click-hold, drag)
+  // hasDragStarted: true once Framer Motion fires onDragStart (distinguishes drag from simple click)
+  const isHolding = useRef(false);
+  const hasDragStarted = useRef(false);
+
+  // ── Timer helpers ──
+
+  const clearTimer = useCallback(() => {
+    if (autoSlideTimer.current) {
+      clearTimeout(autoSlideTimer.current);
+      autoSlideTimer.current = null;
+    }
+  }, []);
+
+  const startTimer = useCallback(() => {
+    // NEVER start the timer while user is holding/touching/dragging the card
+    if (isHolding.current) return;
+
+    clearTimer();
+    autoSlideTimer.current = setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % credentials.length);
+    }, AUTO_SLIDE_INTERVAL);
+  }, [clearTimer]);
+
+  // Whenever activeIndex changes, restart timer (if user is not interacting)
+  useEffect(() => {
+    startTimer();
+    return () => clearTimer();
+  }, [activeIndex, startTimer, clearTimer]);
+
+  // ── Navigation handlers ──
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % credentials.length);
@@ -64,12 +102,69 @@ const Credentials = () => {
     setActiveIndex((prev) => (prev - 1 + credentials.length) % credentials.length);
   };
 
+  const handleIndicatorClick = (index) => {
+    setActiveIndex(index);
+  };
+
+  const handleCardClick = (index, isCenter) => {
+    if (!isCenter) {
+      setActiveIndex(index);
+    }
+  };
+
+  // ── Pointer / Drag interaction handlers ──
+
+  // Called the INSTANT the user puts finger/mouse down on the center card
+  // This catches: tap-and-hold, drag start, click — everything
+  const handlePointerDown = () => {
+    isHolding.current = true;
+    hasDragStarted.current = false;
+    clearTimer();
+  };
+
+  // Called when Framer Motion detects actual drag movement
+  const handleDragStart = () => {
+    hasDragStarted.current = true;
+    // isHolding is already true from onPointerDown, timer already cleared
+  };
+
+  // Called when the user lifts their finger/mouse
+  // If a drag was active, onDragEnd handles the cleanup instead — skip here
+  const handlePointerUp = () => {
+    if (hasDragStarted.current) {
+      // onDragEnd will handle the cleanup and timer restart
+      return;
+    }
+    // Simple click/hold release (no drag happened)
+    isHolding.current = false;
+    startTimer();
+  };
+
+  // Called when drag ends (after a swipe or failed drag)
+  const handleDragEnd = (e, { offset, velocity }) => {
+    const swipe = Math.abs(offset.x) * velocity.x;
+
+    // Release the hold lock BEFORE navigating so the useEffect can start the timer
+    isHolding.current = false;
+    hasDragStarted.current = false;
+
+    if (swipe < -10000 || offset.x < -100) {
+      handleNext();
+    } else if (swipe > 10000 || offset.x > 100) {
+      handlePrev();
+    } else {
+      // Drag didn't go far enough — just restart the timer
+      startTimer();
+    }
+  };
+
+  // ── Card positioning ──
+
   const getCardStyle = (index) => {
     const diff = (index - activeIndex + credentials.length) % credentials.length;
     const isRight = diff === 1;
     const isLeft = diff === credentials.length - 1;
 
-    // Center Card
     if (diff === 0) {
       return {
         x: '0%',
@@ -82,7 +177,6 @@ const Credentials = () => {
       };
     }
 
-    // Right Card (Only show one on the right)
     if (isRight) {
       return {
         x: '65%',
@@ -95,7 +189,6 @@ const Credentials = () => {
       };
     }
 
-    // Left Card (Only show one on the left)
     if (isLeft) {
       return {
         x: '-65%',
@@ -108,7 +201,6 @@ const Credentials = () => {
       };
     }
 
-    // Hide all other cards
     return {
       x: '0%',
       scale: 0.5,
@@ -122,7 +214,7 @@ const Credentials = () => {
 
   return (
     <section id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Decorative Grids - matching site aesthetic */}
+      {/* Background Decorative Grids */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,211,238,0.1),transparent_70%)]" />
         <div className="h-full w-full bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem]" />
@@ -148,16 +240,15 @@ const Credentials = () => {
           </motion.p>
         </div>
 
-        {/* 3D Coverflow Container with In-Animation */}
-        <motion.div 
+        {/* 3D Coverflow Container */}
+        <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-50px" }}
           className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-10"
         >
-
-          {/* Navigation Arrows - Placed at the extreme edges */}
+          {/* Navigation Arrows */}
           <button
             onClick={handlePrev}
             className="absolute left-0 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40 h-12 w-12 md:h-16 md:w-16 rounded-full border border-cyan-300/30 bg-black/80 text-cyan-300 backdrop-blur-xl flex items-center justify-center hover:bg-cyan-300 hover:text-black transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]"
@@ -185,20 +276,21 @@ const Credentials = () => {
                     initial={false}
                     animate={style}
                     transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                    onClick={() => !isCenter && setActiveIndex(index)}
+                    onClick={() => handleCardClick(index, isCenter)}
                     onMouseEnter={() => isCenter && setIsHovered(true)}
                     onMouseLeave={() => isCenter && setIsHovered(false)}
+                    // ── Pointer events: catch the INSTANT user touches/holds the card ──
+                    onPointerDown={isCenter ? handlePointerDown : undefined}
+                    onPointerUp={isCenter ? handlePointerUp : undefined}
+                    onPointerCancel={isCenter ? handlePointerUp : undefined}
+                    // ── Drag events: only on the center card ──
                     drag={isCenter ? "x" : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.2}
-                    onDragEnd={(e, { offset, velocity }) => {
+                    onDragStart={handleDragStart}
+                    onDragEnd={(e, info) => {
                       if (!isCenter) return;
-                      const swipe = Math.abs(offset.x) * velocity.x;
-                      if (swipe < -10000 || offset.x < -100) {
-                        handleNext();
-                      } else if (swipe > 10000 || offset.x > 100) {
-                        handlePrev();
-                      }
+                      handleDragEnd(e, info);
                     }}
                     className={`absolute w-[70vw] sm:w-[450px] md:w-[550px] lg:w-[650px] aspect-[1.414] cursor-pointer ${
                       isCenter ? 'shadow-[0_0_50px_rgba(34,211,238,0.4)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.8)]'
@@ -220,11 +312,10 @@ const Credentials = () => {
                         alt={item.imageAlt}
                         className="h-full w-full object-cover"
                       />
-                      {/* Dark Overlay that fades when centered and hovered */}
                       <div className={`absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/60 to-transparent transition-opacity duration-500 ${isCenter && isHovered ? 'opacity-0' : 'opacity-90'}`} />
                     </motion.div>
 
-                    {/* Permanent Text Overlay (Disappears on hover) */}
+                    {/* Text Overlay */}
                     <div className={`absolute bottom-6 left-0 w-full px-8 z-10 pointer-events-none transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
                       <p className="text-cyan-300 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase mb-2">
                         Authenticated Credential
@@ -251,7 +342,7 @@ const Credentials = () => {
                   </motion.div>
                 );
               })}
-          </AnimatePresence>
+            </AnimatePresence>
           </div>
         </motion.div>
 
@@ -261,7 +352,7 @@ const Credentials = () => {
             {credentials.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => handleIndicatorClick(index)}
                 className={`h-2 rounded-full transition-all duration-500 ease-out ${activeIndex === index
                   ? 'w-12 bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]'
                   : 'w-4 bg-cyan-300/20 hover:bg-cyan-300/50'
@@ -280,8 +371,3 @@ const Credentials = () => {
 };
 
 export default Credentials;
-
-
-
-
-
