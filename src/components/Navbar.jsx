@@ -108,7 +108,7 @@ const Navbar = () => {
             <img
               src="/Assets/cleaned_logo.png"
               alt="Kim Ruds Guston Logo"
-              className="h-16 w-16 md:h-20 md:w-20 object-contain drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]"
+              className="h-12 w-12 md:h-14 md:w-14 object-contain drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]"
             />
           </a>
 
@@ -175,17 +175,15 @@ const Navbar = () => {
       {/* ── Mobile Full-Screen Navigation Overlay ── */}
       {/* Background overlay with low opacity content effect */}
       <div
-        className={`fixed inset-0 z-[51] bg-black/70 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-[51] bg-black/70 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setIsMenuOpen(false)}
       />
 
       {/* Navigation Panel - slides in from right */}
       <div
-        className={`fixed top-0 right-0 z-[55] h-full w-[280px] max-w-[80vw] bg-[rgba(8,12,24,0.97)] border-l border-cyan-300/10 shadow-[-20px_0_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 z-[55] h-full w-[280px] max-w-[80vw] bg-[rgba(8,12,24,0.97)] border-l border-cyan-300/10 shadow-[-20px_0_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         {/* Close button at top right of panel */}
         <div className="flex items-center justify-end px-6 pt-5 pb-2">
@@ -208,11 +206,10 @@ const Navbar = () => {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(event) => handleNavClick(event, item.id)}
-                className={`relative rounded-2xl px-6 py-4 text-lg font-medium tracking-wider transition-all duration-200 ${
-                  isActive
+                className={`relative rounded-2xl px-6 py-4 text-lg font-medium tracking-wider transition-all duration-200 ${isActive
                     ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(56,189,248,0.1)]'
                     : 'text-white/60 hover:bg-white/5 hover:text-white'
-                }`}
+                  }`}
                 style={{
                   transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms',
                 }}

@@ -12,12 +12,12 @@ const Contact = () => {
                     <h3 className="text-white text-3xl mt-16 mb-6">Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Connect</span> </h3>
 
                     <p className="text-gray-400 text-sm leading-relaxed mb-10 max-w-md">
-                        I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.
+                        I enjoy working with others, sharing what I know, and getting things done — from writing code to planning projects, managing tasks, and making sure everything runs smoothly from start to finish.
                     </p>
 
                     <a href="/Assets/Guston_CV.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
                         <i className="fa-solid fa-file-lines"></i>
-                        Get Resume
+                        Download CV
                     </a>
                 </div>
 

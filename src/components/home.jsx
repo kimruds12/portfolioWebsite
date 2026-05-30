@@ -55,13 +55,8 @@ const Home = () => {
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl font-['Space_Grotesk',_sans-serif] text-[clamp(1.05rem,2.4vw,1.5rem)] font-medium leading-relaxed text-white/90">
-              UI/UX Designer | Software Developer | Networking
-            </p>
-
             <p className="mt-6 max-w-2xl text-[clamp(1rem,1.8vw,1.1rem)] leading-8 text-[#B0B0B0]">
-              I build secure, polished digital experiences that merge thoughtful product design with scalable engineering.
-              My work focuses on clean interfaces, reliable systems, and modern web applications that feel premium on every screen.
+              I build clean, polished digital experiences by combining good design, solid engineering, and AI-assisted development — turning ideas into interfaces that look great, systems that work reliably, and web applications that feel smooth on every screen.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
