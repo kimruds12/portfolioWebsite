@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 const credentials = [
   {
@@ -57,40 +57,67 @@ const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
 const Credentials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const sectionRef = useRef(null);
 
-  // Timer ref
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const cardsY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+
+  // Timer refs
   const autoSlideTimer = useRef(null);
+  const inactivityTimer = useRef(null);
 
   // Interaction tracking refs
-  // isHolding: true when user has pointer/finger down on center card (touch, click-hold, drag)
-  // hasDragStarted: true once Framer Motion fires onDragStart (distinguishes drag from simple click)
-  const isHolding = useRef(false);
+  const isPointerDown = useRef(false);
   const hasDragStarted = useRef(false);
+
+  const INACTIVITY_DELAY = 2500; // Delay before resuming after interaction
 
   // ── Timer helpers ──
 
-  const clearTimer = useCallback(() => {
-    if (autoSlideTimer.current) {
-      clearTimeout(autoSlideTimer.current);
-      autoSlideTimer.current = null;
-    }
+  const clearTimers = useCallback(() => {
+    if (autoSlideTimer.current) clearTimeout(autoSlideTimer.current);
+    if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
   }, []);
 
-  const startTimer = useCallback(() => {
-    // NEVER start the timer while user is holding/touching/dragging the card
-    if (isHolding.current) return;
+  const startAutoSlide = useCallback(() => {
+    // NEVER start the timer while user is holding/touching/dragging/hovering the card
+    if (isPointerDown.current || isHovered) return;
 
-    clearTimer();
+    clearTimers();
     autoSlideTimer.current = setTimeout(() => {
       setActiveIndex((prev) => (prev + 1) % credentials.length);
     }, AUTO_SLIDE_INTERVAL);
-  }, [clearTimer]);
+  }, [clearTimers, isHovered]);
 
-  // Whenever activeIndex changes, restart timer (if user is not interacting)
+  const handleInteractionStart = useCallback(() => {
+    clearTimers();
+  }, [clearTimers]);
+
+  const handleInteractionEnd = useCallback(() => {
+    if (isPointerDown.current || isHovered) return; // Still interacting
+    clearTimers();
+    inactivityTimer.current = setTimeout(() => {
+      startAutoSlide();
+    }, INACTIVITY_DELAY);
+  }, [clearTimers, startAutoSlide, isHovered]);
+
+  // Whenever activeIndex or hover state changes, potentially restart timer
   useEffect(() => {
-    startTimer();
-    return () => clearTimer();
-  }, [activeIndex, startTimer, clearTimer]);
+    if (isHovered) {
+      handleInteractionStart();
+    } else {
+      // Use inactivity delay if not on first mount and not actively interacting
+      // For simplicity, just call handleInteractionEnd which does the inactivity check
+      handleInteractionEnd();
+    }
+    return () => clearTimers();
+  }, [activeIndex, isHovered, handleInteractionStart, handleInteractionEnd, clearTimers]);
 
   // ── Navigation handlers ──
 
@@ -115,37 +142,32 @@ const Credentials = () => {
   // ── Pointer / Drag interaction handlers ──
 
   // Called the INSTANT the user puts finger/mouse down on the center card
-  // This catches: tap-and-hold, drag start, click — everything
   const handlePointerDown = () => {
-    isHolding.current = true;
+    isPointerDown.current = true;
     hasDragStarted.current = false;
-    clearTimer();
+    handleInteractionStart();
   };
 
   // Called when Framer Motion detects actual drag movement
   const handleDragStart = () => {
     hasDragStarted.current = true;
-    // isHolding is already true from onPointerDown, timer already cleared
   };
 
   // Called when the user lifts their finger/mouse
-  // If a drag was active, onDragEnd handles the cleanup instead — skip here
   const handlePointerUp = () => {
     if (hasDragStarted.current) {
-      // onDragEnd will handle the cleanup and timer restart
+      // onDragEnd will handle the cleanup
       return;
     }
-    // Simple click/hold release (no drag happened)
-    isHolding.current = false;
-    startTimer();
+    isPointerDown.current = false;
+    handleInteractionEnd();
   };
 
   // Called when drag ends (after a swipe or failed drag)
   const handleDragEnd = (e, { offset, velocity }) => {
     const swipe = Math.abs(offset.x) * velocity.x;
 
-    // Release the hold lock BEFORE navigating so the useEffect can start the timer
-    isHolding.current = false;
+    isPointerDown.current = false;
     hasDragStarted.current = false;
 
     if (swipe < -10000 || offset.x < -100) {
@@ -153,8 +175,7 @@ const Credentials = () => {
     } else if (swipe > 10000 || offset.x > 100) {
       handlePrev();
     } else {
-      // Drag didn't go far enough — just restart the timer
-      startTimer();
+      handleInteractionEnd();
     }
   };
 
@@ -213,15 +234,15 @@ const Credentials = () => {
   };
 
   return (
-    <section id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section ref={sectionRef} id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Decorative Grids */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+      <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 opacity-20 pointer-events-none will-change-transform">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,211,238,0.1),transparent_70%)]" />
         <div className="h-full w-full bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </div>
+      </motion.div>
 
       <div className="mx-auto max-w-[1400px] relative z-10">
-        <div className="mb-4 text-center">
+        <motion.div style={{ y: titleY }} className="mb-4 text-center will-change-transform">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -238,15 +259,16 @@ const Credentials = () => {
             A curated showcase of professional certifications and technical achievements.
             Click the side cards, use arrows, or swipe to explore the vault.
           </motion.p>
-        </div>
+        </motion.div>
 
         {/* 3D Coverflow Container */}
         <motion.div
+          style={{ y: cardsY }}
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-50px" }}
-          className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-10"
+          className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-10 will-change-transform"
         >
           {/* Navigation Arrows */}
           <button
@@ -292,9 +314,8 @@ const Credentials = () => {
                       if (!isCenter) return;
                       handleDragEnd(e, info);
                     }}
-                    className={`absolute w-[70vw] sm:w-[450px] md:w-[550px] lg:w-[650px] aspect-[1.414] cursor-pointer ${
-                      isCenter ? 'shadow-[0_0_50px_rgba(34,211,238,0.4)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.8)]'
-                    } rounded-[2rem] border border-cyan-300/30 bg-[#0A1223] overflow-hidden`}
+                    className={`absolute w-[70vw] sm:w-[450px] md:w-[550px] lg:w-[650px] aspect-[1.414] cursor-pointer ${isCenter ? 'shadow-[0_0_50px_rgba(34,211,238,0.4)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.8)]'
+                      } rounded-[2rem] border border-cyan-300/30 bg-[#0A1223] overflow-hidden`}
                   >
                     {/* Glowing Border for Center Card */}
                     {isCenter && (
