@@ -140,7 +140,8 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             {/* Download CV - Desktop only */}
             <a
-              href="/Assets/2026_LatestCV_Guston.pdf"
+              href="/Assets/FINAL_GUSTON_CV.pdf"
+              download="FINAL_GUSTON_CV.pdf"
               target="_blank"
               rel="noreferrer"
               title="Download CV"
@@ -227,7 +228,8 @@ const Navbar = () => {
 
           {/* Download CV in mobile menu */}
           <a
-            href="/Assets/2026_LatestCV_Guston.pdf"
+            href="/Assets/FINAL_GUSTON_CV.pdf"
+            download="FINAL_GUSTON_CV.pdf"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-3 rounded-2xl px-6 py-4 text-lg font-medium tracking-wider text-cyan-300 transition-all duration-200 hover:bg-cyan-300/10 hover:text-cyan-200"

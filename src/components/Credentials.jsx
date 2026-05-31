@@ -7,7 +7,7 @@ const credentials = [
     description: 'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
     tags: ['Web Design', 'UI/UX', 'Competition'],
     href: '#',
-    image: '/Assets/plv-qlib.png',
+    image: '/Assets/latestwebdesigncert.png',
     imageAlt: 'Certificate showcase visual',
   },
   {
@@ -15,7 +15,7 @@ const credentials = [
     description: 'Demonstrated advanced technical proficiency and problem-solving skills against top peers in a rigorous competitive environment.',
     tags: ['Programming', 'Problem Solving', 'IT Skills'],
     href: '#',
-    image: '/Assets/ARTA-CSS.png',
+    image: '/Assets/itlympicsid.png',
     imageAlt: 'UMAK IT Skills Olympics',
   },
   {
@@ -338,9 +338,6 @@ const Credentials = () => {
 
                     {/* Text Overlay */}
                     <div className={`absolute bottom-6 left-0 w-full px-8 z-10 pointer-events-none transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
-                      <p className="text-cyan-300 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase mb-2">
-                        Authenticated Credential
-                      </p>
                       <h4 className="text-white text-xl md:text-3xl font-bold tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                         {item.title}
                       </h4>
