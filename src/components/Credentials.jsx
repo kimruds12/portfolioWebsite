@@ -256,8 +256,8 @@ const Credentials = () => {
             transition={{ delay: 0.2 }}
             className="max-w-2xl mx-auto text-gray-400 text-lg font-medium"
           >
-            A curated showcase of professional certifications and technical achievements.
-            Click the side cards, use arrows, or swipe to explore the vault.
+            A collection of certifications, achievements, and technical accomplishments that reflect my continuous learning and skill development.
+            Click the side cards, use the arrows, or swipe to explore the collection.
           </motion.p>
         </motion.div>
 
@@ -379,9 +379,6 @@ const Credentials = () => {
               />
             ))}
           </div>
-          <p className="text-cyan-300/50 font-mono text-[10px] tracking-[0.4em] uppercase">
-            Click side cards, arrows, or swipe to navigate
-          </p>
         </div>
       </div>
     </section>

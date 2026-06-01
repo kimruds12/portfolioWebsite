@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const skillCategories = [
     {
         title: 'Languages',
-        description: 'Core Logic & Scripting',
+        description: 'Foundational Programming & Automation',
         icon: 'fa-solid fa-code',
         skills: [
             { name: 'Java', icon: 'fa-brands fa-java text-orange-500' },
@@ -17,7 +17,7 @@ const skillCategories = [
     },
     {
         title: 'Frameworks & Libraries',
-        description: 'Modern Application Stacks',
+        description: 'Current Frameworks & Tech Ecosystems',
         icon: 'fa-solid fa-layer-group',
         skills: [
             { name: 'React', icon: 'fa-brands fa-react text-cyan-400' },
@@ -29,7 +29,7 @@ const skillCategories = [
     },
     {
         title: 'Databases',
-        description: 'Storage & Retrieval',
+        description: 'Data Management & Query Systems',
         icon: 'fa-solid fa-database',
         skills: [
             { name: 'MongoDB', icon: 'fa-solid fa-leaf text-green-500' },
@@ -40,7 +40,7 @@ const skillCategories = [
     },
     {
         title: 'Tools & Platforms',
-        description: 'Development Environment',
+        description: 'Local Tooling & Workspace Setup',
         icon: 'fa-solid fa-wrench',
         skills: [
             { name: 'GitHub', icon: 'fa-brands fa-github text-white' },
@@ -56,7 +56,7 @@ const skillCategories = [
     },
     {
         title: 'Cloud & DevOps',
-        description: 'Deployment & Infrastructure',
+        description: 'Cloud Delivery & System Operations',
         icon: 'fa-solid fa-cloud',
         skills: [
             { name: 'Vercel', icon: 'fa-solid fa-caret-up text-white' },
@@ -67,7 +67,7 @@ const skillCategories = [
     },
     {
         title: 'AI & Machine Learning',
-        description: 'Intelligent Solutions',
+        description: 'AI-Driven Problem Solving',
         icon: 'fa-solid fa-brain',
         skills: [
             { name: 'OpenCV', icon: 'fa-solid fa-camera text-green-500' },
@@ -129,9 +129,9 @@ const Skills = () => {
         <section id="skills" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative">
             <div className="mx-auto max-w-[85rem]">
                 <div className="grid gap-10 xl:grid-cols-[0.8fr_1.2fr] xl:items-center">
-                    
+
                     {/* Left Side: Context / Title */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
@@ -143,13 +143,13 @@ const Skills = () => {
                             Skills &<br />Technologies
                         </h2>
                         <p className="mt-5 text-lg leading-8 text-[#B0B0B0]">
-                            Technologies and tools I use to bring ideas to life. Scroll vertically through the skill categories to explore my technical proficiencies.
+                            A collection of technologies and tools that support my development work. Scroll through the skill categories to explore my technical proficiencies and experience.
                         </p>
 
                         <div className="mt-10 flex gap-2">
                             {skillCategories.map((_, idx) => (
-                                <div 
-                                    key={idx} 
+                                <div
+                                    key={idx}
                                     className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSkill ? 'w-8 bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.8)]' : 'w-2 bg-white/20'}`}
                                 />
                             ))}
@@ -157,7 +157,7 @@ const Skills = () => {
                     </motion.div>
 
                     {/* Right Side: Scrollable Container */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
@@ -165,15 +165,15 @@ const Skills = () => {
                         className="relative"
                     >
                         <div className="relative mx-auto w-full rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(7,20,39,0.4))] p-2 backdrop-blur-md sm:p-4">
-                            
-                            <div 
+
+                            <div
                                 ref={skillsViewportRef}
                                 className="relative flex h-[550px] flex-col gap-6 overflow-y-auto px-2 py-[250px] scroll-smooth sm:px-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-y snap-mandatory"
                             >
                                 {skillCategories.map((category, index) => {
                                     const isActive = index === activeSkill;
                                     return (
-                                        <div 
+                                        <div
                                             key={category.title}
                                             ref={(el) => (skillCardRefs.current[index] = el)}
                                             className={`snap-center transition-all duration-700 ease-out ${isActive ? 'opacity-100 scale-100' : 'opacity-30 scale-[0.92] blur-[2px]'}`}
@@ -191,7 +191,7 @@ const Skills = () => {
 
                                                 <div className="flex flex-wrap gap-3">
                                                     {category.skills.map(skill => (
-                                                        <div 
+                                                        <div
                                                             key={skill.name}
                                                             className="flex items-center gap-2.5 rounded-full border border-white/10 bg-black/20 px-4 py-2.5 text-sm font-medium text-white/90 transition-all hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
                                                         >

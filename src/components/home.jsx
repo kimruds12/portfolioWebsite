@@ -75,33 +75,29 @@ const Home = () => {
               </a>
             </div>
 
-            <div className="mt-10 overflow-hidden rounded-[1.75rem] border border-cyan-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(5,11,20,0.94))] shadow-[0_0_50px_rgba(56,189,248,0.08)] backdrop-blur-xl">
+            <div className="mt-10 w-fit overflow-hidden rounded-[1.75rem] border border-cyan-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(5,11,20,0.94))] shadow-[0_0_50px_rgba(56,189,248,0.08)] backdrop-blur-xl">
               <div className="flex items-center justify-between border-b border-cyan-300/12 bg-white/[0.03] px-5 py-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[#FF6258]" />
-                  <span className="h-3 w-3 rounded-full bg-[#FFBE2E]" />
-                  <span className="h-3 w-3 rounded-full bg-[#2ED573]" />
+                <div className="flex items-center gap-2 font-mono text-sm text-cyan-200">
+                  <span className="text-cyan-300">-&gt;</span>
+                  <span><b>Objectives</b></span>
                 </div>
               </div>
-              <div className="space-y-6 px-5 py-6 font-mono text-sm leading-8 text-[#D8D8D8]">
-                <div>
-                  <p className="flex flex-wrap gap-2 text-cyan-200">
-                    <span className="text-cyan-300">-&gt; ~</span>
-                    <span>./list_objectives.sh</span>
-                  </p>
-                  <ul className="mt-4 space-y-2 text-[#B8C5D8]">
-                    {[
-                      'AI-assisted workflows',
-                      'Futuristic UI systems',
-                      'Secure product mindset',
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <span className="mt-[11px] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="px-5 py-6 font-mono text-sm leading-8 text-[#D8D8D8]">
+                <ul className="grid grid-cols-1 gap-x-8 gap-y-2 text-[#B8C5D8] sm:grid-flow-col sm:grid-rows-3">
+                  {[
+                    'AI-assisted workflows',
+                    'Futuristic UI systems',
+                    'Secure product mindset',
+                    'Scalable network infrastructure',
+                    'Structured problem-solving approach',
+                    'Collaborative, agile development',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </motion.div>

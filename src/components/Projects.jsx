@@ -80,7 +80,7 @@ const projects = [
       'An immersive narrative-driven gameplay experience developed inside Unity, featuring node-based dialog trees, custom dialogue state controllers, and dynamic branching storylines that respond to player choices in real time.',
     href: 'https://toneecru.itch.io/accord',
     image: '/Assets/Accord .png',
-    tags: ['Unity', 'C#', 'Plastic SCM', 'XNode'],
+    tags: ['Unity', 'C#', 'XNode'],
     category: 'game',
   },
   {
@@ -91,7 +91,7 @@ const projects = [
       'A cooperative multi-unit tactics game built inside Unity, featuring strategic unit management, turn-based combat mechanics, and team-based objectives utilizing Plastic SCM for collaborative version control across the development team.',
     href: 'https://toneecru.itch.io/barikada-nations-unite',
     image: '/Assets/Barikada.png',
-    tags: ['Unity', 'C#', 'Plastic SCM'],
+    tags: ['Unity', 'C#'],
     category: 'game',
   },
 
@@ -104,7 +104,7 @@ const projects = [
       'Developed a Java-based emergency response management application designed for school environments, featuring real-time incident reporting, evacuation protocol management, and automated notification systems to ensure student and staff safety during critical situations.',
     href: 'https://github.com/kimruds12/School-Rescue',
     image: '/Assets/SchoolRescue.png',
-    tags: ['Java', 'Swing', 'Emergency Response'],
+    tags: ['Java', 'Swing'],
     category: 'java',
   },
   {
@@ -128,7 +128,7 @@ const projects = [
       'Designed and configured a comprehensive network infrastructure for the PLV CABA Building using Cisco Packet Tracer, implementing VLAN segmentation, inter-VLAN routing, DHCP services, and network security policies to establish a scalable and secure campus network architecture.',
     href: '',
     image: '/Assets/CabaTopology.png',
-    tags: ['Cisco', 'Networking', 'VLAN', 'Packet Tracer'],
+    tags: ['Cisco', 'Networking', 'VLAN'],
     category: 'networking',
     download: '/Assets/Guston_CABA.pkt',
   },
