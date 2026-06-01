@@ -41,7 +41,7 @@ const Home = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-3xl"
+            className="max-w-3xl flex flex-col items-center text-center lg:items-start lg:text-left"
           >
             <span className="inline-flex items-center gap-3 rounded-full border border-cyan-300/15 bg-white/[0.03] px-4 py-2 text-sm uppercase tracking-[0.3em] text-white/70 backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.85)]" />
@@ -59,7 +59,7 @@ const Home = () => {
               I build clean, polished digital experiences by combining good design, solid engineering, and AI-assisted development — turning ideas into interfaces that look great, systems that work reliably, and web applications that feel smooth on every screen.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
               <a
                 href="#contact"
                 className="group inline-flex items-center gap-3 rounded-full border border-cyan-300/40 bg-[linear-gradient(135deg,#38bdf8,#0ea5e9)] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-[0_0_28px_rgba(56,189,248,0.34)] transition duration-300 hover:-translate-y-1 hover:px-7 hover:shadow-[0_0_42px_rgba(56,189,248,0.46)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050B14]"
@@ -75,7 +75,7 @@ const Home = () => {
               </a>
             </div>
 
-            <div className="mt-10 w-fit overflow-hidden rounded-[1.75rem] border border-cyan-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(5,11,20,0.94))] shadow-[0_0_50px_rgba(56,189,248,0.08)] backdrop-blur-xl">
+            <div className="mt-10 w-fit overflow-hidden rounded-[1.75rem] border border-cyan-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(5,11,20,0.94))] shadow-[0_0_50px_rgba(56,189,248,0.08)] backdrop-blur-xl text-left">
               <div className="flex items-center justify-between border-b border-cyan-300/12 bg-white/[0.03] px-5 py-3">
                 <div className="flex items-center gap-2 font-mono text-sm text-cyan-200">
                   <span className="text-cyan-300">-&gt;</span>
@@ -145,7 +145,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="max-w-xl"
+            className="max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left"
           >
             <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">
               Let's Connect

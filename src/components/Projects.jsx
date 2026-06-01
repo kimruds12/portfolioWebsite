@@ -220,7 +220,7 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="max-w-3xl"
+          className="max-w-3xl flex flex-col items-center text-center lg:items-start lg:text-left"
         >
           <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Featured Work</span>
           <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.3rem,5vw,3rem)] font-bold tracking-[-0.03em] text-white">
@@ -232,7 +232,7 @@ const Projects = () => {
         </motion.div>
 
         {/* ── Category Filter Bar ── */}
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
           {categories.map((cat) => {
             const count = getCategoryCount(cat.key);
             const isActive = activeCategory === cat.key;

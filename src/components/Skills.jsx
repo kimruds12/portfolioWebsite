@@ -136,7 +136,7 @@ const Skills = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true, margin: "-50px" }}
-                        className="max-w-2xl"
+                        className="max-w-2xl flex flex-col items-center text-center xl:items-start xl:text-left"
                     >
                         <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Tech Stack</span>
                         <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1] tracking-[-0.04em] text-white">
@@ -146,7 +146,7 @@ const Skills = () => {
                             A collection of technologies and tools that support my development work. Scroll through the skill categories to explore my technical proficiencies and experience.
                         </p>
 
-                        <div className="mt-10 flex gap-2">
+                        <div className="mt-10 flex justify-center gap-2 xl:justify-start">
                             {skillCategories.map((_, idx) => (
                                 <div
                                     key={idx}
