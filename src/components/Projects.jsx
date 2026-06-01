@@ -381,7 +381,6 @@ const Projects = () => {
                         >
                           <i className="fa-solid fa-download text-base" />
                           Download Cisco PKT
-                          <i className="fa-solid fa-arrow-down text-xs transition-transform duration-300 group-hover:translate-y-0.5" />
                         </a>
                       ) : project.category === 'mobile' && project.href ? (
                         <a
