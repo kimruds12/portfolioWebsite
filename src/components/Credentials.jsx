@@ -274,7 +274,7 @@ const Credentials = () => {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-50px" }}
-          className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-10 will-change-transform"
+          className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-24 sm:mt-10 will-change-transform"
         >
           {/* Navigation Arrows */}
           <button
