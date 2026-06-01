@@ -34,8 +34,8 @@ const contactLinks = [
 const Home = () => {
   return (
     <>
-      <section id="home" className="scroll-mt-32 px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pt-36">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+      <section id="home" className="scroll-mt-32 px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pt-36 min-h-[90vh] flex flex-col justify-center">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -136,8 +136,8 @@ const Home = () => {
 
       <Credentials />
 
-      <section id="contact" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+      <section id="contact" className="scroll-mt-12 px-4 pt-16 pb-20 sm:px-6 lg:px-8 min-h-[95vh] flex flex-col justify-center">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 md:grid-cols-2">
 
           {/* Left Side: "Let's Connect" layout matching reference */}
           <motion.div
@@ -145,7 +145,7 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left"
+            className="max-w-xl flex flex-col items-center text-center md:items-start md:text-left"
           >
             <h2 className="font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">
               Let's Connect

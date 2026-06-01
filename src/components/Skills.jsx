@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const skillCategories = [
     {
-        title: 'Languages',
+        title: 'Core Languages',
         description: 'Foundational Programming & Automation',
         icon: 'fa-solid fa-code',
         skills: [
@@ -16,7 +16,7 @@ const skillCategories = [
         ]
     },
     {
-        title: 'Frameworks & Libraries',
+        title: 'Tech Stack & Libraries',
         description: 'Current Frameworks & Tech Ecosystems',
         icon: 'fa-solid fa-layer-group',
         skills: [
@@ -39,7 +39,7 @@ const skillCategories = [
         ]
     },
     {
-        title: 'Tools & Platforms',
+        title: 'Workspace & Utilities',
         description: 'Local Tooling & Workspace Setup',
         icon: 'fa-solid fa-wrench',
         skills: [
@@ -55,7 +55,7 @@ const skillCategories = [
         ]
     },
     {
-        title: 'Cloud & DevOps',
+        title: 'Hosting & Delivery',
         description: 'Cloud Delivery & System Operations',
         icon: 'fa-solid fa-cloud',
         skills: [
@@ -66,7 +66,7 @@ const skillCategories = [
         ]
     },
     {
-        title: 'AI & Machine Learning',
+        title: 'Cognitive Technologies',
         description: 'AI-Driven Problem Solving',
         icon: 'fa-solid fa-brain',
         skills: [
@@ -126,8 +126,8 @@ const Skills = () => {
     }, []);
 
     return (
-        <section id="skills" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative">
-            <div className="mx-auto max-w-[85rem]">
+        <section id="skills" className="scroll-mt-32 px-4 pt-0 pb-24 sm:px-6 lg:px-8 relative min-h-[95vh] flex flex-col justify-center">
+            <div className="mx-auto w-full max-w-[85rem]">
                 <div className="grid gap-10 xl:grid-cols-[0.8fr_1.2fr] xl:items-center">
 
                     {/* Left Side: Context / Title */}

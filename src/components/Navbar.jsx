@@ -208,8 +208,8 @@ const Navbar = () => {
                 href={`#${item.id}`}
                 onClick={(event) => handleNavClick(event, item.id)}
                 className={`relative rounded-2xl px-6 py-4 text-lg font-medium tracking-wider transition-all duration-200 ${isActive
-                    ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(56,189,248,0.1)]'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white'
+                  ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(56,189,248,0.1)]'
+                  : 'text-white/60 hover:bg-white/5 hover:text-white'
                   }`}
                 style={{
                   transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms',

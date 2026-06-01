@@ -234,14 +234,14 @@ const Credentials = () => {
   };
 
   return (
-    <section ref={sectionRef} id="credentials" className="scroll-mt-32 px-4 py-24 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section ref={sectionRef} id="credentials" className="scroll-mt-12 px-4 pt-0 pb-24 sm:px-6 lg:px-8 relative overflow-hidden min-h-[95vh] flex flex-col justify-center">
       {/* Background Decorative Grids */}
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 opacity-20 pointer-events-none will-change-transform">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,211,238,0.1),transparent_70%)]" />
         <div className="h-full w-full bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       </motion.div>
 
-      <div className="mx-auto max-w-[1400px] relative z-10">
+      <div className="mx-auto w-full max-w-[1400px] relative z-10">
         <motion.div style={{ y: titleY }} className="mb-4 text-center will-change-transform">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

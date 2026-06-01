@@ -57,7 +57,7 @@ function App() {
       <div className="relative z-10">
         <Navbar />
 
-        <main className="pb-16">
+        <main className="pb-0">
           <Home />
         </main>
 

@@ -213,8 +213,8 @@ const Projects = () => {
   }, [updateFocusedProject]);
 
   return (
-    <section id="projects" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <section id="projects" className="scroll-mt-32 px-4 py-16 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center">
+      <div className="mx-auto w-full max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
