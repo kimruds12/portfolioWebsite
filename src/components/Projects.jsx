@@ -15,46 +15,46 @@ const projects = [
   // ── WEB DEV ──
   {
     title: 'PLV-QLib',
-    meta: 'Patron Management System | Capstone Project',
+    meta: 'Web Application',
     year: '2026',
-    description:
-      'Designed and developed a multi-platform patron management system for the Pamantasan ng Lungsod ng Valenzuela (PLV) Library using React Native, React.js, and Supabase, delivering a seamless library patron experience with integrated database management and backend services.',
+    description: 'Built a multi-platform library patron management system for PLV using React Native, React.js, and Supabase, covering web with integrated database management and backend services.',
+    role: 'Project Manager & UI/UX Designer — Led the project planning using Agile methodology, created wireframes and UI/UX designs in Figma, contributed to the web application\'s frontend development, and made sure the system met the goals of the proposed project.',
     href: 'https://github.com/ToneeCru/Val-Track.git',
     image: '/Assets/plv-qlib.png',
-    tags: ['React Native', 'React.js', 'Supabase'],
+    tags: ['Tailwind CSS', 'Next.js', 'Supabase'],
     category: 'web',
   },
   {
     title: 'ARTA-CSS Website',
     meta: 'Survey Data Management System with Role-Based Analytics Dashboard | Academic Project',
     year: '2025',
-    description:
-      'Built a web-based ARTA-compliant citizen satisfaction survey platform for the City Government of Valenzuela, implementing role-based access control and an analytics dashboard to visualize and monitor customer satisfaction survey results in real time.',
+    description: 'Built a web-based citizen satisfaction survey platform for the City Government of Valenzuela with role-based access and a real-time analytics dashboard to track and visualize survey results.',
+    role: 'Project Lead & Developer — Led the team\'s direction, handled the development, and created the wireframes and UI/UX design in Figma — making sure everything aligned with the objectives set by our professor.',
     href: 'https://github.com/Aizrc/valenzuela-survey',
     image: '/Assets/ARTA-CSS.png',
-    tags: ['Analytics', 'Role-Based Access', 'Survey Platform'],
+    tags: ['Tailwind CSS', 'React', 'Firebase'],
     category: 'web',
   },
   {
     title: 'EduManage',
     meta: 'Student Performance Tracking System | Academic Project',
     year: '2025',
-    description:
-      'Engineered a comprehensive web-based platform for managing and tracking Senior High School student academic performance, providing educators with intuitive tools to monitor grades, attendance, and progress analytics to support data-driven instructional strategies.',
+    description: 'Built a web platform for tracking Senior High School student performance, giving teachers easy tools to monitor grades, attendance, and progress to support better teaching decisions.',
+    role: 'UI/UX Designer, Developer & QA Tester — Designed the wireframes and UI/UX, handled the development, and performed quality assurance testing at the end to make sure all modules and features were working correctly.',
     href: 'https://github.com/kimruds12/EduManage',
     image: '/Assets/edumanage_image.png',
-    tags: ['Education', 'Tracking', 'Web System'],
+    tags: ['Tailwind CSS', 'React', 'Firebase'],
     category: 'web',
   },
   {
     title: 'Amaro Resort Website',
     meta: 'Content Management System | Academic Project',
     year: '2025',
-    description:
-      'Designed and developed a fully responsive informational website with an integrated content management system for Amaro Resort, empowering non-technical administrators to seamlessly manage bookings, update resort amenities, and publish promotional content without any developer assistance.',
+    description: 'Built a fully responsive website with a content management system for Amaro Resort, allowing non-technical admins to manage bookings, update amenities, and post promotions without developer help.',
+    role: 'Project Manager, UI/UX Designer & Communication Lead — Planned the project objectives, coordinated with the client to gather needed assets, designed the UI/UX, and tested the final output to make sure everything was functional and met the project goals.',
     href: 'https://github.com/kimruds12/AmaroResortWebsite',
     image: '/Assets/amaro_resort.png',
-    tags: ['CMS', 'Website', 'Content Management'],
+    tags: ['Content Management System', 'Informational Website', 'Client-Based'],
     category: 'web',
   },
 
@@ -63,9 +63,9 @@ const projects = [
     title: 'PLV-QLib Mobile App',
     meta: 'Mobile App Development',
     year: '2026',
-    description:
-      'A comprehensive digital library companion for Pamantasan ng Lungsod ng Valenzuela (PLV), built with React Native and Expo. The application streamlines access to resource catalogs, enables book reservations, supports offline-first data synchronization, and delivers push notifications for library events and due-date reminders.',
-    href: '',
+    description: 'A digital library companion for PLV built with React Native and Expo, supporting resource browsing, book reservations, offline sync, and push notifications for events and due dates.',
+    role: 'UI/UX Designer & Frontend Developer — Designed the app\'s layout, content structure, and modules, then helped build the frontend to make sure every feature looked great and worked as expected.',
+    href: 'https://drive.google.com/drive/folders/18FlKOeBi8lQkt2CeupOk1oefBxpjXA1_',
     image: '/Assets/Mobile App.png',
     tags: ['React Native', 'Expo', 'TypeScript', 'Supabase'],
     category: 'mobile',
@@ -74,10 +74,10 @@ const projects = [
   // ── GAME DEV ──
   {
     title: 'Accord',
-    meta: 'Game Development',
+    meta: 'Game Development | Generalist',
     year: '2025',
-    description:
-      'An immersive narrative-driven gameplay experience developed inside Unity, featuring node-based dialog trees, custom dialogue state controllers, and dynamic branching storylines that respond to player choices in real time.',
+    description: 'A narrative-driven game built in Unity with node-based dialogue trees, custom dialogue state controllers, and branching storylines that respond to player choices in real time.',
+    role: 'Generalist — Supported the lead developer by making sure all needed elements were in place — from game functionality to user-friendly design — keeping development on track.',
     href: 'https://toneecru.itch.io/accord',
     image: '/Assets/Accord .png',
     tags: ['Unity', 'C#', 'XNode'],
@@ -85,10 +85,10 @@ const projects = [
   },
   {
     title: 'Barikada Nations Unite',
-    meta: 'Game Development',
+    meta: 'Game Development | Generalist',
     year: '2025',
-    description:
-      'A cooperative multi-unit tactics game built inside Unity, featuring strategic unit management, turn-based combat mechanics, and team-based objectives utilizing Plastic SCM for collaborative version control across the development team.',
+    description: 'A cooperative tactics game in Unity with strategic unit management, turn-based combat, and team-based objectives, using Plastic SCM for collaborative version control.',
+    role: 'Generalist — Supported the lead developer by making sure all needed elements were in place — from game functionality to user-friendly design — keeping development on track.',
     href: 'https://toneecru.itch.io/barikada-nations-unite',
     image: '/Assets/Barikada.png',
     tags: ['Unity', 'C#'],
@@ -98,10 +98,10 @@ const projects = [
   // ── JAVA PROJECTS ──
   {
     title: 'School Rescue',
-    meta: 'Java Application | Academic Project',
+    meta: 'Java | Developer | Academic Project ',
     year: '2025',
-    description:
-      'Developed a Java-based emergency response management application designed for school environments, featuring real-time incident reporting, evacuation protocol management, and automated notification systems to ensure student and staff safety during critical situations.',
+    description: 'Built a Java-based emergency response app for schools with real-time incident reporting, evacuation management, and automated notifications to keep students and staff safe.',
+    role: 'Developer — Helped build the app\'s core logic, environment interactions, and the final quiz feature — making sure everything ran smoothly from start to finish.',
     href: 'https://github.com/kimruds12/School-Rescue',
     image: '/Assets/SchoolRescue.png',
     tags: ['Java', 'Swing'],
@@ -109,7 +109,7 @@ const projects = [
   },
   {
     title: 'Library Management System',
-    meta: 'Academic Project',
+    meta: 'Java | Developer |Academic Project',
     year: '2025',
     description:
       'Built a standalone Library Management System using Java and Swing, with features including book addition, editing, deletion, search, borrowing, and inventory tracking, allowing librarians to easily manage library records and improve the overall efficiency of daily library operations.',
@@ -136,8 +136,8 @@ const projects = [
   // ── UI PROTOTYPE ──
   {
     title: 'QASTRACK',
-    meta: 'Web-Based Quality Assurance UI Prototype',
-    year: '',
+    meta: 'Web-Based Quality Assurance UI Prototype | Academic Project',
+    year: '2025',
     description:
       'Conceptualized and designed a high-fidelity frontend UI prototype for a web-based quality assurance tracking system tailored for Pamantasan ng Lungsod ng Valenzuela. The prototype demonstrates a proposed user interface for systematic monitoring and documentation of quality assurance workflows, featuring an intuitive dashboard layout, structured data visualization components, and a clean information architecture — serving as a design foundation for future full-stack development.',
     href: 'https://github.com/kimruds12/project-qastrack.git',
@@ -172,11 +172,17 @@ const Projects = () => {
     projectRefs.current.forEach((el, idx) => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const cardCenter = rect.top + rect.height / 2;
-      const distance = Math.abs(cardCenter - viewportCenter);
 
-      // Only consider cards that are at least partially visible
-      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      // If the viewport center is vertically inside this card, it is the focused one
+      if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
+        if (0 < closestDistance) {
+          closestDistance = 0;
+          closestIndex = idx;
+        }
+      } else {
+        // Fallback: use standard distance from card center to viewport center
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
         if (distance < closestDistance) {
           closestDistance = distance;
           closestIndex = idx;
@@ -334,6 +340,12 @@ const Projects = () => {
                     <p className="mt-3 max-w-3xl text-sm leading-8 text-[#B0B0B0] sm:text-[0.98rem]">
                       {project.description}
                     </p>
+                    {project.role && (
+                      <p className="mt-4 max-w-3xl text-sm leading-8 text-[#B0B0B0] sm:text-[0.98rem]">
+                        <span className="font-semibold text-white/90">Role: {project.role.split(' — ')[0]}</span>
+                        {project.role.includes(' — ') ? ' — ' + project.role.split(' — ')[1] : ''}
+                      </p>
+                    )}
 
                     <div className="mt-6 flex flex-wrap gap-3">
                       {project.tags.map((tag) => (
@@ -371,15 +383,24 @@ const Projects = () => {
                           Download Cisco PKT
                           <i className="fa-solid fa-arrow-down text-xs transition-transform duration-300 group-hover:translate-y-0.5" />
                         </a>
-                      ) : project.href ? (
+                      ) : project.category === 'mobile' && project.href ? (
                         <a
                           href={project.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-white"
+                          className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-cyan-400/15 to-cyan-300/10 border border-cyan-300/25 px-5 py-2.5 text-sm font-semibold text-cyan-200 transition-all duration-300 hover:from-cyan-400/25 hover:to-cyan-300/20 hover:border-cyan-300/40 hover:text-white hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+                        >
+                          <i className="fa-solid fa-download text-base" />
+                          Download App
+                        </a>
+                      ) : project.href ? (
+                        <a
+                          href={project.href}
+                          target="_blank"
+                          className="group inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-white"
                         >
                           View Details
-                          <i className="fa-solid fa-arrow-right text-xs" />
+                          <i className="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1" />
                         </a>
                       ) : (
                         <span className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-200/70">
@@ -394,7 +415,7 @@ const Projects = () => {
                           <i className="fa-solid fa-lock text-sm" />
                           Private Project
                         </span>
-                      ) : project.category !== 'game' && project.href ? (
+                      ) : project.category !== 'game' && project.category !== 'mobile' && project.href ? (
                         <a
                           href={project.href}
                           target="_blank"

@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 const credentials = [
   {
     title: 'ITLympics 2025 - Web Design Champion',
+    date: 'April 2025',
     description: 'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
     tags: ['Web Design', 'UI/UX', 'Competition'],
     href: '#',
@@ -12,6 +13,7 @@ const credentials = [
   },
   {
     title: 'UMAK 14th IT Skills Olympics 2025',
+    date: 'November 2025',
     description: 'Demonstrated advanced technical proficiency and problem-solving skills against top peers in a rigorous competitive environment.',
     tags: ['Programming', 'Problem Solving', 'IT Skills'],
     href: '#',
@@ -20,6 +22,7 @@ const credentials = [
   },
   {
     title: 'Network Addressing and Basic Troubleshooting',
+    date: 'May 2025',
     description: 'Certified expertise in configuring network addresses and resolving foundational connectivity issues efficiently.',
     tags: ['Networking', 'Troubleshooting', 'Cisco'],
     href: '#',
@@ -28,6 +31,7 @@ const credentials = [
   },
   {
     title: 'Networking Basics',
+    date: 'May 2025',
     description: 'Comprehensive understanding of network topologies, protocols, and the fundamental architecture of modern communications.',
     tags: ['Fundamentals', 'Protocols', 'Architecture'],
     href: '#',
@@ -36,6 +40,7 @@ const credentials = [
   },
   {
     title: 'Networking Devices and Initial Configuration',
+    date: 'May 2025',
     description: 'Proven ability to set up, configure, and manage core networking hardware, ensuring stable and secure operations.',
     tags: ['Hardware', 'Configuration', 'Routing'],
     href: '#',
@@ -44,6 +49,7 @@ const credentials = [
   },
   {
     title: 'Network Support and Security',
+    date: 'May 2025',
     description: 'Specialized in maintaining network health and implementing robust security measures to protect against vulnerabilities.',
     tags: ['Security', 'Maintenance', 'Firewalls'],
     href: '#',
@@ -353,9 +359,9 @@ const Credentials = () => {
                       )}
                     </div>
 
-                    {/* Floating ID */}
+                    {/* Floating ID / Date */}
                     <div className={`absolute right-6 top-6 z-20 rounded-full border border-cyan-300/30 bg-black/60 px-4 py-1.5 text-[10px] md:text-xs font-mono text-cyan-300 backdrop-blur-md transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
-                      CERTICATE_0{index + 1}
+                      {item.date}
                     </div>
                   </motion.div>
                 );

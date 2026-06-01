@@ -155,8 +155,8 @@ const Home = () => {
             </p>
 
             <a
-              href="/Assets/FINAL_GUSTON_CV.pdf"
-              download="FINAL_GUSTON_CV.pdf"
+              href="/Assets/2026_GUSTON_CV.pdf"
+              download="2026_GUSTON_CV.pdf"
               target="_blank"
               rel="noreferrer"
               className="mt-10 inline-flex items-center gap-3 rounded-[1rem] border border-cyan-300/20 bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]"
