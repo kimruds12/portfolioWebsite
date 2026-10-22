@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const credentials = [
   {
@@ -58,21 +58,12 @@ const credentials = [
   },
 ];
 
-const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+const AUTO_SLIDE_INTERVAL = 5000;
 
 const Credentials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const sectionRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
-  const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const cardsY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   // Timer refs
   const autoSlideTimer = useRef(null);
@@ -82,9 +73,7 @@ const Credentials = () => {
   const isPointerDown = useRef(false);
   const hasDragStarted = useRef(false);
 
-  const INACTIVITY_DELAY = 2500; // Delay before resuming after interaction
-
-  // ── Timer helpers ──
+  const INACTIVITY_DELAY = 2500;
 
   const clearTimers = useCallback(() => {
     if (autoSlideTimer.current) clearTimeout(autoSlideTimer.current);
@@ -92,7 +81,6 @@ const Credentials = () => {
   }, []);
 
   const startAutoSlide = useCallback(() => {
-    // NEVER start the timer while user is holding/touching/dragging/hovering the card
     if (isPointerDown.current || isHovered) return;
 
     clearTimers();
@@ -106,26 +94,21 @@ const Credentials = () => {
   }, [clearTimers]);
 
   const handleInteractionEnd = useCallback(() => {
-    if (isPointerDown.current || isHovered) return; // Still interacting
+    if (isPointerDown.current || isHovered) return;
     clearTimers();
     inactivityTimer.current = setTimeout(() => {
       startAutoSlide();
     }, INACTIVITY_DELAY);
   }, [clearTimers, startAutoSlide, isHovered]);
 
-  // Whenever activeIndex or hover state changes, potentially restart timer
   useEffect(() => {
     if (isHovered) {
       handleInteractionStart();
     } else {
-      // Use inactivity delay if not on first mount and not actively interacting
-      // For simplicity, just call handleInteractionEnd which does the inactivity check
       handleInteractionEnd();
     }
     return () => clearTimers();
   }, [activeIndex, isHovered, handleInteractionStart, handleInteractionEnd, clearTimers]);
-
-  // ── Navigation handlers ──
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % credentials.length);
@@ -145,31 +128,22 @@ const Credentials = () => {
     }
   };
 
-  // ── Pointer / Drag interaction handlers ──
-
-  // Called the INSTANT the user puts finger/mouse down on the center card
   const handlePointerDown = () => {
     isPointerDown.current = true;
     hasDragStarted.current = false;
     handleInteractionStart();
   };
 
-  // Called when Framer Motion detects actual drag movement
   const handleDragStart = () => {
     hasDragStarted.current = true;
   };
 
-  // Called when the user lifts their finger/mouse
   const handlePointerUp = () => {
-    if (hasDragStarted.current) {
-      // onDragEnd will handle the cleanup
-      return;
-    }
+    if (hasDragStarted.current) return;
     isPointerDown.current = false;
     handleInteractionEnd();
   };
 
-  // Called when drag ends (after a swipe or failed drag)
   const handleDragEnd = (e, { offset, velocity }) => {
     const swipe = Math.abs(offset.x) * velocity.x;
 
@@ -184,8 +158,6 @@ const Credentials = () => {
       handleInteractionEnd();
     }
   };
-
-  // ── Card positioning ──
 
   const getCardStyle = (index) => {
     const diff = (index - activeIndex + credentials.length) % credentials.length;
@@ -206,24 +178,24 @@ const Credentials = () => {
 
     if (isRight) {
       return {
-        x: '65%',
+        x: '62%',
         scale: 0.85,
-        rotateY: -55,
+        rotateY: -45,
         zIndex: 20,
-        opacity: 0.75,
-        filter: 'brightness(0.6)',
+        opacity: 0.7,
+        filter: 'brightness(0.65)',
         pointerEvents: 'auto',
       };
     }
 
     if (isLeft) {
       return {
-        x: '-65%',
+        x: '-62%',
         scale: 0.85,
-        rotateY: 55,
+        rotateY: 45,
         zIndex: 20,
-        opacity: 0.75,
-        filter: 'brightness(0.6)',
+        opacity: 0.7,
+        filter: 'brightness(0.65)',
         pointerEvents: 'auto',
       };
     }
@@ -240,59 +212,56 @@ const Credentials = () => {
   };
 
   return (
-    <section ref={sectionRef} id="credentials" className="scroll-mt-12 px-4 pt-0 pb-24 sm:px-6 lg:px-8 relative overflow-hidden min-h-[95vh] flex flex-col justify-center">
-      {/* Background Decorative Grids */}
-      <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 opacity-20 pointer-events-none will-change-transform">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,211,238,0.1),transparent_70%)]" />
-        <div className="h-full w-full bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </motion.div>
+    <section
+      ref={sectionRef}
+      id="experience"
+      className="scroll-mt-28 px-4 py-20 sm:px-6 lg:px-8 relative min-h-[90vh] flex flex-col justify-center"
+    >
+      <div className="mx-auto w-full max-w-7xl relative z-10">
 
-      <div className="mx-auto w-full max-w-[1400px] relative z-10">
-        <motion.div style={{ y: titleY }} className="mb-4 text-center will-change-transform">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-6"
-          >
-            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Certificates</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="max-w-2xl mx-auto text-gray-400 text-lg font-medium"
-          >
-            A collection of certifications, achievements, and technical accomplishments that reflect my continuous learning and skill development.
-            Click the side cards, use the arrows, or swipe to explore the collection.
-          </motion.p>
+        {/* Section Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          className="mb-8 text-center"
+        >
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
+            Experience & Achievements
+          </span>
+          <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-tight text-[var(--text-main)]">
+            Credentials & Honors
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-base leading-relaxed text-[var(--text-muted)]">
+            A verified record of certifications, competitive web design achievements, and technical milestones demonstrating commitment to excellence.
+          </p>
         </motion.div>
 
         {/* 3D Coverflow Container */}
-        <motion.div
-          style={{ y: cardsY }}
-          initial={{ opacity: 0, scale: 0.9, y: 50 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[550px] w-full flex items-center justify-center perspective-[1500px] mt-24 sm:mt-10 will-change-transform"
-        >
-          {/* Navigation Arrows */}
+        <div className="relative h-[65vw] sm:h-[400px] md:h-[450px] lg:h-[520px] w-full flex items-center justify-center perspective-[1500px] mt-8">
+
+          {/* Prev Button */}
           <button
+            type="button"
             onClick={handlePrev}
-            className="absolute left-0 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40 h-12 w-12 md:h-16 md:w-16 rounded-full border border-cyan-300/30 bg-black/80 text-cyan-300 backdrop-blur-xl flex items-center justify-center hover:bg-cyan-300 hover:text-black transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+            aria-label="Previous credential"
+            className="glass-neu-pill absolute left-2 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40 h-11 w-11 md:h-14 md:w-14 rounded-full text-[var(--text-main)] flex items-center justify-center active:scale-95"
           >
-            <i className="fa-solid fa-chevron-left text-lg md:text-2xl" />
+            <i className="fa-solid fa-chevron-left text-sm md:text-lg" />
           </button>
 
+          {/* Next Button */}
           <button
+            type="button"
             onClick={handleNext}
-            className="absolute right-0 md:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-40 h-12 w-12 md:h-16 md:w-16 rounded-full border border-cyan-300/30 bg-black/80 text-cyan-300 backdrop-blur-xl flex items-center justify-center hover:bg-cyan-300 hover:text-black transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+            aria-label="Next credential"
+            className="glass-neu-pill absolute right-2 sm:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-40 h-11 w-11 md:h-14 md:w-14 rounded-full text-[var(--text-main)] flex items-center justify-center active:scale-95"
           >
-            <i className="fa-solid fa-chevron-right text-lg md:text-2xl" />
+            <i className="fa-solid fa-chevron-right text-sm md:text-lg" />
           </button>
 
-          {/* Cards */}
-          <div className="relative w-full max-w-[850px] h-full flex items-center justify-center transform-style-3d">
+          {/* Cards Stack */}
+          <div className="relative w-full max-w-[820px] h-full flex items-center justify-center transform-style-3d">
             <AnimatePresence initial={false}>
               {credentials.map((item, index) => {
                 const isCenter = index === activeIndex;
@@ -303,16 +272,14 @@ const Credentials = () => {
                     key={index}
                     initial={false}
                     animate={style}
-                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                     onClick={() => handleCardClick(index, isCenter)}
                     onMouseEnter={() => isCenter && setIsHovered(true)}
                     onMouseLeave={() => isCenter && setIsHovered(false)}
-                    // ── Pointer events: catch the INSTANT user touches/holds the card ──
                     onPointerDown={isCenter ? handlePointerDown : undefined}
                     onPointerUp={isCenter ? handlePointerUp : undefined}
                     onPointerCancel={isCenter ? handlePointerUp : undefined}
-                    // ── Drag events: only on the center card ──
-                    drag={isCenter ? "x" : false}
+                    drag={isCenter ? 'x' : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.2}
                     onDragStart={handleDragStart}
@@ -320,38 +287,47 @@ const Credentials = () => {
                       if (!isCenter) return;
                       handleDragEnd(e, info);
                     }}
-                    className={`absolute w-[70vw] sm:w-[450px] md:w-[550px] lg:w-[650px] aspect-[1.414] cursor-pointer ${isCenter ? 'shadow-[0_0_50px_rgba(34,211,238,0.4)]' : 'shadow-[0_0_30px_rgba(0,0,0,0.8)]'
-                      } rounded-[2rem] border border-cyan-300/30 bg-[#0A1223] overflow-hidden`}
+                    className={`glass-neu-card absolute w-[72vw] sm:w-[460px] md:w-[540px] lg:w-[620px] aspect-[1.414] cursor-pointer rounded-3xl overflow-hidden`}
                   >
-                    {/* Glowing Border for Center Card */}
+                    {/* Glowing Accent Border for Center Card */}
                     {isCenter && (
-                      <div className="absolute inset-0 z-0 pointer-events-none rounded-[2rem] shadow-[inset_0_0_30px_rgba(34,211,238,0.3)] border-2 border-cyan-400" />
+                      <div className="absolute inset-0 z-20 pointer-events-none rounded-3xl border-2 border-[var(--text-main)] opacity-30" />
                     )}
 
-                    {/* Background Image */}
-                    <motion.div
-                      className="absolute inset-0 z-0"
-                      animate={{ scale: isCenter && isHovered ? 1.05 : 1 }}
-                      transition={{ duration: 0.5 }}
-                    >
+                    {/* Image */}
+                    <div className="absolute inset-0 z-0 bg-[var(--surface-soft)]">
                       <img
                         src={item.image}
                         alt={item.imageAlt}
                         className="h-full w-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
-                      <div className={`absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/60 to-transparent transition-opacity duration-500 ${isCenter && isHovered ? 'opacity-0' : 'opacity-90'}`} />
-                    </motion.div>
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-t from-[var(--bg-page)] via-[var(--bg-page)]/70 to-transparent transition-opacity duration-300 ${
+                          isCenter && isHovered ? 'opacity-20' : 'opacity-85'
+                        }`}
+                      />
+                    </div>
 
                     {/* Text Overlay */}
-                    <div className={`absolute bottom-6 left-0 w-full px-8 z-10 pointer-events-none transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
-                      <h4 className="text-white text-xl md:text-3xl font-bold tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+                    <div
+                      className={`absolute bottom-5 left-0 w-full px-6 sm:px-8 z-10 pointer-events-none transition-opacity duration-300 ${
+                        isCenter && isHovered ? 'opacity-0' : 'opacity-100'
+                      }`}
+                    >
+                      <h4 className="font-['Sora',_sans-serif] text-base sm:text-xl lg:text-2xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
                         {item.title}
                       </h4>
 
                       {isCenter && (
-                        <div className="flex flex-wrap gap-2 mt-4 hidden sm:flex">
+                        <div className="flex flex-wrap gap-2 mt-3 hidden sm:flex">
                           {item.tags.map((tag) => (
-                            <span key={tag} className="rounded-full border border-cyan-300/30 bg-cyan-300/20 px-3 py-1 text-[10px] md:text-xs font-mono text-cyan-100 uppercase tracking-widest backdrop-blur-sm">
+                            <span
+                              key={tag}
+                              className="rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-3 py-1 text-[11px] font-mono text-[var(--text-main)] uppercase tracking-wider backdrop-blur-md"
+                            >
                               {tag}
                             </span>
                           ))}
@@ -359,8 +335,12 @@ const Credentials = () => {
                       )}
                     </div>
 
-                    {/* Floating ID / Date */}
-                    <div className={`absolute right-6 top-6 z-20 rounded-full border border-cyan-300/30 bg-black/60 px-4 py-1.5 text-[10px] md:text-xs font-mono text-cyan-300 backdrop-blur-md transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'}`}>
+                    {/* Date Badge */}
+                    <div
+                      className={`absolute right-4 top-4 z-20 rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-3 py-1 text-[11px] font-mono font-medium text-[var(--text-main)] backdrop-blur-md transition-opacity duration-300 ${
+                        isCenter && isHovered ? 'opacity-0' : 'opacity-100'
+                      }`}
+                    >
                       {item.date}
                     </div>
                   </motion.div>
@@ -368,24 +348,25 @@ const Credentials = () => {
               })}
             </AnimatePresence>
           </div>
-        </motion.div>
-
-        {/* Dynamic Indicators */}
-        <div className="mt-12 flex flex-col items-center gap-6">
-          <div className="flex gap-3">
-            {credentials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleIndicatorClick(index)}
-                className={`h-2 rounded-full transition-all duration-500 ease-out ${activeIndex === index
-                  ? 'w-12 bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]'
-                  : 'w-4 bg-cyan-300/20 hover:bg-cyan-300/50'
-                  }`}
-                aria-label={`Go to certificate ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
+
+        {/* Indicators */}
+        <div className="mt-8 flex justify-center gap-2">
+          {credentials.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => handleIndicatorClick(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === index
+                  ? 'w-10 bg-[var(--text-main)]'
+                  : 'w-3 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
+              }`}
+              aria-label={`Go to certificate ${index + 1}`}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );

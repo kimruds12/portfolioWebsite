@@ -2,217 +2,246 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const skillCategories = [
-    {
-        title: 'Core Languages',
-        description: 'Foundational Programming & Automation',
-        icon: 'fa-solid fa-code',
-        skills: [
-            { name: 'Java', icon: 'fa-brands fa-java text-orange-500' },
-            { name: 'C#', icon: 'fa-solid fa-c text-purple-500' },
-            { name: 'Python', icon: 'fa-brands fa-python text-yellow-300' },
-            { name: 'PHP', icon: 'fa-brands fa-php text-indigo-400' },
-            { name: 'TypeScript', icon: 'fa-brands fa-connectdevelop text-blue-400' },
-            { name: 'JavaScript', icon: 'fa-brands fa-js text-yellow-400' },
-        ]
-    },
-    {
-        title: 'Tech Stack & Libraries',
-        description: 'Current Frameworks & Tech Ecosystems',
-        icon: 'fa-solid fa-layer-group',
-        skills: [
-            { name: 'React', icon: 'fa-brands fa-react text-cyan-400' },
-            { name: 'Tailwind CSS', icon: 'fa-solid fa-wind text-cyan-400' },
-            { name: 'Node.js', icon: 'fa-brands fa-node-js text-green-500' },
-            { name: 'FastAPI', icon: 'fa-solid fa-bolt text-teal-400' },
-            { name: 'Laravel', icon: 'fa-brands fa-laravel text-red-500' },
-        ]
-    },
-    {
-        title: 'Databases',
-        description: 'Data Management & Query Systems',
-        icon: 'fa-solid fa-database',
-        skills: [
-            { name: 'MongoDB', icon: 'fa-solid fa-leaf text-green-500' },
-            { name: 'MySQL', icon: 'fa-solid fa-database text-blue-400' },
-            { name: 'SQL Server', icon: 'fa-solid fa-server text-red-500' },
-            { name: 'PostgreSQL', icon: 'fa-solid fa-database text-indigo-500' },
-        ]
-    },
-    {
-        title: 'Workspace & Utilities',
-        description: 'Local Tooling & Workspace Setup',
-        icon: 'fa-solid fa-wrench',
-        skills: [
-            { name: 'GitHub', icon: 'fa-brands fa-github text-white' },
-            { name: 'Git', icon: 'fa-brands fa-git-alt text-orange-500' },
-            { name: 'VS Code', icon: 'fa-solid fa-code text-blue-500' },
-            { name: 'Visual Studio', icon: 'fa-solid fa-v text-purple-500' },
-            { name: 'PyCharm', icon: 'fa-solid fa-p text-green-500' },
-            { name: 'NPM', icon: 'fa-brands fa-npm text-red-500' },
-            { name: 'Vite', icon: 'fa-solid fa-bolt text-purple-500' },
-            { name: 'Figma', icon: 'fa-brands fa-figma text-pink-500' },
-            { name: 'Ubuntu', icon: 'fa-brands fa-ubuntu text-orange-500' },
-        ]
-    },
-    {
-        title: 'Hosting & Delivery',
-        description: 'Cloud Delivery & System Operations',
-        icon: 'fa-solid fa-cloud',
-        skills: [
-            { name: 'Vercel', icon: 'fa-solid fa-caret-up text-white' },
-            { name: 'Cloudflare', icon: 'fa-brands fa-cloudflare text-orange-500' },
-            { name: 'Render', icon: 'fa-solid fa-r text-gray-300' },
-            { name: 'Docker', icon: 'fa-brands fa-docker text-blue-500' },
-        ]
-    },
-    {
-        title: 'Cognitive Technologies',
-        description: 'AI-Driven Problem Solving',
-        icon: 'fa-solid fa-brain',
-        skills: [
-            { name: 'OpenCV', icon: 'fa-solid fa-camera text-green-500' },
-        ]
-    }
+  {
+    title: 'Core Languages',
+    description: 'Foundational Programming & Systems',
+    icon: 'fa-solid fa-code',
+    skills: [
+      { name: 'JavaScript', icon: 'fa-brands fa-js', color: '#F7DF1E' },
+      { name: 'TypeScript', icon: 'fa-solid fa-code', color: '#3178C6' },
+      { name: 'Java', icon: 'fa-brands fa-java', color: '#EA2D2E' },
+      { name: 'C#', icon: 'fa-solid fa-c', color: '#9B4993' },
+      { name: 'Python', icon: 'fa-brands fa-python', color: '#3776AB' },
+      { name: 'PHP', icon: 'fa-brands fa-php', color: '#777BB4' },
+    ],
+  },
+  {
+    title: 'Frontend & Libraries',
+    description: 'Modern Frameworks & Ecosystems',
+    icon: 'fa-solid fa-layer-group',
+    skills: [
+      { name: 'React', icon: 'fa-brands fa-react', color: '#61DAFB' },
+      { name: 'Next.js', icon: 'fa-solid fa-n', color: 'var(--text-main)' },
+      { name: 'Tailwind CSS', icon: 'fa-solid fa-wind', color: '#38BDF8' },
+      { name: 'Framer Motion', icon: 'fa-solid fa-wand-magic-sparkles', color: '#FF0055' },
+      { name: 'Node.js', icon: 'fa-brands fa-node-js', color: '#5FA04E' },
+      { name: 'FastAPI', icon: 'fa-solid fa-bolt', color: '#059669' },
+      { name: 'Laravel', icon: 'fa-brands fa-laravel', color: '#FF2D20' },
+    ],
+  },
+  {
+    title: 'Databases & Storage',
+    description: 'Data Persistence & Relational Schemas',
+    icon: 'fa-solid fa-database',
+    skills: [
+      { name: 'PostgreSQL', icon: 'fa-solid fa-database', color: '#336791' },
+      { name: 'MySQL', icon: 'fa-solid fa-server', color: '#00758F' },
+      { name: 'MongoDB', icon: 'fa-solid fa-leaf', color: '#47A248' },
+      { name: 'Supabase', icon: 'fa-solid fa-bolt', color: '#3ECF8E' },
+      { name: 'Firebase', icon: 'fa-solid fa-fire', color: '#FFA000' },
+    ],
+  },
+  {
+    title: 'Workspace & Utilities',
+    description: 'Developer Tooling & Workflow Optimization',
+    icon: 'fa-solid fa-wrench',
+    skills: [
+      { name: 'Git & GitHub', icon: 'fa-brands fa-git-alt', color: '#F05032' },
+      { name: 'VS Code', icon: 'fa-solid fa-code', color: '#007ACC' },
+      { name: 'Figma', icon: 'fa-brands fa-figma', color: '#F24E1E' },
+      { name: 'Ubuntu / Linux', icon: 'fa-brands fa-ubuntu', color: '#E95420' },
+      { name: 'Vite', icon: 'fa-solid fa-bolt', color: '#646CFF' },
+      { name: 'NPM / PNPM', icon: 'fa-brands fa-npm', color: '#CB3837' },
+      { name: 'Docker', icon: 'fa-brands fa-docker', color: '#2496ED' },
+    ],
+  },
+  {
+    title: 'Cloud & Infrastructure',
+    description: 'Deployment, Networking & Hosting',
+    icon: 'fa-solid fa-cloud',
+    skills: [
+      { name: 'Vercel', icon: 'fa-solid fa-caret-up', color: 'var(--text-main)' },
+      { name: 'Cloudflare', icon: 'fa-brands fa-cloudflare', color: '#F38020' },
+      { name: 'Render', icon: 'fa-solid fa-server', color: '#46E3B7' },
+      { name: 'Cisco Packet Tracer', icon: 'fa-solid fa-network-wired', color: '#1BA0D7' },
+      { name: 'OpenCV', icon: 'fa-solid fa-camera', color: '#5C3EE8' },
+    ],
+  },
 ];
 
 const Skills = () => {
-    const skillsViewportRef = useRef(null);
-    const skillCardRefs = useRef([]);
-    const [activeSkill, setActiveSkill] = useState(0);
+  const skillsViewportRef = useRef(null);
+  const skillCardRefs = useRef([]);
+  const [activeSkill, setActiveSkill] = useState(0);
 
-    useEffect(() => {
-        const viewport = skillsViewportRef.current;
-        if (!viewport) return;
+  useEffect(() => {
+    const viewport = skillsViewportRef.current;
+    if (!viewport) return;
 
-        let frameId = null;
+    let frameId = null;
 
-        const updateActiveSkill = () => {
-            frameId = null;
-            const viewportRect = viewport.getBoundingClientRect();
-            const viewportCenter = viewportRect.top + viewportRect.height / 2;
+    const updateActiveSkill = () => {
+      frameId = null;
+      const viewportRect = viewport.getBoundingClientRect();
+      const viewportCenter = viewportRect.top + viewportRect.height / 2;
 
-            let nextIndex = 0;
-            let closestDistance = Number.POSITIVE_INFINITY;
+      let nextIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
 
-            skillCardRefs.current.forEach((card, index) => {
-                if (!card) return;
-                const rect = card.getBoundingClientRect();
-                const cardCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(cardCenter - viewportCenter);
+      skillCardRefs.current.forEach((card, index) => {
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
 
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    nextIndex = index;
-                }
-            });
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextIndex = index;
+        }
+      });
 
-            setActiveSkill((current) => (current === nextIndex ? current : nextIndex));
-        };
+      setActiveSkill((current) => (current === nextIndex ? current : nextIndex));
+    };
 
-        const handleSkillScroll = () => {
-            if (frameId !== null) cancelAnimationFrame(frameId);
-            frameId = window.requestAnimationFrame(updateActiveSkill);
-        };
+    const handleSkillScroll = () => {
+      if (frameId !== null) cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateActiveSkill);
+    };
 
-        handleSkillScroll();
-        viewport.addEventListener('scroll', handleSkillScroll, { passive: true });
-        window.addEventListener('resize', handleSkillScroll);
+    handleSkillScroll();
+    viewport.addEventListener('scroll', handleSkillScroll, { passive: true });
+    window.addEventListener('resize', handleSkillScroll);
 
-        return () => {
-            viewport.removeEventListener('scroll', handleSkillScroll);
-            window.removeEventListener('resize', handleSkillScroll);
-            if (frameId !== null) cancelAnimationFrame(frameId);
-        };
-    }, []);
+    return () => {
+      viewport.removeEventListener('scroll', handleSkillScroll);
+      window.removeEventListener('resize', handleSkillScroll);
+      if (frameId !== null) cancelAnimationFrame(frameId);
+    };
+  }, []);
 
-    return (
-        <section id="skills" className="scroll-mt-32 px-4 pt-0 pb-24 sm:px-6 lg:px-8 relative min-h-[95vh] flex flex-col justify-center">
-            <div className="mx-auto w-full max-w-[85rem]">
-                <div className="grid gap-10 xl:grid-cols-[0.8fr_1.2fr] xl:items-center">
+  return (
+    <section
+      id="skills"
+      className="scroll-mt-28 px-4 py-20 sm:px-6 lg:px-8 min-h-[90vh] flex flex-col justify-center"
+    >
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
 
-                    {/* Left Side: Context / Title */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        className="max-w-2xl flex flex-col items-center text-center xl:items-start xl:text-left"
-                    >
-                        <span className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Tech Stack</span>
-                        <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1] tracking-[-0.04em] text-white">
-                            Skills &<br />Technologies
-                        </h2>
-                        <p className="mt-5 text-lg leading-8 text-[#B0B0B0]">
-                            A collection of technologies and tools that support my development work. Scroll through the skill categories to explore my technical proficiencies and experience.
-                        </p>
+          {/* ── Left Side: About Context & Background ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-50px' }}
+            className="flex flex-col items-center text-center lg:items-start lg:text-left"
+          >
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
+              About & Skills
+            </span>
 
-                        <div className="mt-10 flex justify-center gap-2 xl:justify-start">
-                            {skillCategories.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSkill ? 'w-8 bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.8)]' : 'w-2 bg-white/20'}`}
-                                />
-                            ))}
-                        </div>
-                    </motion.div>
+            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.2rem,5vw,3.5rem)] font-bold leading-tight tracking-tight text-[var(--text-main)]">
+              Engineering Clean <br />Digital Systems
+            </h2>
 
-                    {/* Right Side: Scrollable Container */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        className="relative"
-                    >
-                        <div className="relative mx-auto w-full rounded-[2rem] border border-cyan-300/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(7,20,39,0.4))] p-2 backdrop-blur-md sm:p-4">
+            <p className="mt-6 text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
+              I am a Front End Developer and Computer Engineering student at Pamantasan ng Lungsod ng Valenzuela. I specialize in building responsive, accessible web interfaces, component architectures, and reliable network setups.
+            </p>
 
-                            <div
-                                ref={skillsViewportRef}
-                                className="relative flex h-[550px] flex-col gap-6 overflow-y-auto px-2 py-[250px] scroll-smooth sm:px-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-y snap-mandatory"
-                            >
-                                {skillCategories.map((category, index) => {
-                                    const isActive = index === activeSkill;
-                                    return (
-                                        <div
-                                            key={category.title}
-                                            ref={(el) => (skillCardRefs.current[index] = el)}
-                                            className={`snap-center transition-all duration-700 ease-out ${isActive ? 'opacity-100 scale-100' : 'opacity-30 scale-[0.92] blur-[2px]'}`}
-                                        >
-                                            <div className="rounded-[1.5rem] bg-white/[0.03] border border-white/5 p-6 sm:p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                                                <div className="mb-6 flex items-center gap-5">
-                                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-300 border border-cyan-300/20 shadow-[0_0_20px_rgba(34,211,238,0.1)]">
-                                                        <i className={`${category.icon} text-2xl`} />
-                                                    </div>
-                                                    <div>
-                                                        <h3 className="text-xl font-bold text-white tracking-wide">{category.title}</h3>
-                                                        <p className="text-sm text-cyan-200/60 font-mono mt-1">{category.description}</p>
-                                                    </div>
-                                                </div>
+            <p className="mt-4 text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
+              By blending modern frontend tools with structured problem-solving and AI-assisted workflows, I create software experiences that feel seamless, fast, and engineered with precision.
+            </p>
 
-                                                <div className="flex flex-wrap gap-3">
-                                                    {category.skills.map(skill => (
-                                                        <div
-                                                            key={skill.name}
-                                                            className="flex items-center gap-2.5 rounded-full border border-white/10 bg-black/20 px-4 py-2.5 text-sm font-medium text-white/90 transition-all hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
-                                                        >
-                                                            <i className={`${skill.icon} text-lg`} />
-                                                            <span>{skill.name}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-
-                    </motion.div>
-                </div>
+            {/* Quick Indicators for Scroll list */}
+            <div className="mt-8 flex justify-center gap-2 lg:justify-start">
+              {skillCategories.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    skillCardRefs.current[idx]?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'center',
+                    });
+                  }}
+                  aria-label={`Jump to ${skillCategories[idx].title}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    idx === activeSkill
+                      ? 'w-8 bg-[var(--text-main)]'
+                      : 'w-2 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
+                  }`}
+                />
+              ))}
             </div>
-        </section>
-    );
+          </motion.div>
+
+          {/* ── Right Side: Skills Showcase Container ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true, margin: '-50px' }}
+            className="relative"
+          >
+            <div className="glass-neu-card relative mx-auto w-full rounded-3xl p-3 sm:p-5">
+              <div
+                ref={skillsViewportRef}
+                className="relative flex h-[520px] flex-col gap-6 overflow-y-auto px-2 py-[220px] scroll-smooth sm:px-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-y snap-mandatory"
+              >
+                {skillCategories.map((category, index) => {
+                  const isActive = index === activeSkill;
+                  return (
+                    <div
+                      key={category.title}
+                      ref={(el) => (skillCardRefs.current[index] = el)}
+                      className={`snap-center transition-all duration-500 ease-out ${
+                        isActive
+                          ? 'opacity-100 scale-100'
+                          : 'opacity-35 scale-[0.93] blur-[1px]'
+                      }`}
+                    >
+                      <div className="glass-neu-card rounded-2xl p-6 sm:p-7">
+                        <div className="mb-6 flex items-center gap-4">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--text-main)] border border-[var(--border-color)] shadow-xs">
+                            <i className={`${category.icon} text-xl`} />
+                          </div>
+                          <div>
+                            <h3 className="font-['Sora',_sans-serif] text-lg font-bold text-[var(--text-main)] tracking-tight">
+                              {category.title}
+                            </h3>
+                            <p className="text-xs text-[var(--text-muted)] font-mono mt-0.5">
+                              {category.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2.5">
+                          {category.skills.map((skill) => (
+                            <div
+                              key={skill.name}
+                              className="glass-neu-pill flex items-center gap-2.5 rounded-xl px-3.5 py-2 text-xs font-semibold text-[var(--text-main)] transition-all hover:scale-102"
+                            >
+                              <span
+                                className="flex h-5 w-5 items-center justify-center shrink-0"
+                                style={{ color: skill.color }}
+                              >
+                                <i className={`${skill.icon} text-sm`} />
+                              </span>
+                              <span>{skill.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Skills;

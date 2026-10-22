@@ -5,9 +5,25 @@
     <link rel="icon" type="image/jpeg" href="/Assets/1by1.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <title>Kim Ruds Guston | Portfolio</title>
+    <title>Kim Ruds Guston | Front End Developer</title>
+    <meta name="description" content="Portfolio of Kim Ruds Guston — Front End Developer & Computer Engineering student crafting modern web applications and dependable digital products." />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = saved ? saved : (prefersDark ? 'dark' : 'light');
+          document.documentElement.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#050B14]">
+  <body class="theme-transition-ready">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
