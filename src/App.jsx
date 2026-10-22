@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './components/home';
 import ProjectsPage from './components/ProjectsPage';
 import AboutPage from './components/AboutPage';
+import OJTExperiencePage from './components/OJTExperiencePage';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import BootLoader from './components/BootLoader';
@@ -124,6 +125,7 @@ function AppInner() {
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/ojt-experience" element={<OJTExperiencePage />} />
             </Routes>
           </PageTransition>
         </main>

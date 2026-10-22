@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const RecordsSplitCarousel = ({
   tabType,
@@ -8,6 +9,7 @@ const RecordsSplitCarousel = ({
   onSelectIndex,
 }) => {
   const [enlargedCertificate, setEnlargedCertificate] = useState(null);
+  const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
@@ -17,6 +19,8 @@ const RecordsSplitCarousel = ({
 
   const prevIndex = (selectedIndex - 1 + total) % total;
   const nextIndex = (selectedIndex + 1) % total;
+  const prev2Index = (selectedIndex - 2 + total) % total;
+  const next2Index = (selectedIndex + 2) % total;
 
   const handleNext = () => {
     onSelectIndex((selectedIndex + 1) % total);
@@ -111,51 +115,70 @@ const RecordsSplitCarousel = ({
     >
       {isCredentialsTab ? (
         /* ── Split Layout for Certificates & Honors (Pure Image Carousel on Left) ── */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-18 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-12 lg:gap-16 xl:gap-20 items-center">
 
-          {/* ── LEFT COLUMN: 3-Image Layered Carousel Stage (Matching Reference Image 2) ── */}
-          <div className="lg:col-span-6 flex items-center justify-center min-h-[340px] sm:min-h-[400px] md:min-h-[440px] relative px-2 sm:px-4">
-            <div className="relative w-full max-w-[480px] sm:max-w-[540px] h-[300px] sm:h-[360px] md:h-[400px] flex items-center justify-center select-none">
+          {/* ── LEFT COLUMN: Five-image layered certificate stage ── */}
+          <div className="min-w-0 flex items-center justify-center min-h-[390px] sm:min-h-[450px] md:min-h-[500px] relative px-2 sm:px-4 lg:pr-6">
+            <div className="relative w-full max-w-[620px] h-[340px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
 
-              {/* 1. PREVIOUS CERTIFICATE IMAGE (-1) - More visible at back matching Image 2 */}
+              {/* 1. FAR PREVIOUS CERTIFICATE IMAGE (-2) */}
+              <motion.div
+                key={`far-left-cert-${records[prev2Index].id}`}
+                onClick={() => onSelectIndex(prev2Index)}
+                initial={false}
+                animate={{
+                  x: '-96%',
+                  scale: 0.62,
+                  rotate: shouldReduceMotion ? 0 : -10,
+                  opacity: 0.42,
+                  zIndex: 5,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="hidden md:block absolute w-[220px] md:w-[260px] aspect-[16/11] cursor-pointer"
+              >
+                {renderCertificateImageSlide(records[prev2Index], false)}
+              </motion.div>
+
+              {/* 2. PREVIOUS CERTIFICATE IMAGE (-1) */}
               <motion.div
                 key={`left-cert-${records[prevIndex].id}`}
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: '-48%',
+                  x: '-52%',
                   scale: 0.88,
                   rotate: shouldReduceMotion ? 0 : -7,
-                  opacity: 0.88,
+                  opacity: 0.76,
                   zIndex: 10,
                 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
                 className="absolute w-[240px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
 
-              {/* 2. NEXT CERTIFICATE IMAGE (+1) - More visible at back matching Image 2 */}
+              {/* 3. NEXT CERTIFICATE IMAGE (+1) */}
               <motion.div
                 key={`right-cert-${records[nextIndex].id}`}
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: '48%',
+                  x: '52%',
                   scale: 0.88,
                   rotate: shouldReduceMotion ? 0 : 7,
-                  opacity: 0.88,
+                  opacity: 0.76,
                   zIndex: 10,
                 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
                 className="absolute w-[240px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
 
-              {/* 3. ACTIVE CENTER CERTIFICATE IMAGE (0) */}
+              {/* 4. ACTIVE CENTER CERTIFICATE IMAGE */}
               <motion.div
                 key={`active-cert-${currentRecord.id}`}
                 initial={{ scale: 0.94, opacity: 0.85 }}
@@ -166,17 +189,36 @@ const RecordsSplitCarousel = ({
                   opacity: 1,
                   zIndex: 25,
                 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="glass-neu-card absolute w-[270px] sm:w-[340px] md:w-[390px] aspect-[16/11] shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
+              </motion.div>
+
+              {/* 5. FAR NEXT CERTIFICATE IMAGE (+2) */}
+              <motion.div
+                key={`far-right-cert-${records[next2Index].id}`}
+                onClick={() => onSelectIndex(next2Index)}
+                initial={false}
+                animate={{
+                  x: '96%',
+                  scale: 0.62,
+                  rotate: shouldReduceMotion ? 0 : 10,
+                  opacity: 0.42,
+                  zIndex: 5,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="hidden md:block absolute w-[220px] md:w-[260px] aspect-[16/11] cursor-pointer"
+              >
+                {renderCertificateImageSlide(records[next2Index], false)}
               </motion.div>
 
             </div>
           </div>
 
           {/* ── RIGHT COLUMN: Selected Record Details ── */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left pl-0 lg:pl-4">
+          <div className="min-w-0 flex flex-col justify-center text-left">
             <motion.div
               key={`details-${currentRecord.id}`}
               initial={{ opacity: 0, y: 12 }}
@@ -204,21 +246,22 @@ const RecordsSplitCarousel = ({
                 {currentRecord.description}
               </p>
 
-              {/* Key Competencies / Technologies */}
+              {/* Key Competencies / Tags in clean two-column line layout */}
               <div className="mt-6">
-                <span className="block font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
+                <span className="block font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-2.5">
                   KEY COMPETENCIES
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {(currentRecord.tags || currentRecord.technologies || []).map((item) => (
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                  {(currentRecord.tags || currentRecord.technologies || []).slice(0, 4).map((item) => (
                     <span
                       key={item}
-                      className="glass-neu-pill rounded-xl border border-[var(--border-color)] bg-[var(--surface-soft)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-main)] shadow-xs transition-colors hover:border-[var(--text-muted)]"
+                      className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] truncate"
                     >
                       {item}
                     </span>
                   ))}
                 </div>
+                <div className="relative w-full h-[1px] mt-4 bg-[var(--border-color)]" />
               </div>
             </motion.div>
           </div>
@@ -264,9 +307,34 @@ const RecordsSplitCarousel = ({
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
-              {currentRecord.description}
-            </p>
+            {currentRecord.description && (
+              <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
+                {currentRecord.description}
+              </p>
+            )}
+
+            {/* Recognition and Honors */}
+            {currentRecord.honors && (
+              <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2 text-xs sm:text-sm">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--text-muted)] shrink-0">
+                  Recognition and Honors:
+                </span>
+                <span className="font-semibold text-[var(--text-main)]">
+                  {currentRecord.honors}
+                </span>
+              </div>
+            )}
+
+            {currentRecord.id === 'work-11ftc' && (
+              <button
+                type="button"
+                onClick={() => navigate('/ojt-experience')}
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--text-main)] px-5 py-2.5 text-sm font-semibold text-[var(--surface)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]"
+              >
+                See OJT Experience
+                <i className="fa-solid fa-arrow-right text-xs" />
+              </button>
+            )}
 
             {/* Subtle Divider Line */}
             <div className="my-6 border-t border-[var(--border-subtle)]" />

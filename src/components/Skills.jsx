@@ -164,11 +164,10 @@ const Skills = () => {
                     });
                   }}
                   aria-label={`Jump to ${skillCategories[idx].title}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    idx === activeSkill
+                  className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSkill
                       ? 'w-8 bg-[var(--text-main)]'
                       : 'w-2 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -193,11 +192,10 @@ const Skills = () => {
                     <div
                       key={category.title}
                       ref={(el) => (skillCardRefs.current[index] = el)}
-                      className={`snap-center transition-all duration-500 ease-out ${
-                        isActive
+                      className={`snap-center transition-all duration-500 ease-out ${isActive
                           ? 'opacity-100 scale-100'
                           : 'opacity-35 scale-[0.93] blur-[1px]'
-                      }`}
+                        }`}
                     >
                       <div className="glass-neu-card rounded-2xl p-6 sm:p-7">
                         <div className="mb-6 flex items-center gap-4">

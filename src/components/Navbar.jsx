@@ -171,9 +171,8 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'py-1.5 sm:py-2' : 'py-3 sm:py-4'
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-1.5 sm:py-2' : 'py-3 sm:py-4'
+          }`}
       >
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6">
 
@@ -256,17 +255,16 @@ const Navbar = () => {
                   key={link.path}
                   href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
-                  className={`relative flex min-h-[38px] items-center justify-center rounded-full px-4 sm:px-5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-                    isActive
+                  className={`relative flex min-h-[38px] items-center justify-center rounded-full px-4 sm:px-5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${isActive
                       ? 'text-[var(--nav-item-active-text)] font-bold'
                       : 'text-[var(--nav-item-text)] hover:text-[var(--text-main)]'
-                  }`}
+                    }`}
                   style={
                     isActive
                       ? {
-                          backgroundColor: 'var(--nav-item-active-bg)',
-                          boxShadow: 'var(--nav-item-active-shadow)',
-                        }
+                        backgroundColor: 'var(--nav-item-active-bg)',
+                        boxShadow: 'var(--nav-item-active-shadow)',
+                      }
                       : {}
                   }
                   aria-current={isActive ? 'page' : undefined}
@@ -410,17 +408,16 @@ const Navbar = () => {
                         key={link.path}
                         href={link.path}
                         onClick={(e) => handleNavClick(e, link.path)}
-                        className={`flex min-h-[48px] items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition-all duration-200 ${
-                          isActive
+                        className={`flex min-h-[48px] items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition-all duration-200 ${isActive
                             ? 'text-[var(--nav-item-active-text)] font-bold'
                             : 'text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-main)]'
-                        }`}
+                          }`}
                         style={
                           isActive
                             ? {
-                                backgroundColor: 'var(--nav-item-active-bg)',
-                                boxShadow: 'var(--nav-item-active-shadow)',
-                              }
+                              backgroundColor: 'var(--nav-item-active-bg)',
+                              boxShadow: 'var(--nav-item-active-shadow)',
+                            }
                             : {}
                         }
                       >

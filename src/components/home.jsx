@@ -1,8 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import CredentialsCarousel from './CredentialsCarousel';
-import { projects, getTagConfig } from './ProjectsPage';
+import ProjectCard from './ProjectCard';
+import ProjectDetailsDialog from './ProjectDetailsDialog';
+import { projects } from './ProjectsPage';
 
 // The 3 recent projects shown on home
 const RECENT_PROJECTS = [
@@ -44,132 +46,152 @@ const contactLinks = [
   },
 ];
 
-// ── Mini project card for the Recent Projects section ──
-const RecentProjectCard = ({ project, index }) => {
-  const config = project.tags.map((tag) => ({ ...getTagConfig(tag), tag }));
+// ── ContactRow with lighted box and rightward shift (matching Image 2) ──
+const ContactRow = ({ item, isLast }) => {
+  const shouldReduceMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragShift, setDragShift] = useState(0);
+
+  const startPos = useRef({ x: 0, y: 0 });
+  const isPointerDown = useRef(false);
+  const hasDragged = useRef(false);
+
+  const handlePointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    startPos.current = { x: e.clientX, y: e.clientY };
+    isPointerDown.current = true;
+    hasDragged.current = false;
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (_) {}
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isPointerDown.current) return;
+
+    const dx = e.clientX - startPos.current.x;
+    const dy = e.clientY - startPos.current.y;
+
+    // Yield to vertical page scrolling on touch devices
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6 && !hasDragged.current) {
+      isPointerDown.current = false;
+      setIsDragging(false);
+      setDragShift(0);
+      return;
+    }
+
+    if (dx > 0) {
+      if (dx >= 8) {
+        hasDragged.current = true;
+      }
+      setIsDragging(true);
+      setDragShift(Math.min(32, dx * 0.45));
+    } else {
+      setDragShift(0);
+    }
+  };
+
+  const handlePointerEnd = () => {
+    if (isPointerDown.current) {
+      isPointerDown.current = false;
+      setIsDragging(false);
+      setDragShift(0);
+
+      if (hasDragged.current) {
+        setTimeout(() => {
+          hasDragged.current = false;
+        }, 150);
+      }
+    }
+  };
+
+  const handleClick = (e) => {
+    if (hasDragged.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      hasDragged.current = false;
+    }
+  };
+
+  const isActive = isHovered || isDragging;
+  const totalShift = isActive ? 20 + dragShift : 0;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      className="glass-neu-card group flex flex-col justify-between overflow-hidden rounded-3xl"
+    <a
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      draggable={false}
+      onDragStart={(e) => e.preventDefault()}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerEnd}
+      onPointerCancel={handlePointerEnd}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        handlePointerEnd();
+      }}
+      onClick={handleClick}
+      className={`contact-drag-row group relative flex min-h-[58px] sm:min-h-[64px] items-center justify-between px-3 sm:px-5 py-3 border-b border-[var(--border-color)] bg-transparent select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
+        isLast ? 'border-b-0' : ''
+      }`}
+      style={{
+        touchAction: 'pan-y',
+      }}
     >
-      {/* Image Container */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
-        {/* Inner padding so image has space before border */}
-        <div className="absolute inset-[6px] overflow-hidden rounded-2xl">
-          {project.image ? (
-            <img
-              src={project.image}
-              alt={project.title}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-[var(--surface-soft)] rounded-2xl">
-              <div className="flex flex-col items-center gap-3 text-[var(--text-muted)]">
-                <i className="fa-solid fa-laptop-code text-4xl opacity-40" />
-                <span className="text-xs font-mono opacity-60">Local System</span>
-              </div>
+      {/* Lighted Opacity Box (Matching Image 2) */}
+      <div
+        className="contact-row-box pointer-events-none absolute inset-x-1 inset-y-1 rounded-xl transition-all duration-300"
+        style={{
+          opacity: isActive ? 1 : 0,
+        }}
+      />
+
+      {/* Row Content */}
+      <div className="relative z-10 flex w-full items-center justify-between gap-4">
+        {/* Moving Group: Logo + Text slide right together when hovered/dragged */}
+        <div
+          className="flex flex-1 items-center gap-3 sm:gap-4 min-w-0"
+          style={{
+            transform: shouldReduceMotion ? 'none' : `translateX(${totalShift}px)`,
+            transition: isDragging
+              ? 'none'
+              : 'transform 320ms cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
+          {/* Contact icon / logo */}
+          <div className="flex w-9 sm:w-11 shrink-0 items-center justify-start">
+            <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-[var(--surface-soft)] border border-[var(--border-color)] shadow-2xs transition-colors duration-300 ${isActive ? 'border-[var(--text-muted)]' : ''}`}>
+              <i className={`${item.icon} text-sm sm:text-base`} style={{ color: item.color }} />
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Badges */}
-        <div className="absolute inset-x-3 top-3 flex items-center justify-between pointer-events-none">
-          <span className="rounded-full border border-[var(--border-color)] bg-[var(--surface)]/90 px-2.5 py-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--text-main)] backdrop-blur-md">
-            {project.isLocal ? 'LOCAL' : project.category.toUpperCase()}
-          </span>
-          {project.status && (
-            <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-500 backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {project.status}
+          {/* Contact name and handle text */}
+          <div className="flex flex-1 flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 min-w-0 pr-2">
+            <span className="font-['Sora',_sans-serif] text-sm sm:text-base font-bold text-[var(--text-main)] truncate">
+              {item.label}
             </span>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex-1">
-        <div className="flex items-baseline justify-between gap-2">
-          <h3 className="font-['Sora',_sans-serif] text-base font-bold text-[var(--text-main)] tracking-tight">
-            {project.title}
-          </h3>
-          {project.year && (
-            <span className="font-mono text-xs text-[var(--text-muted)] shrink-0">{project.year}</span>
-          )}
-        </div>
-        <p className="mt-1 text-xs font-medium text-[var(--text-muted)] line-clamp-1">{project.meta}</p>
-        <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] line-clamp-3">{project.description}</p>
-
-        {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {config.map(({ icon, color, tag }) => (
-            <span
-              key={tag}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-soft)] px-2.5 py-1 text-[11px] font-mono text-[var(--text-main)] shadow-2xs"
-            >
-              <i className={`${icon} text-xs shrink-0`} style={{ color }} />
-              <span>{tag}</span>
+            <span className={`font-mono text-xs sm:text-sm transition-colors duration-200 truncate ${isActive ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)]'}`}>
+              {item.value}
             </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Footer actions */}
-      <div className="flex items-center justify-between border-t border-[var(--border-color)] px-5 py-3.5 bg-[var(--surface-soft)]/50">
-        <div className="flex items-center gap-2">
-          {project.isLocal ? (
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noreferrer"
-              className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-            >
-              <i className="fa-brands fa-github text-[10px]" />
-              <span>GitHub</span>
-            </a>
-          ) : project.category === 'game' && project.href ? (
-            <a href={project.href} target="_blank" rel="noreferrer"
-              className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-            >
-              <span>Play</span>
-              <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-            </a>
-          ) : project.href ? (
-            <a href={project.href} target="_blank" rel="noreferrer"
-              className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-            >
-              <span>Live</span>
-              <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-            </a>
-          ) : null}
-
-          {project.href && project.category !== 'game' && !project.isLocal && (
-            <a href={project.href} target="_blank" rel="noreferrer"
-              className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)]"
-            >
-              <i className="fa-brands fa-github text-xs" />
-              <span>Source</span>
-            </a>
-          )}
+          </div>
         </div>
 
-        {project.href ? (
-          <a href={project.href} target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
-          >
-            <span>Details</span>
-            <i className="fa-solid fa-arrow-right text-[10px]" />
-          </a>
-        ) : (
-          <span className="text-xs font-semibold text-[var(--text-muted)]">Archive</span>
-        )}
+        {/* Arrow-up-right icon on the right (turns blue just like in Image 2) */}
+        <div className="flex w-8 shrink-0 items-center justify-end">
+          <i
+            className={`fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm transition-all duration-300 ${
+              isActive
+                ? 'text-sky-400 translate-x-0.5 -translate-y-0.5'
+                : 'text-[var(--text-muted)]'
+            }`}
+          />
+        </div>
       </div>
-    </motion.article>
+    </a>
   );
 };
 
@@ -177,6 +199,18 @@ const Home = () => {
   const heroRef = useRef(null);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+
+  const [selectedProject, setSelectedProject] = useState(null);
+  const activeTriggerRef = useRef(null);
+
+  const handleOpenDetails = (project, triggerRef) => {
+    activeTriggerRef.current = triggerRef?.current || triggerRef;
+    setSelectedProject(project);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedProject(null);
+  };
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -295,10 +329,15 @@ const Home = () => {
             </p>
           </motion.div>
 
-          {/* 3 Cards in horizontal row */}
+          {/* 3 Cards with 3D tilt & interaction */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {recentProjects.map((project, index) => (
-              <RecentProjectCard key={project.title} project={project} index={index} />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={index}
+                onOpenDetails={handleOpenDetails}
+              />
             ))}
           </div>
 
@@ -359,51 +398,39 @@ const Home = () => {
               download="2026_GUSTON_CV.pdf"
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2.5 rounded-full bg-[var(--btn-strong-bg)] px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--btn-strong-text)] shadow-sm hover:opacity-90 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+              className="group mt-8 inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
             >
-              <i className="fa-solid fa-file-arrow-down text-xs" />
+              <i className="fa-solid fa-file-arrow-down text-xs transition-transform duration-200 group-hover:translate-y-0.5" />
               <span>Download CV</span>
             </a>
           </motion.div>
 
-          {/* Right Side: Contact Links */}
+          {/* Right Side: Four full-width Contact Rows */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true, margin: '-50px' }}
-            className="flex flex-col gap-3"
+            className="w-full flex flex-col border-t border-[var(--border-color)]"
           >
-            {contactLinks.map((item) => (
-              <a
+            {contactLinks.map((item, idx) => (
+              <ContactRow
                 key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex min-h-[64px] items-center justify-between rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] px-6 py-4 transition-all duration-200 hover:border-[var(--text-muted)] hover:bg-[var(--surface-hover)] shadow-2xs glass-neu-card"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-soft)] border border-[var(--border-color)]">
-                    <i className={`${item.icon} text-base`} style={{ color: item.color }} />
-                  </div>
-                  <div>
-                    <p className="font-['Sora',_sans-serif] text-sm font-bold text-[var(--text-main)]">{item.label}</p>
-                    <p className="text-xs text-[var(--text-muted)] font-mono sm:hidden">{item.value}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <span className="hidden sm:block font-mono text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors">
-                    {item.value}
-                  </span>
-                  <i className="fa-solid fa-arrow-up-right-from-square text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />
-                </div>
-              </a>
+                item={item}
+                isLast={idx === contactLinks.length - 1}
+              />
             ))}
           </motion.div>
 
         </div>
       </section>
+
+      {/* Project Details Modal Dialog */}
+      <ProjectDetailsDialog
+        project={selectedProject}
+        onClose={handleCloseDetails}
+        triggerRef={activeTriggerRef}
+      />
     </>
   );
 };

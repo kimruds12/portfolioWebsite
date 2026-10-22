@@ -1,65 +1,69 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import RecordsSplitCarousel from './RecordsSplitCarousel';
 
 export const workExperienceRecords = [
   {
+    id: 'work-meycauayan',
+    organization: 'Meycauayan, Bulacan',
+    badge: 'OPERATIONS SUPPORT',
+    title: 'Device Asset Custodian',
+    period: 'July 2025 to August 2025',
+    location: 'Meycauayan, Bulacan',
+    description:
+      'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops for warehouse employees each shift, ensuring full device accountability and zero equipment loss. Administered device and employee ID scanning procedures to track assignments accurately, strengthen asset-control compliance, and maintain audit-ready inventory records across the sortation facility.',
+    technologies: ['Asset Control', 'Device Tracking', 'ID Verification', 'Inventory Records'],
+  },
+  {
     id: 'work-11ftc',
-    organization: '11FTC Enterprises Inc.',
-    badge: 'INTERNSHIP & IT OPS',
-    title: 'IT Management System Intern',
-    period: '2024 - 2025',
-    location: 'Valenzuela City (On-site)',
+    organization: '11FTC Enterprises, Inc.',
+    badge: 'IT TECHNICAL SUPPORT',
+    title: 'IT Technical Support Intern',
+    period: 'June 2026 to October 2026',
+    location: 'Novaliches, Quezon City',
     description:
-      'Architected and implemented a local IT ticket and hardware inventory management system (11FTCTicketManagementSystem). Streamlined request workflows, technician assignment protocols, and service reporting across enterprise hardware and network infrastructure.',
-    technologies: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL', 'ITIL Workflows'],
-  },
-  {
-    id: 'work-web-apps',
-    organization: 'Personal & Open Source Projects',
-    badge: 'PRODUCT ENGINEERING',
-    title: 'Web Application Creator & Frontend Engineer',
-    period: '2023 - Present',
-    location: 'Remote',
-    description:
-      'Engineered and deployed 5+ production-grade web applications including PLV-QLib Library System, CV Studio, and interactive state engines. Implemented modern design systems, fluid micro-interactions, responsive accessibility, and real-time database synchronization.',
-    technologies: ['React 19', 'Vite', 'Firebase Firestore', 'Tailwind CSS', 'Vercel'],
-  },
-  {
-    id: 'work-freelance',
-    organization: 'Independent & Academic Engagements',
-    badge: 'SYSTEM DESIGN & UI',
-    title: 'Frontend Developer & UI Specialist',
-    period: '2022 - 2024',
-    location: 'Hybrid',
-    description:
-      'Designed high-fidelity Figma prototypes, wireframes, and scalable component libraries for university software projects and client websites. Spearheaded UI modernization with an emphasis on performance audits and WCAG accessibility standards.',
-    technologies: ['Figma', 'JavaScript (ES6+)', 'HTML5 / Semantic CSS', 'Responsive UI'],
+      'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops while verifying employee IDs and tracking device assignments each shift. Maintained full device accountability, zero equipment loss, and accurate, audit-ready inventory records.',
+    technologies: ['IT Support', 'Asset Control', 'ID Verification', 'Inventory Records'],
   },
 ];
 
 export const educationRecords = [
   {
     id: 'edu-plv',
-    organization: 'Pamantasan ng Lungsod ng Valenzuela (PLV)',
-    badge: 'UNDERGRADUATE DEGREE',
-    title: 'Bachelor of Science in Computer Engineering',
-    period: '2021 - Present',
+    organization: 'Pamantasan ng Lungsod ng Valenzuela',
+    badge: 'IN PROGRESS / COLLEGE',
+    title: 'Bachelor of Science in Information Technology',
+    period: '2023 to Present',
     location: 'Valenzuela City, Philippines',
     description:
-      'Rigorous academic program spanning computer architecture, object-oriented software engineering, network administration, digital logic design, embedded systems, and database management systems. Consistent academic excellence.',
-    technologies: ['Computer Architecture', 'Network Security', 'Data Structures', 'C# / Java', 'Linux / Ubuntu'],
+      'Currently pursuing a Bachelor of Science in Information Technology with a focus on practical software development, systems, and technical problem solving.',
+    honors: 'Dean’s Lister during the first, second, and third year.',
+    technologies: ['Dean’s Lister (1st, 2nd, 3rd Year)', 'Software Development', 'Systems', 'Problem Solving'],
   },
   {
-    id: 'edu-stem',
-    organization: 'Senior High School Academic Track',
-    badge: 'ACADEMIC HONORS',
-    title: 'Science, Technology, Engineering & Mathematics (STEM)',
-    period: '2019 - 2021',
-    location: 'Metro Manila, Philippines',
+    id: 'edu-punturin',
+    organization: 'Punturin Senior High School',
+    badge: 'SENIOR HIGH SCHOOL',
+    title: 'Science, Technology, Engineering and Mathematics',
+    period: '2021 to 2023',
+    location: 'Valenzuela City, Philippines',
     description:
-      'Graduated with honors in the STEM academic strand. Developed foundational analytical rigor, mathematical modeling capabilities, algorithmic thinking, and early programming exposure.',
-    technologies: ['Advanced Mathematics', 'Physics', 'Algorithmic Problem Solving'],
+      'Completed the Science, Technology, Engineering and Mathematics (STEM) academic strand with High Honors, establishing strong analytical foundations in mathematics and science.',
+    honors: 'With High Honors.',
+    technologies: ['With High Honors', 'STEM', 'Mathematics', 'Analytical Problem Solving'],
+  },
+  {
+    id: 'edu-bignay',
+    organization: 'Bignay National High School',
+    badge: 'JUNIOR HIGH SCHOOL',
+    title: 'Junior High School',
+    period: '2017 to 2021',
+    location: 'Valenzuela City, Philippines',
+    description:
+      'Completed Junior High School with High Honors, developing disciplined academic habits and an enduring curiosity for technology and computing.',
+    honors: 'With High Honors.',
+    technologies: ['With High Honors', 'Academic Excellence', 'Basic Science', 'Technology Foundations'],
   },
 ];
 
@@ -133,13 +137,23 @@ export const certificatesRecords = [
 
 const TABS = [
   { id: 'experience', label: 'Work Experience', icon: 'fa-solid fa-briefcase' },
+  { id: 'credentials', label: 'Certificates and Honors', icon: 'fa-regular fa-bookmark' },
   { id: 'education', label: 'Education', icon: 'fa-solid fa-graduation-cap' },
-  { id: 'credentials', label: 'Certificates & Honors', icon: 'fa-regular fa-bookmark' },
 ];
 
 const ExperienceTabs = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('experience');
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    if (query.get('record') === '11ftc') {
+      setActiveTab('experience');
+      const idx = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
+      setSelectedIndex(idx !== -1 ? idx : 1);
+    }
+  }, [location.search]);
 
   const getActiveRecords = () => {
     switch (activeTab) {

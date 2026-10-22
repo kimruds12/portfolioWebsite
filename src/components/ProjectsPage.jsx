@@ -1,8 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ProjectCard from './ProjectCard';
+import ProjectDetailsDialog from './ProjectDetailsDialog';
 
-const categories = [
+export const categories = [
   { key: 'all', label: 'All Projects' },
   { key: 'web', label: 'Web Dev' },
   { key: 'mobile', label: 'Mobile App' },
@@ -201,6 +203,17 @@ const ProjectsPage = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const activeTriggerRef = useRef(null);
+
+  const handleOpenDetails = (project, triggerRef) => {
+    activeTriggerRef.current = triggerRef?.current || triggerRef;
+    setSelectedProject(project);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedProject(null);
+  };
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
@@ -310,170 +323,12 @@ const ProjectsPage = () => {
         {/* ── Project Cards Grid ── */}
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
-            <motion.article
+            <ProjectCard
               key={`${project.title}-${index}`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="glass-neu-card group flex flex-col justify-between overflow-hidden rounded-3xl"
-            >
-              <div>
-                {/* Image Container with Badges */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
-                  {/* Inner padding/margin wrapper so image has space before border */}
-                  <div className="absolute inset-[6px] overflow-hidden rounded-2xl">
-                    {project.image ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center p-6 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-2xl">
-                        <div className="flex flex-col items-center gap-3">
-                          <i className="fa-solid fa-laptop-code text-4xl opacity-40" />
-                          <span className="text-xs font-mono opacity-60">Local System</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Top Bar inside image */}
-                  <div className="absolute inset-x-3 top-3 flex items-center justify-between pointer-events-none">
-                    <span className="rounded-full border border-[var(--border-color)] bg-[var(--surface)]/90 px-2.5 py-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--text-main)] backdrop-blur-md">
-                      {project.isLocal ? 'LOCAL' : project.category.toUpperCase()}
-                    </span>
-                    {project.status && (
-                      <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-500 backdrop-blur-md">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        {project.status}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-6">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <h3 className="font-['Sora',_sans-serif] text-lg font-bold text-[var(--text-main)] tracking-tight">
-                      {project.title}
-                    </h3>
-                    {project.year && (
-                      <span className="font-mono text-xs text-[var(--text-muted)]">
-                        {project.year}
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="mt-1 text-xs font-medium text-[var(--text-muted)] line-clamp-1">
-                    {project.meta}
-                  </p>
-
-                  <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Tech Tags */}
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => {
-                      const config = getTagConfig(tag);
-                      return (
-                        <span
-                          key={tag}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-soft)] px-2.5 py-1 text-[11px] font-mono text-[var(--text-main)] shadow-2xs"
-                        >
-                          <i className={`${config.icon} text-xs shrink-0`} style={{ color: config.color }} />
-                          <span>{tag}</span>
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons Footer */}
-              <div className="flex items-center justify-between border-t border-[var(--border-color)] px-5 py-3.5 bg-[var(--surface-soft)]/50">
-                <div className="flex items-center gap-2">
-                  {project.category === 'game' && project.href ? (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-                    >
-                      <span>Play</span>
-                      <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-                    </a>
-                  ) : project.download ? (
-                    <a
-                      href={project.download}
-                      download
-                      className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-                    >
-                      <i className="fa-solid fa-download text-[10px]" />
-                      <span>Download</span>
-                    </a>
-                  ) : project.isLocal ? (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-                    >
-                      <i className="fa-brands fa-github text-[10px]" />
-                      <span>GitHub</span>
-                    </a>
-                  ) : project.href ? (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90"
-                    >
-                      <span>Live</span>
-                      <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-                    </a>
-                  ) : (
-                    <span className="text-xs text-[var(--text-muted)] font-mono">Local System</span>
-                  )}
-
-                  {/* GitHub Source Button */}
-                  {project.href && project.category !== 'game' && !project.isLocal && (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)]"
-                      title="View Source Code"
-                    >
-                      <i className="fa-brands fa-github text-xs" />
-                      <span>Source</span>
-                    </a>
-                  )}
-                </div>
-
-                {/* Details Link */}
-                {project.href ? (
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
-                  >
-                    <span>Details</span>
-                    <i className="fa-solid fa-arrow-right text-[10px]" />
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-muted)]">
-                    <span>Archive</span>
-                  </span>
-                )}
-              </div>
-            </motion.article>
+              project={project}
+              index={index}
+              onOpenDetails={handleOpenDetails}
+            />
           ))}
         </div>
 
@@ -485,6 +340,13 @@ const ProjectsPage = () => {
             <p className="text-xs text-[var(--text-muted)] mt-1">Try another search keyword or select a different category.</p>
           </div>
         )}
+
+        {/* Project Details Modal Dialog */}
+        <ProjectDetailsDialog
+          project={selectedProject}
+          onClose={handleCloseDetails}
+          triggerRef={activeTriggerRef}
+        />
       </div>
     </section>
   );

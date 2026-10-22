@@ -87,7 +87,7 @@ export function useBootSequence() {
 
     // Also wait for fonts (non-blocking — just sets the flag)
     if (document.fonts?.ready) {
-      document.fonts.ready.then(() => {}).catch(() => {});
+      document.fonts.ready.then(() => { }).catch(() => { });
     }
 
     /* ── Minimum display timer ── */

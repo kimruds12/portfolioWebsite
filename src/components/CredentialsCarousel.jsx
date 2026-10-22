@@ -5,8 +5,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 const credentialsRecords = [
   {
     id: 'umak',
-    typeLabel: '// ACADEMIC COMPETITION',
-    badge: 'PARTICIPANT',
+    typeLabel: '',
+    badge: 'UMAK IT SKILLS OLYMPICS',
     organization: 'University of Makati',
     title: '14th UMAK IT Skills Olympics 2025',
     date: 'November 2025',
@@ -18,8 +18,8 @@ const credentialsRecords = [
   },
   {
     id: 'itlympics',
-    typeLabel: '// WEB DESIGN COMPETITION',
-    badge: '1ST PLACE',
+    typeLabel: '',
+    badge: 'WEB DESIGN COMPETITION',
     organization: 'National IT Skills Championship',
     title: 'PLV ITlympics 2025: Web Design Competition',
     date: 'April 2025',
@@ -31,8 +31,8 @@ const credentialsRecords = [
   },
   {
     id: 'cisco-addressing',
-    typeLabel: '// CISCO CERTIFICATION',
-    badge: 'CAREER PATH',
+    typeLabel: '',
+    badge: 'CISCO CERTIFICATION',
     organization: 'Cisco Networking Academy',
     title: 'Cisco Network Technician Career Path',
     date: 'May 2025',
@@ -44,8 +44,8 @@ const credentialsRecords = [
   },
   {
     id: 'cisco-basics',
-    typeLabel: '// CISCO CERTIFICATION',
-    badge: 'FOUNDATIONS',
+    typeLabel: '',
+    badge: 'CISCO FOUNDATIONS',
     organization: 'Cisco Networking Academy',
     title: 'Cisco Networking Basics & Topologies',
     date: 'May 2025',
@@ -57,8 +57,8 @@ const credentialsRecords = [
   },
   {
     id: 'cisco-devices',
-    typeLabel: '// CISCO CERTIFICATION',
-    badge: 'INFRASTRUCTURE',
+    typeLabel: '',
+    badge: 'CISCO INFRASTRUCTURE',
     organization: 'Cisco Networking Academy',
     title: 'Cisco Networking Devices Configuration',
     date: 'May 2025',
@@ -176,17 +176,198 @@ const CredentialsCarousel = () => {
   const farOffset = isDesktop ? '112%' : isTablet ? '96%' : '80%';
   const nearOffset = isDesktop ? '58%' : isTablet ? '50%' : '40%';
 
+  // ── Sub-component: Individual credential tag with interactive underline generation ──
+  const CredentialTagItem = ({ label, isCenterCard, shouldReduceMotion, className = '' }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragProgress, setDragProgress] = useState(0);
+
+    const startPos = useRef({ x: 0, y: 0 });
+    const isPointerDown = useRef(false);
+
+    const handlePointerDown = (e) => {
+      if (!isCenterCard) return;
+      if (e.button !== undefined && e.button !== 0) return;
+      startPos.current = { x: e.clientX, y: e.clientY };
+      isPointerDown.current = true;
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch (_) {}
+    };
+
+    const handlePointerMove = (e) => {
+      if (!isPointerDown.current || !isCenterCard) return;
+      const dx = e.clientX - startPos.current.x;
+      const dy = e.clientY - startPos.current.y;
+
+      // Yield to vertical scrolling if gesture is predominantly vertical
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6 && !isDragging) {
+        isPointerDown.current = false;
+        setIsDragging(false);
+        setDragProgress(0);
+        return;
+      }
+
+      if (dx > 0) {
+        setIsDragging(true);
+        // Interactively generates underline from left to right as dragged
+        const progress = Math.min(1, Math.max(0, dx / 90));
+        setDragProgress(progress);
+      } else {
+        setDragProgress(0);
+        setIsDragging(false);
+      }
+    };
+
+    const handlePointerEnd = (e) => {
+      if (isPointerDown.current) {
+        isPointerDown.current = false;
+        setIsDragging(false);
+        setDragProgress(0);
+        try {
+          if (e && e.currentTarget && e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+          }
+        } catch (_) {}
+      }
+    };
+
+    const isActive = isHovered || isDragging;
+    const progressValue = isDragging ? dragProgress : (isHovered ? 1 : 0);
+
+    return (
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          if (!isPointerDown.current) {
+            setIsDragging(false);
+            setDragProgress(0);
+          }
+        }}
+        className={`group relative min-w-0 pb-2 select-none touch-pan-y ${
+          isCenterCard ? 'cursor-grab active:cursor-grabbing' : ''
+        } ${className}`}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <span
+            className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 ${
+              isActive ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)]'
+            }`}
+          >
+            {label}
+          </span>
+
+          <i
+            className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-colors duration-200 ${
+              isActive ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)]'
+            }`}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Static base divider track */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[var(--border-color)]" />
+
+        {/* Running highlight line that generates from left to right */}
+        <div
+          className="credential-running-line absolute bottom-0 left-0 h-[1.5px] sm:h-[2px] w-full origin-left pointer-events-none"
+          style={{
+            transformOrigin: 'left',
+            transform: shouldReduceMotion ? 'none' : `scaleX(${progressValue})`,
+            opacity: isActive ? 1 : 0,
+            transition: isDragging
+              ? 'none'
+              : 'transform 380ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease-out',
+          }}
+        />
+      </div>
+    );
+  };
+
+  // ── Lower Action Area: Two-column tags + static divider + centered action ──
+  const CredentialCardActionArea = ({ record: itemRecord, isCenter: isCenterCard, onOpenCertificate }) => {
+    const shouldReduceMotion = useReducedMotion();
+    const tags = itemRecord.tags || [];
+
+    const handleActionClick = (e) => {
+      if (!isCenterCard) return;
+      e.stopPropagation();
+      onOpenCertificate(itemRecord, e.currentTarget);
+    };
+
+    return (
+      <div className="w-full flex flex-col justify-end select-none mt-auto">
+        {/* Two-column credential tags with per-tag animated line generation */}
+        <div className="my-2.5 sm:my-3 w-full">
+          <div className="grid grid-cols-2 gap-x-6 sm:gap-x-8">
+            {/* Left column */}
+            <div className="min-w-0 flex flex-col">
+              <CredentialTagItem
+                label={tags[0] || 'BASICS'}
+                isCenterCard={isCenterCard}
+                shouldReduceMotion={shouldReduceMotion}
+              />
+              <CredentialTagItem
+                label={tags[2] || 'ADDRESSING'}
+                isCenterCard={isCenterCard}
+                shouldReduceMotion={shouldReduceMotion}
+                className="mt-2"
+              />
+            </div>
+
+            {/* Right column */}
+            <div className="min-w-0 flex flex-col">
+              <CredentialTagItem
+                label={tags[1] || 'DEVICES'}
+                isCenterCard={isCenterCard}
+                shouldReduceMotion={shouldReduceMotion}
+              />
+              <CredentialTagItem
+                label={tags[3] || 'SECURITY'}
+                isCenterCard={isCenterCard}
+                shouldReduceMotion={shouldReduceMotion}
+                className="mt-2"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Clean, static subtle divider line separating tags from VIEW CERTIFICATE */}
+        <div className="w-full h-[1px] my-1 sm:my-1.5 bg-[var(--border-color)]" />
+
+        {/* Centered VIEW CERTIFICATE Action */}
+        <div className="flex items-center justify-center pt-1 pb-0.5">
+          {isCenterCard ? (
+            <button
+              type="button"
+              onClick={handleActionClick}
+              className="w-full py-1.5 flex items-center justify-center font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded"
+            >
+              <span>VIEW CERTIFICATE</span>
+            </button>
+          ) : (
+            <span className="w-full py-1.5 flex items-center justify-center font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] opacity-50 cursor-pointer">
+              <span>VIEW CERTIFICATE</span>
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   // Helper to render the structured card matching Reference Image 2 & Image 4
   const renderCardContent = (record, isCenter = false) => (
     <div className="flex flex-col justify-between h-full w-full">
-      {/* Top Header: Eyebrow + Badge */}
+      {/* Top Header: Eyebrow */}
       <div>
-        <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2 mb-2">
-          <span className="font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)] font-medium truncate uppercase tracking-wider">
-            {record.typeLabel || '// CERTIFICATION'}
-          </span>
-          <span className="shrink-0 rounded-full bg-[var(--surface-soft)] border border-[var(--border-color)] px-2 py-0.5 text-[8px] sm:text-[9px] font-mono font-semibold uppercase tracking-wider text-[var(--text-main)]">
-            {record.badge || 'VERIFIED'}
+        <div className="flex items-center justify-end mb-1 sm:mb-1.5">
+          <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+            // {record.badge || 'CERTIFICATION'}
           </span>
         </div>
 
@@ -203,18 +384,16 @@ const CredentialsCarousel = () => {
             e.stopPropagation();
             openCertificate(record, e.currentTarget);
           }}
-          className={`group relative my-2 sm:my-2.5 aspect-[16/10] w-full rounded-xl overflow-hidden bg-[var(--surface-soft)] border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-inner transition-all ${
-            isCenter ? 'cursor-zoom-in' : 'cursor-pointer'
-          }`}
+          className={`group relative mt-2 mb-1 aspect-[16/10] w-full rounded-xl overflow-hidden bg-[var(--surface-soft)] border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-inner transition-all ${isCenter ? 'cursor-zoom-in' : 'cursor-pointer'
+            }`}
           title={isCenter ? 'Click to enlarge certificate' : 'Click to select credential'}
         >
           <img
             src={record.image}
             alt={record.imageAlt || record.title}
             loading={isCenter ? 'eager' : 'lazy'}
-            className={`h-full w-full object-contain transition-transform duration-300 ${
-              isCenter ? 'group-hover:scale-105' : ''
-            }`}
+            className={`h-full w-full object-contain transition-transform duration-300 ${isCenter ? 'group-hover:scale-105' : ''
+              }`}
           />
           {/* Hover Enlarge Badge ONLY on Center Card */}
           {isCenter && (
@@ -226,42 +405,14 @@ const CredentialsCarousel = () => {
             </div>
           )}
         </div>
-
-        {/* 2x2 Tag Pills (Reference Image 2 & 4 style with ↗) */}
-        <div className="grid grid-cols-2 gap-1.5 my-1.5 sm:my-2">
-          {(record.tags || []).slice(0, 4).map((tag) => (
-            <div
-              key={tag}
-              className="flex items-center justify-between rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-soft)] px-2 sm:px-2.5 py-1 text-[9px] sm:text-[10px] font-mono font-semibold text-[var(--text-main)] transition-colors hover:border-[var(--text-muted)]"
-            >
-              <span className="truncate uppercase">{tag}</span>
-              <i className="fa-solid fa-arrow-up-right text-[8px] sm:text-[9px] text-[var(--text-muted)] shrink-0 ml-1" />
-            </div>
-          ))}
-        </div>
       </div>
 
-      {/* Bottom Action: View Certificate ↗ */}
-      <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center justify-center">
-        {isCenter ? (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              openCertificate(record, e.currentTarget);
-            }}
-            className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:outline-none"
-          >
-            <span>View Certificate</span>
-            <i className="fa-solid fa-arrow-up-right text-[9px] sm:text-[10px]" />
-          </button>
-        ) : (
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] opacity-50">
-            <span>View Certificate</span>
-            <i className="fa-solid fa-arrow-up-right text-[9px] sm:text-[10px]" />
-          </span>
-        )}
-      </div>
+      {/* Lower Action Area: Two-column tags, single divider line with running highlight, centered VIEW CERTIFICATE */}
+      <CredentialCardActionArea
+        record={record}
+        isCenter={isCenter}
+        onOpenCertificate={openCertificate}
+      />
     </div>
   );
 
@@ -294,7 +445,7 @@ const CredentialsCarousel = () => {
 
         {/* 5-Card Layered Panoramic Carousel Stage (Reference Image 4) */}
         <div
-          className="relative h-[460px] sm:h-[510px] md:h-[540px] w-full flex items-center justify-center select-none px-2 sm:px-6 md:px-10"
+          className="relative h-[430px] sm:h-[470px] md:h-[490px] w-full flex items-center justify-center select-none px-2 sm:px-6 md:px-10"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -334,9 +485,9 @@ const CredentialsCarousel = () => {
                 opacity: 0.76,
                 zIndex: 12,
               }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[410px] sm:h-[450px] md:h-[480px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(prev2Record, false)}
             </motion.div>
@@ -353,9 +504,9 @@ const CredentialsCarousel = () => {
                 opacity: 0.88,
                 zIndex: 22,
               }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[410px] sm:h-[450px] md:h-[480px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(prev1Record, false)}
             </motion.div>
@@ -371,8 +522,8 @@ const CredentialsCarousel = () => {
                 opacity: 1,
                 zIndex: 35,
               }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-neu-card absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[410px] sm:h-[450px] md:h-[480px] rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
+              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="glass-neu-card absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
             >
               {renderCardContent(activeRecord, true)}
             </motion.div>
@@ -389,9 +540,9 @@ const CredentialsCarousel = () => {
                 opacity: 0.88,
                 zIndex: 22,
               }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[410px] sm:h-[450px] md:h-[480px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(next1Record, false)}
             </motion.div>
@@ -408,9 +559,9 @@ const CredentialsCarousel = () => {
                 opacity: 0.76,
                 zIndex: 12,
               }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[410px] sm:h-[450px] md:h-[480px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(next2Record, false)}
             </motion.div>

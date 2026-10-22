@@ -134,33 +134,9 @@ const ProjectDeliveryFramework = () => {
           <button
             type="button"
             onClick={handleConnectClick}
-            className="
-              group shrink-0 inline-flex min-h-[48px] items-center justify-center gap-3
-              rounded-xl border px-8 py-3.5
-              font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight
-
-              border-slate-400/40
-              bg-gradient-to-r from-slate-900 via-slate-800 to-slate-500
-              text-white
-              shadow-[0_5px_14px_rgba(15,23,42,0.20)]
-
-              dark:border-white/70
-              dark:!bg-gradient-to-r dark:!from-white dark:!via-slate-100 dark:!to-slate-300
-              dark:!text-slate-900
-              dark:shadow-[0_0_18px_rgba(255,255,255,0.25)]
-
-              transition-all duration-300 ease-out
-              hover:-translate-y-0.5
-              hover:shadow-lg
-              active:translate-y-0 active:scale-[0.97]
-
-              focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-slate-500
-              dark:focus-visible:ring-white
-            "
+            className="group shrink-0 inline-flex min-h-[48px] items-center justify-center gap-3 rounded-xl border px-8 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
           >
-            <span>Let's Connect</span>
-
+            <span>Schedule a Project Discovery</span>
             <i
               className="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"
               aria-hidden="true"
