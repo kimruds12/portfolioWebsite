@@ -118,8 +118,8 @@ const RecordsSplitCarousel = ({
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-12 lg:gap-16 xl:gap-20 items-center">
 
           {/* ── LEFT COLUMN: Five-image layered certificate stage ── */}
-          <div className="min-w-0 flex items-center justify-center min-h-[390px] sm:min-h-[450px] md:min-h-[500px] relative px-2 sm:px-4 lg:pr-6">
-            <div className="relative w-full max-w-[620px] h-[340px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
+          <div className="min-w-0 flex items-center justify-center min-h-[280px] xs:min-h-[340px] sm:min-h-[450px] md:min-h-[500px] relative px-2 sm:px-4 lg:pr-6 overflow-hidden sm:overflow-visible">
+            <div className="relative w-full max-w-[620px] h-[250px] xs:h-[310px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
 
               {/* 1. FAR PREVIOUS CERTIFICATE IMAGE (-2) */}
               <motion.div
@@ -154,7 +154,7 @@ const RecordsSplitCarousel = ({
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="absolute w-[240px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden xs:block absolute w-[220px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
@@ -173,7 +173,7 @@ const RecordsSplitCarousel = ({
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="absolute w-[240px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden xs:block absolute w-[220px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
@@ -190,7 +190,7 @@ const RecordsSplitCarousel = ({
                   zIndex: 25,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-neu-card absolute w-[270px] sm:w-[340px] md:w-[390px] aspect-[16/11] shadow-2xl"
+                className="glass-neu-card absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[390px] aspect-[16/11] shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
               </motion.div>
@@ -275,20 +275,20 @@ const RecordsSplitCarousel = ({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="glass-neu-card w-full rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-6 sm:p-8 md:p-10 shadow-xl relative overflow-hidden text-left"
+            className="glass-neu-card w-full rounded-2xl sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 md:p-10 shadow-xl relative overflow-hidden text-left"
           >
             {/* Top Row: Organization / Category + Badge */}
-            <div className="flex items-center justify-between gap-3">
-              <span className="font-mono text-xs sm:text-[13px] font-medium text-[var(--text-main)] truncate">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-xs sm:text-[13px] font-medium text-[var(--text-main)] truncate max-w-[190px] min-[400px]:max-w-none">
                 {currentRecord.organization}
               </span>
-              <span className="shrink-0 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-subtle)] px-3 py-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
+              <span className="shrink-0 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-subtle)] px-2.5 sm:px-3 py-1 font-mono text-[9px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
                 {currentRecord.badge || (tabType === 'education' ? 'ACADEMIC' : 'EXPERIENCE')}
               </span>
             </div>
 
             {/* Title */}
-            <h3 className="mt-4 font-['Sora',_sans-serif] text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-main)] leading-snug">
+            <h3 className="mt-4 font-['Sora',_sans-serif] text-xl min-[400px]:text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-main)] leading-snug break-words">
               {currentRecord.title}
             </h3>
 

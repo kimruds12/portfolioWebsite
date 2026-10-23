@@ -139,15 +139,15 @@ const Skills = () => {
               About & Skills
             </span>
 
-            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.2rem,5vw,3.5rem)] font-bold leading-tight tracking-tight text-[var(--text-main)]">
-              Engineering Clean <br />Digital Systems
+            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(1.75rem,5vw,3.5rem)] font-bold leading-tight tracking-tight text-[var(--text-main)] break-words">
+              Engineering Clean <br className="hidden sm:inline" />Digital Systems
             </h2>
 
-            <p className="mt-6 text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
               I am a Front End Developer and Computer Engineering student at Pamantasan ng Lungsod ng Valenzuela. I specialize in building responsive, accessible web interfaces, component architectures, and reliable network setups.
             </p>
 
-            <p className="mt-4 text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
               By blending modern frontend tools with structured problem-solving and AI-assisted workflows, I create software experiences that feel seamless, fast, and engineered with precision.
             </p>
 
@@ -181,10 +181,10 @@ const Skills = () => {
             viewport={{ once: true, margin: '-50px' }}
             className="relative"
           >
-            <div className="glass-neu-card relative mx-auto w-full rounded-3xl p-3 sm:p-5">
+            <div className="glass-neu-card relative mx-auto w-full rounded-3xl p-2.5 sm:p-5">
               <div
                 ref={skillsViewportRef}
-                className="relative flex h-[520px] flex-col gap-6 overflow-y-auto px-2 py-[220px] scroll-smooth sm:px-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-y snap-mandatory"
+                className="relative flex h-[440px] sm:h-[520px] flex-col gap-6 overflow-y-auto px-2 py-[180px] sm:py-[220px] scroll-smooth sm:px-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-y snap-mandatory"
               >
                 {skillCategories.map((category, index) => {
                   const isActive = index === activeSkill;
@@ -197,22 +197,22 @@ const Skills = () => {
                           : 'opacity-35 scale-[0.93] blur-[1px]'
                         }`}
                     >
-                      <div className="glass-neu-card rounded-2xl p-6 sm:p-7">
-                        <div className="mb-6 flex items-center gap-4">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--text-main)] border border-[var(--border-color)] shadow-xs">
-                            <i className={`${category.icon} text-xl`} />
+                      <div className="glass-neu-card rounded-2xl p-4 sm:p-7">
+                        <div className="mb-4 sm:mb-6 flex items-center gap-3 sm:gap-4">
+                          <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--text-main)] border border-[var(--border-color)] shadow-xs shrink-0">
+                            <i className={`${category.icon} text-lg sm:text-xl`} />
                           </div>
-                          <div>
-                            <h3 className="font-['Sora',_sans-serif] text-lg font-bold text-[var(--text-main)] tracking-tight">
+                          <div className="min-w-0">
+                            <h3 className="font-['Sora',_sans-serif] text-base sm:text-lg font-bold text-[var(--text-main)] tracking-tight truncate">
                               {category.title}
                             </h3>
-                            <p className="text-xs text-[var(--text-muted)] font-mono mt-0.5">
+                            <p className="text-[11px] sm:text-xs text-[var(--text-muted)] font-mono mt-0.5 truncate">
                               {category.description}
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2.5">
+                        <div className="flex flex-wrap gap-2 sm:gap-2.5">
                           {category.skills.map((skill) => (
                             <div
                               key={skill.name}

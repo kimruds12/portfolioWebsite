@@ -60,7 +60,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
   return (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-8"
+        className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-6 md:p-8"
         role="dialog"
         aria-modal="true"
         aria-labelledby="dialog-project-title"
@@ -83,7 +83,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           onClick={(e) => e.stopPropagation()}
-          className="project-dialog-content relative z-10 w-full max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-2xl p-6 sm:p-8 md:p-10 flex flex-col justify-between"
+          className="project-dialog-content relative z-10 w-full max-w-4xl lg:max-w-5xl max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-2xl p-4 sm:p-8 md:p-10 flex flex-col justify-between"
           style={{
             scrollbarWidth: 'thin',
             scrollbarColor: 'var(--border-color) transparent',
@@ -127,7 +127,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
           <div className="mt-1">
             <h2
               id="dialog-project-title"
-              className="font-['Sora',_sans-serif] text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--text-main)] leading-tight"
+              className="font-['Sora',_sans-serif] text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--text-main)] leading-tight break-words"
             >
               {project.title}
             </h2>

@@ -84,7 +84,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
             : 'transform 380ms cubic-bezier(0.16, 1, 0.3, 1)',
           touchAction: 'pan-y',
         }}
-        className="glass-neu-card project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
+        className="@container glass-neu-card project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
       >
         <div>
           {/* Image Container with Badges */}
@@ -126,9 +126,9 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           </div>
 
           {/* Content Section */}
-          <div className="p-6">
+          <div className="p-4 @md:p-6">
             <div className="flex items-baseline justify-between gap-2">
-              <h3 className="font-['Sora',_sans-serif] text-lg font-bold text-[var(--text-main)] tracking-tight">
+              <h3 className="font-['Sora',_sans-serif] text-base @md:text-lg font-bold text-[var(--text-main)] tracking-tight break-words">
                 {project.title}
               </h3>
               {project.year && (
@@ -169,7 +169,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
         </div>
 
         {/* Action Buttons Footer */}
-        <div className="flex items-center justify-between border-t border-[var(--border-color)] px-5 py-3.5 bg-[var(--surface-soft)]/50">
+        <div className="flex items-center justify-between border-t border-[var(--border-color)] px-4 @md:px-5 py-3 @md:py-3.5 bg-[var(--surface-soft)]/50">
           <div className="flex items-center gap-2">
             {action ? (
               <a

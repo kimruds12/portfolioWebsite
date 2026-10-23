@@ -6,6 +6,8 @@ import Home from './components/home';
 import ProjectsPage from './components/ProjectsPage';
 import AboutPage from './components/AboutPage';
 import OJTExperiencePage from './components/OJTExperiencePage';
+import OJTMonthPage from './components/OJTMonthPage';
+import OJTWeekPage from './components/OJTWeekPage';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import BootLoader from './components/BootLoader';
@@ -126,6 +128,8 @@ function AppInner() {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/ojt-experience" element={<OJTExperiencePage />} />
+              <Route path="/ojt-experience/:monthSlug" element={<OJTMonthPage />} />
+              <Route path="/ojt-experience/:monthSlug/:weekSlug" element={<OJTWeekPage />} />
             </Routes>
           </PageTransition>
         </main>

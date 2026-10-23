@@ -174,7 +174,7 @@ const Navbar = () => {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-1.5 sm:py-2' : 'py-3 sm:py-4'
           }`}
       >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 min-[360px]:px-4 sm:px-6">
 
           {/* ── LEFT: Identity Pill with 5-Second Rotation ── */}
           <div className="flex items-center min-w-0 h-11">
@@ -186,14 +186,14 @@ const Navbar = () => {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 2 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex h-10 sm:h-11 items-center gap-2.5 rounded-full px-4 backdrop-blur-xl transition-all duration-300 select-none border border-[var(--border-color)] bg-[var(--surface)] shadow-md"
+                  className="flex h-10 sm:h-11 items-center gap-2 rounded-full px-3 sm:px-4 backdrop-blur-xl transition-all duration-300 select-none border border-[var(--border-color)] bg-[var(--surface)] shadow-md min-w-0"
                   style={{
                     backgroundColor: 'var(--identity-bg)',
                     borderColor: 'var(--identity-border)',
                     boxShadow: 'var(--identity-shadow)',
                   }}
                 >
-                  <span className="truncate font-['Sora',_sans-serif] text-xs sm:text-sm font-bold text-[var(--text-main)] tracking-tight">
+                  <span className="truncate max-w-[120px] min-[360px]:max-w-none font-['Sora',_sans-serif] text-xs sm:text-sm font-bold text-[var(--text-main)] tracking-tight">
                     Kim Ruds Guston
                   </span>
                   <span className="hidden sm:inline-block h-3.5 w-px bg-[var(--border-color)] opacity-70" />
@@ -376,7 +376,7 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed right-0 top-0 bottom-0 z-[70] flex w-[82vw] max-w-sm flex-col justify-between border-l border-[var(--border-color)] bg-[var(--surface)] p-6 shadow-2xl md:hidden"
+              className="fixed right-0 top-0 bottom-0 z-[70] flex w-[85vw] max-w-sm flex-col justify-between border-l border-[var(--border-color)] bg-[var(--surface)] p-4 min-[360px]:p-6 shadow-2xl md:hidden"
             >
               <div>
                 {/* Mobile Header */}

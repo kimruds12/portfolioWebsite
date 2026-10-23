@@ -60,14 +60,14 @@ const Footer = () => {
           <span className="font-['Sora',_sans-serif] text-base font-bold text-[var(--text-main)] tracking-tight">
             Connect
           </span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
             {socialLinks.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)]/50 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:border-[var(--text-muted)] transition-all shadow-xs"
+                className="flex h-10 w-10 sm:h-11 sm:w-11 min-w-[40px] min-h-[40px] items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)]/50 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:border-[var(--text-muted)] transition-all shadow-xs"
                 aria-label={item.label}
                 title={item.label}
               >

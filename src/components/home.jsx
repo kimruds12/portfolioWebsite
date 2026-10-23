@@ -116,7 +116,8 @@ const ContactRow = ({ item, isLast }) => {
   };
 
   const isActive = isHovered || isDragging;
-  const totalShift = isActive ? 20 + dragShift : 0;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const totalShift = isActive ? (isMobile ? 8 + Math.min(dragShift, 10) : 20 + dragShift) : 0;
 
   return (
     <a
@@ -259,7 +260,7 @@ const Home = () => {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="relative my-6 sm:my-8 flex items-center justify-center"
           >
-            <div className="relative flex h-[16rem] w-[16rem] sm:h-[20rem] sm:w-[20rem] lg:h-[22rem] lg:w-[22rem] items-center justify-center">
+            <div className="relative flex h-[13rem] w-[13rem] min-[360px]:h-[15rem] min-[360px]:w-[15rem] min-[420px]:h-[17rem] min-[420px]:w-[17rem] sm:h-[20rem] sm:w-[20rem] lg:h-[22rem] lg:w-[22rem] max-w-[85vw] max-h-[85vw] items-center justify-center">
               <div className="absolute inset-0 rounded-full border border-[var(--antenna-line)]" aria-hidden="true" />
               <div className="hero-orbit absolute inset-[1.25rem] sm:inset-[1.6rem] rounded-full border border-dashed border-[var(--antenna-dashed)]" aria-hidden="true" />
               <svg className="pointer-events-none absolute inset-[-0.5rem] sm:inset-[-0.75rem] h-[calc(100%+1rem)] w-[calc(100%+1rem)] sm:h-[calc(100%+1.5rem)] sm:w-[calc(100%+1.5rem)] -rotate-45" viewBox="0 0 100 100" aria-hidden="true">
@@ -286,7 +287,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="poster-wall-title text-[clamp(2.75rem,8.2vw,8.5rem)] font-black tracking-[-0.04em] uppercase text-[var(--text-main)] select-none leading-[0.9] text-center w-full"
+            className="poster-wall-title text-[clamp(1.75rem,8.2vw,8.5rem)] font-black tracking-[-0.04em] uppercase text-[var(--text-main)] select-none leading-[0.9] text-center w-full break-words"
           >
             CREATE WITHOUT LIMITS
           </motion.h1>
@@ -385,7 +386,7 @@ const Home = () => {
               Get in Touch
             </span>
 
-            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(2.4rem,5vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)]">
+            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
               Let's Connect
             </h2>
 

@@ -26,7 +26,7 @@ export const projects = [
     image: '/Assets/plv-qlib.png',
     tags: ['Tailwind CSS', 'Next.js', 'Supabase'],
     category: 'web',
-    status: 'Completed',
+    status: '',
   },
   {
     title: 'ARTA-CSS Website',
@@ -38,7 +38,7 @@ export const projects = [
     image: '/Assets/ARTA-CSS.png',
     tags: ['Tailwind CSS', 'React', 'Firebase'],
     category: 'web',
-    status: 'Completed',
+    status: '',
   },
   {
     title: 'EduManage',
@@ -50,7 +50,7 @@ export const projects = [
     image: '/Assets/edumanage_image.png',
     tags: ['Tailwind CSS', 'React', 'Firebase'],
     category: 'web',
-    status: 'Completed',
+    status: '',
   },
   {
     title: 'Amaro Resort Website',
@@ -62,7 +62,7 @@ export const projects = [
     image: '/Assets/amaro_resort.png',
     tags: ['Content Management System', 'Informational Website', 'Client-Based'],
     category: 'web',
-    status: 'Completed',
+    status: '',
   },
 
   // ── MOBILE APP ──
@@ -76,7 +76,7 @@ export const projects = [
     image: '/Assets/Mobile App.png',
     tags: ['React Native', 'Expo', 'TypeScript', 'Supabase'],
     category: 'mobile',
-    status: 'Completed',
+    status: '',
   },
 
   // ── INTERNSHIP PROJECT ──
@@ -90,7 +90,7 @@ export const projects = [
     image: '',
     tags: ['JavaScript', 'TypeScript'],
     category: 'web',
-    status: 'Completed',
+    status: '',
     isLocal: true,
   },
 
@@ -105,7 +105,7 @@ export const projects = [
     image: '/Assets/Accord .png',
     tags: ['Unity', 'C#', 'XNode'],
     category: 'game',
-    status: 'Completed',
+    status: '',
   },
   {
     title: 'Barikada Nations Unite',
@@ -117,7 +117,7 @@ export const projects = [
     image: '/Assets/Barikada.png',
     tags: ['Unity', 'C#'],
     category: 'game',
-    status: 'Completed',
+    status: '',
   },
 
   // ── JAVA PROJECTS ──
@@ -131,7 +131,7 @@ export const projects = [
     image: '/Assets/SchoolRescue.png',
     tags: ['Java', 'Swing'],
     category: 'java',
-    status: 'Completed',
+    status: '',
   },
   {
     title: 'Library Management System',
@@ -143,7 +143,7 @@ export const projects = [
     image: '/Assets/LibraryManagementSystem_Image.png',
     tags: ['Java', 'Swing', 'Inventory'],
     category: 'java',
-    status: 'Completed',
+    status: '',
   },
 
   // ── NETWORKING ──
@@ -158,7 +158,7 @@ export const projects = [
     tags: ['Cisco', 'Networking', 'VLAN'],
     category: 'networking',
     download: '/Assets/Guston_CABA.pkt',
-    status: 'Completed',
+    status: '',
   },
 
   // ── UI PROTOTYPE ──
@@ -172,7 +172,7 @@ export const projects = [
     image: '/Assets/Qastrack UI Prototype.png',
     tags: ['UI/UX', 'Prototype', 'Web Design'],
     category: 'prototype',
-    status: 'Completed',
+    status: '',
   },
 ];
 
@@ -240,7 +240,7 @@ const ProjectsPage = () => {
   return (
     <section
       id="projects-page"
-      className="min-h-screen px-4 pt-32 pb-20 sm:px-6 lg:px-8"
+      className="min-h-screen px-4 pt-24 sm:pt-32 pb-16 sm:pb-20 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
 
@@ -255,16 +255,16 @@ const ProjectsPage = () => {
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
               Portfolio Archive
             </span>
-            <h1 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)]">
+            <h1 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
               Projects
             </h1>
-            <p className="mt-3 max-w-2xl text-base text-[var(--text-muted)]">
+            <p className="mt-3 max-w-2xl text-sm sm:text-base text-[var(--text-muted)]">
               Here are some of my projects and systems that I have built across web, mobile, games, and infrastructure.
             </p>
           </div>
 
           {/* Search bar */}
-          <div className="relative w-full max-w-xs self-center md:self-end">
+          <div className="relative w-full md:max-w-xs self-start md:self-end">
             <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]" />
             <input
               type="text"
@@ -302,15 +302,15 @@ const ProjectsPage = () => {
                 type="button"
                 onClick={() => setActiveCategory(cat.key)}
                 className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition-all duration-200 min-h-[38px] ${isActive
-                    ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
-                    : 'glass-neu-pill text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                  ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
+                  : 'glass-neu-pill text-[var(--text-muted)] hover:text-[var(--text-main)]'
                   }`}
               >
                 <span>{cat.label}</span>
                 <span
                   className={`inline-flex h-4 min-w-[1.2rem] items-center justify-center rounded-full px-1 text-[10px] font-bold ${isActive
-                      ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
-                      : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
+                    ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
+                    : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
                     }`}
                 >
                   {count}

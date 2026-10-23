@@ -5,17 +5,6 @@ import RecordsSplitCarousel from './RecordsSplitCarousel';
 
 export const workExperienceRecords = [
   {
-    id: 'work-meycauayan',
-    organization: 'Meycauayan, Bulacan',
-    badge: 'OPERATIONS SUPPORT',
-    title: 'Device Asset Custodian',
-    period: 'July 2025 to August 2025',
-    location: 'Meycauayan, Bulacan',
-    description:
-      'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops for warehouse employees each shift, ensuring full device accountability and zero equipment loss. Administered device and employee ID scanning procedures to track assignments accurately, strengthen asset-control compliance, and maintain audit-ready inventory records across the sortation facility.',
-    technologies: ['Asset Control', 'Device Tracking', 'ID Verification', 'Inventory Records'],
-  },
-  {
     id: 'work-11ftc',
     organization: '11FTC Enterprises, Inc.',
     badge: 'IT TECHNICAL SUPPORT',
@@ -25,6 +14,17 @@ export const workExperienceRecords = [
     description:
       'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops while verifying employee IDs and tracking device assignments each shift. Maintained full device accountability, zero equipment loss, and accurate, audit-ready inventory records.',
     technologies: ['IT Support', 'Asset Control', 'ID Verification', 'Inventory Records'],
+  },
+  {
+    id: 'work-meycauayan',
+    organization: 'Meycauayan, Bulacan',
+    badge: 'OPERATIONS SUPPORT',
+    title: 'Device Asset Custodian',
+    period: 'June 2025 to August 2025',
+    location: 'Meycauayan, Bulacan',
+    description:
+      'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops for warehouse employees each shift, ensuring full device accountability and zero equipment loss. Administered device and employee ID scanning procedures to track assignments accurately, strengthen asset-control compliance, and maintain audit-ready inventory records across the sortation facility.',
+    technologies: ['Asset Control', 'Device Tracking', 'ID Verification', 'Inventory Records'],
   },
 ];
 
@@ -190,7 +190,7 @@ const ExperienceTabs = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="font-['Sora',_sans-serif] text-[clamp(2.2rem,4.5vw,3.4rem)] font-extrabold tracking-tight text-[var(--text-main)]">
+          <h2 className="font-['Sora',_sans-serif] text-[clamp(1.75rem,4.5vw,3.4rem)] font-extrabold tracking-tight text-[var(--text-main)] break-words">
             Experience, Education &amp; Credentials
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-xs sm:text-sm leading-relaxed text-[var(--text-muted)]">
@@ -203,7 +203,7 @@ const ExperienceTabs = () => {
           <div
             role="tablist"
             aria-label="Records categories"
-            className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-color)] shadow-xs"
+            className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-color)] shadow-xs w-full sm:w-auto"
           >
             {TABS.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -216,11 +216,10 @@ const ExperienceTabs = () => {
                   aria-controls={`panel-${tab.id}`}
                   type="button"
                   onClick={() => handleTabChange(tab.id)}
-                  className={`flex min-h-[42px] items-center gap-2.5 rounded-xl px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-                    isActive
-                      ? 'bg-[var(--text-main)] text-[var(--surface)] shadow-md'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface)]/50'
-                  }`}
+                  className={`flex min-h-[42px] items-center justify-center gap-2 rounded-xl px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] w-full min-[480px]:w-auto ${isActive
+                    ? 'bg-[var(--text-main)] text-[var(--surface)] shadow-md'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface)]/50'
+                    }`}
                 >
                   <i className={`${tab.icon} text-xs ${isActive ? 'text-[var(--surface)]' : 'opacity-70'}`} />
                   <span>{tab.label}</span>

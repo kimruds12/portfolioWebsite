@@ -61,10 +61,10 @@ const ProjectDeliveryFramework = () => {
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
             Project Delivery Framework
           </span>
-          <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2.2rem,4.8vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)]">
+          <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.75rem,4.8vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
             4-Sprint Lifecycle
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base leading-relaxed text-[var(--text-muted)]">
+          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
             Our development methodology prioritizes transparent stakeholder communication, predictable milestone tracking, and iterative feedback loops to eliminate black-box development.
           </p>
         </motion.div>
@@ -78,7 +78,7 @@ const ProjectDeliveryFramework = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true, margin: '-40px' }}
-              className="glass-neu-card flex flex-col justify-between rounded-3xl p-6 sm:p-7 border border-[var(--border-color)] bg-[var(--surface)] hover:-translate-y-1 transition-transform duration-300 shadow-lg"
+              className="glass-neu-card flex flex-col justify-between rounded-3xl p-5 sm:p-7 border border-[var(--border-color)] bg-[var(--surface)] hover:-translate-y-1 transition-transform duration-300 shadow-lg"
             >
               <div>
                 {/* Header: Number + Phase Tag */}
@@ -122,7 +122,7 @@ const ProjectDeliveryFramework = () => {
           className="mt-16 flex flex-col lg:flex-row items-center justify-between gap-6"
         >
           <div className="max-w-2xl text-center lg:text-left">
-            <h3 className="font-['Sora',_sans-serif] text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)]">
+            <h3 className="font-['Sora',_sans-serif] text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)] break-words">
               Ready to kick off development or upgrade your current stack?
             </h3>
 
@@ -134,9 +134,9 @@ const ProjectDeliveryFramework = () => {
           <button
             type="button"
             onClick={handleConnectClick}
-            className="group shrink-0 inline-flex min-h-[48px] items-center justify-center gap-3 rounded-xl border px-8 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+            className="group shrink-0 inline-flex min-h-[48px] w-full sm:w-auto items-center justify-center gap-3 rounded-xl border px-8 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
           >
-            <span>Schedule a Project Discovery</span>
+            <span>Lets Connect</span>
             <i
               className="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"
               aria-hidden="true"

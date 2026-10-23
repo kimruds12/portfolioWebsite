@@ -487,7 +487,7 @@ const CredentialsCarousel = () => {
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(prev2Record, false)}
             </motion.div>
@@ -506,7 +506,7 @@ const CredentialsCarousel = () => {
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden min-[400px]:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(prev1Record, false)}
             </motion.div>
@@ -523,7 +523,7 @@ const CredentialsCarousel = () => {
                 zIndex: 35,
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-neu-card absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
+              className="glass-neu-card absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
             >
               {renderCardContent(activeRecord, true)}
             </motion.div>
@@ -542,7 +542,7 @@ const CredentialsCarousel = () => {
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden min-[400px]:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(next1Record, false)}
             </motion.div>
@@ -561,7 +561,7 @@ const CredentialsCarousel = () => {
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
-              className="hidden sm:flex absolute w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
             >
               {renderCardContent(next2Record, false)}
             </motion.div>
