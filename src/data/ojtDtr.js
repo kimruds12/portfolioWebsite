@@ -404,12 +404,48 @@ export const internshipOverviewSections = [
     subtitle: 'SOFTWARE, HARDWARE & NETWORK INFRASTRUCTURE',
     description:
       'Leveraged standard enterprise IT management tools, operating system utilities, network diagnostic suites, and application environments to deliver prompt technical support.',
+    toolGroups: [
+      {
+        category: 'Hardware & Networking',
+        items: [
+          'PC Assembly',
+          'Hardware Maintenance',
+          'Laptop and Printer Troubleshooting',
+          'LAN Cabling',
+          'Peripheral Configuration',
+        ],
+      },
+      {
+        category: 'Operating Systems',
+        items: [
+          'Windows 10/11 Enterprise',
+          'macOS',
+        ],
+      },
+      {
+        category: 'Design Software',
+        items: [
+          'Adobe Photoshop',
+          'Adobe Illustrator',
+          'Canva',
+          'SketchUp',
+        ],
+      },
+      {
+        category: 'IT Systems & Infrastructure',
+        items: [
+          'Ticketing Management System',
+          'Sophos Firewall',
+          'FileZilla',
+          'Network-Attached Storage (NAS)',
+        ],
+      },
+    ],
     points: [
-      'Operating Systems: Windows 10 & Windows 11 Enterprise environments, Windows Administrative Tools, Registry, and Credential Manager.',
-      'Productivity & Design Software: Microsoft 365 / Office Suite, Adobe Creative Cloud, Adobe Acrobat Pro DC, and proprietary internal design packages.',
-      'Networking & Communication: DHCP / Static IP configurations, POP3 / IMAP / SMTP mail setup, LAN cabling, and enterprise network printer protocols.',
-      'Hardware Maintenance: Laptop disassembly/reassembly, RAM and SSD diagnostics, peripheral testing, and thermal paste reapplication.',
-      'Asset Management: IT inventory audit tracking, device custody logging, and documentation of technical service actions.',
+      'Hardware & Networking: PC Assembly, Hardware Maintenance, Laptop and Printer Troubleshooting, LAN Cabling, Peripheral Configuration',
+      'Operating Systems: Windows 10/11 Enterprise, macOS',
+      'Design Software: Adobe Photoshop, Adobe Illustrator, Canva, SketchUp',
+      'IT Systems & Infrastructure: Ticketing Management System, Sophos Firewall, FileZilla, Network-Attached Storage (NAS)',
     ],
   },
   {
@@ -419,6 +455,33 @@ export const internshipOverviewSections = [
     subtitle: 'PROFESSIONAL GROWTH & TECHNICAL CAPABILITIES',
     description:
       'Cultivated practical expertise in corporate IT infrastructure management, problem resolution workflows, and cross-functional user communication during the internship.',
+    skills: [
+      {
+        title: 'Systematic Troubleshooting',
+        description:
+          'Enhanced ability to isolate root causes in software conflicts, OS configuration errors, and network disconnects efficiently.',
+      },
+      {
+        title: 'Enterprise Deployment',
+        description:
+          'Mastered rapid workstation imaging, application provisioning, and standardized credential deployments.',
+      },
+      {
+        title: 'Client Communication & Empathy',
+        description:
+          'Developed clear, patient communication when assisting non-technical personnel with software and hardware hurdles.',
+      },
+      {
+        title: 'Accountability & Asset Custody',
+        description:
+          'Strengthened accuracy in auditing company assets, logging hardware turnover, and maintaining precise chain of custody records.',
+      },
+      {
+        title: 'Professional Work Ethic',
+        description:
+          'Demonstrated consistent punctuality, detailed daily time recording (DTR), and proactive support in a fast-paced retail marketing solutions enterprise.',
+      },
+    ],
     points: [
       'Systematic Troubleshooting: Enhanced ability to isolate root causes in software conflicts, OS configuration errors, and network disconnects efficiently.',
       'Enterprise Deployment: Mastered rapid workstation imaging, application provisioning, and standardized credential deployments.',

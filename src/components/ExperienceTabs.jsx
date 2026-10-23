@@ -12,7 +12,7 @@ export const workExperienceRecords = [
     period: 'June 2026 to October 2026',
     location: 'Novaliches, Quezon City',
     description:
-      'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops while verifying employee IDs and tracking device assignments each shift. Maintained full device accountability, zero equipment loss, and accurate, audit-ready inventory records.',
+      'Delivered end-user IT support by diagnosing and resolving hardware, software, printer, and network issues, maintaining IT assets, and deploying fully tested workstations to improve system reliability, minimize operational downtime, and keep business operations running smoothly.',
     technologies: ['IT Support', 'Asset Control', 'ID Verification', 'Inventory Records'],
   },
   {

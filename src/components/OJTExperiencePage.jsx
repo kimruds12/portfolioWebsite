@@ -127,9 +127,8 @@ const OJTExperiencePage = () => {
                     aria-hidden="true"
                   >
                     <i
-                      className={`fa-solid fa-chevron-down text-xs sm:text-sm text-[var(--text-main)] transition-transform duration-300 ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
+                      className={`fa-solid fa-chevron-down text-xs sm:text-sm text-[var(--text-main)] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
+                        }`}
                     />
                   </span>
                 </button>
@@ -145,12 +144,81 @@ const OJTExperiencePage = () => {
                       className="overflow-hidden"
                     >
                       <div className="px-3 sm:px-6 pb-6 pt-1">
-                        <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-soft)]/50 p-4 sm:p-5 backdrop-blur-md space-y-3">
-                          <p className="text-xs sm:text-sm text-[var(--text-main)] leading-relaxed">
-                            {section.description}
-                          </p>
+                        <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-soft)]/50 p-4 sm:p-6 backdrop-blur-md space-y-4">
+                          {/* ── Section 02: 4 Tool Groups in 2 Rows x 2 Columns with Check Circles (Image 2 Style) ── */}
+                          {section.toolGroups && section.toolGroups.length > 0 && (
+                            <div className="pt-3 border-t border-[var(--border-subtle)] grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                              {section.toolGroups.map((group, gIdx) => (
+                                <div
+                                  key={gIdx}
+                                  className="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)]/80 p-4 sm:p-5 flex flex-col justify-between shadow-xs transition-colors hover:border-[var(--text-muted)]"
+                                >
+                                  <div>
+                                    <div className="flex items-center justify-between mb-3 pb-2 border-b border-[var(--border-subtle)]">
+                                      <h4 className="font-['Sora',_sans-serif] text-xs sm:text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
+                                        {group.category}
+                                      </h4>
+                                      <span className="font-mono text-[10px] text-[var(--text-muted)] font-bold">
+                                        0{gIdx + 1}
+                                      </span>
+                                    </div>
 
-                          {section.points && section.points.length > 0 && (
+                                    <ul className="space-y-2.5 list-none">
+                                      {group.items.map((item, iIdx) => (
+                                        <li key={iIdx} className="flex items-center gap-2.5 group/item">
+                                          <span className="flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)] text-[var(--text-main)] shrink-0 transition-colors group-hover/item:border-[var(--text-main)] shadow-2xs">
+                                            <svg
+                                              className="h-2.5 w-2.5 sm:h-3 sm:w-3 stroke-current"
+                                              viewBox="0 0 24 24"
+                                              fill="none"
+                                              strokeWidth="2.5"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                            >
+                                              <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                          </span>
+                                          <span className="text-xs sm:text-sm text-[var(--text-main)] font-medium leading-tight">
+                                            {item}
+                                          </span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* ── Section 03: Skills & Competencies with Underlines & Hoverable Running Lines (Image 3 Style) ── */}
+                          {section.skills && section.skills.length > 0 && (
+                            <div className="pt-3 border-t border-[var(--border-subtle)] space-y-5">
+                              {/* Inline Tags Row (Exact Image 3 Layout with Running Underline Effect) */}
+                              <div>
+                                <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-8 gap-y-3">
+                                  {section.skills.map((skill, sIdx) => (
+                                    <div
+                                      key={sIdx}
+                                      className="group/tag relative pb-1.5 cursor-pointer select-none inline-flex items-center"
+                                    >
+                                      <span className="font-mono text-xs sm:text-sm font-semibold text-[var(--text-muted)] transition-colors duration-200 group-hover/tag:text-[var(--text-main)]">
+                                        {skill.title}
+                                      </span>
+                                      {/* Static base divider track */}
+                                      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[var(--border-color)]" />
+                                      {/* Running highlight line like Credentials section */}
+                                      <div
+                                        className="credential-running-line absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 transition-transform duration-300 ease-out group-hover/tag:scale-x-100 pointer-events-none"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Fallback Standard Points (e.g. Section 01: Roles & Responsibilities) */}
+                          {!section.toolGroups && !section.skills && section.points && section.points.length > 0 && (
                             <ul className="space-y-2 pt-2 border-t border-[var(--border-subtle)] text-xs sm:text-sm text-[var(--text-main)]/90 leading-relaxed list-none">
                               {section.points.map((pt, pIdx) => (
                                 <li key={pIdx} className="flex items-start gap-2.5">

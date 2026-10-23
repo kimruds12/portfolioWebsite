@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Home from './components/home';
@@ -130,6 +130,7 @@ function AppInner() {
               <Route path="/ojt-experience" element={<OJTExperiencePage />} />
               <Route path="/ojt-experience/:monthSlug" element={<OJTMonthPage />} />
               <Route path="/ojt-experience/:monthSlug/:weekSlug" element={<OJTWeekPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </PageTransition>
         </main>
