@@ -256,8 +256,8 @@ const Navbar = () => {
                   href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
                   className={`relative flex min-h-[38px] items-center justify-center rounded-full px-4 sm:px-5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${isActive
-                      ? 'text-[var(--nav-item-active-text)] font-bold'
-                      : 'text-[var(--nav-item-text)] hover:text-[var(--text-main)]'
+                    ? 'text-[var(--nav-item-active-text)] font-bold'
+                    : 'text-[var(--nav-item-text)] hover:text-[var(--text-main)]'
                     }`}
                   style={
                     isActive
@@ -289,7 +289,7 @@ const Navbar = () => {
               target="_blank"
               rel="noreferrer"
               title="Download Resume"
-              className="hidden md:inline-flex min-h-[38px] min-w-[44px] items-center justify-center gap-2 rounded-2xl px-5 py-2 text-xs font-bold uppercase tracking-wider backdrop-blur-xl transition-all duration-200 hover:opacity-90 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+              className="navbar-resume-btn group hidden md:inline-flex min-h-[38px] min-w-[44px] items-center justify-center gap-2 rounded-2xl px-5 py-2 text-xs font-bold uppercase tracking-wider backdrop-blur-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
               style={{
                 backgroundColor: 'var(--resume-btn-bg)',
                 color: 'var(--resume-btn-text)',
@@ -298,7 +298,8 @@ const Navbar = () => {
                 boxShadow: 'var(--resume-btn-shadow)',
               }}
             >
-              <span>Resume</span>
+              <i className="fa-solid fa-file-arrow-down text-[11px] opacity-75 transition-transform duration-200 group-hover:translate-y-0.5" />
+              <span>Download CV</span>
             </a>
 
             {/* Mobile Menu Button */}
@@ -409,8 +410,8 @@ const Navbar = () => {
                         href={link.path}
                         onClick={(e) => handleNavClick(e, link.path)}
                         className={`flex min-h-[48px] items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition-all duration-200 ${isActive
-                            ? 'text-[var(--nav-item-active-text)] font-bold'
-                            : 'text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-main)]'
+                          ? 'text-[var(--nav-item-active-text)] font-bold'
+                          : 'text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-main)]'
                           }`}
                         style={
                           isActive

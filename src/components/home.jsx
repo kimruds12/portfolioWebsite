@@ -394,16 +394,29 @@ const Home = () => {
               I am always open to collaborating on new web applications, engineering discussions, or discussing modern developer infrastructure. Feel free to reach out directly.
             </p>
 
-            <a
-              href="/Assets/2026_GUSTON_CV.pdf"
-              download="2026_GUSTON_CV.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="group mt-8 inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
-            >
-              <i className="fa-solid fa-file-arrow-down text-xs transition-transform duration-200 group-hover:translate-y-0.5" />
-              <span>Download CV</span>
-            </a>
+            <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+              <a
+                href="/Assets/2026_GUSTON_CV.pdf"
+                download="2026_GUSTON_CV.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border px-6 sm:px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+              >
+                <i className="fa-solid fa-file-arrow-down text-xs transition-transform duration-200 group-hover:translate-y-0.5" />
+                <span>Download CV</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => navigate('/about')}
+                className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-6 sm:px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
+                style={{ boxShadow: 'var(--shadow-neu-pill)' }}
+              >
+                <i className="fa-solid fa-user-astronaut text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />
+                <span>Meet the Developer</span>
+                <i className="fa-solid fa-arrow-right text-[11px] transition-transform duration-200 group-hover:translate-x-1" />
+              </button>
+            </div>
           </motion.div>
 
           {/* Right Side: Four full-width Contact Rows */}

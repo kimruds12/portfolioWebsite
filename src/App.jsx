@@ -9,7 +9,6 @@ import OJTExperiencePage from './components/OJTExperiencePage';
 import OJTMonthPage from './components/OJTMonthPage';
 import OJTWeekPage from './components/OJTWeekPage';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import BootLoader from './components/BootLoader';
 import useBootSequence from './hooks/useBootSequence';
 
@@ -79,7 +78,7 @@ function AppInner() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] custom-cursor-active transition-colors duration-250">
+    <div className="relative min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] transition-colors duration-250">
       {/* Boot Loading Screen */}
       <BootLoader
         show={phase === 'loading' || phase === 'ready'}
@@ -87,8 +86,6 @@ function AppInner() {
         isReady={isReady}
         onExitComplete={completeExit}
       />
-
-      <CustomCursor />
 
       {/* Ambient background */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">

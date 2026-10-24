@@ -15,10 +15,16 @@ const Contact = () => {
                         I enjoy working with others, sharing what I know, and getting things done — from writing code to planning projects, managing tasks, and making sure everything runs smoothly from start to finish.
                     </p>
 
-                    <a href="/Assets/2026_GUSTON_CV.pdf" download="2026_GUSTON_CV.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
-                        <i className="fa-solid fa-file-lines"></i>
-                        Download CV
-                    </a>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <a href="/Assets/2026_GUSTON_CV.pdf" download="2026_GUSTON_CV.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
+                            <i className="fa-solid fa-file-lines"></i>
+                            Download CV
+                        </a>
+                        <a href="/about" className="inline-flex items-center gap-3 px-6 py-3 bg-transparent hover:bg-white/5 border border-gray-700 text-white transition-colors text-sm font-medium">
+                            <i className="fa-solid fa-user-astronaut"></i>
+                            Meet the Developer
+                        </a>
+                    </div>
                 </div>
 
                 {/* Right Side */}

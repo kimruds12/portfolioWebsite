@@ -3,6 +3,18 @@ import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } fro
 import { getTagConfig } from './ProjectsPage';
 import { getProjectAction } from './ProjectDetailsDialog';
 
+const getCategoryLabel = (project) => {
+  if (project.isLocal) return 'LOCAL SYSTEM';
+  if (project.meta && project.meta.toLowerCase().includes('academic')) return 'SCHOOL PROJECTS';
+  if (project.category === 'web') return 'WEB APPLICATIONS';
+  if (project.category === 'mobile') return 'MOBILE APPS';
+  if (project.category === 'game') return 'GAME PROJECTS';
+  if (project.category === 'java') return 'JAVA PROJECTS';
+  if (project.category === 'networking') return 'NETWORKING';
+  if (project.category === 'prototype') return 'UI PROTOTYPE';
+  return project.category ? project.category.toUpperCase() : 'PROJECT';
+};
+
 const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   const wrapperRef = useRef(null);
   const detailsBtnRef = useRef(null);
@@ -18,11 +30,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   const mouseYSpring = useSpring(y, springConfig);
   const translateY = useSpring(translateYTarget, springConfig);
 
-  // Exact tilt mapping matching direction specifications:
-  // Upper right: rotateX > 0, rotateY > 0
-  // Lower right: rotateX < 0, rotateY > 0
-  // Upper left:  rotateX > 0, rotateY < 0
-  // Lower left:  rotateX < 0, rotateY < 0
+  // Exact tilt mapping
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [6, -6]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-6, 6]);
 
@@ -53,6 +61,11 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   };
 
   const action = getProjectAction(project);
+  const hasGithub = Boolean(project.href && project.href.includes('github.com'));
+  const isWebsite = Boolean(
+    project.title === 'PLV-QLib' ||
+    (project.href && !project.href.includes('github.com') && !project.isLocal)
+  );
 
   return (
     <motion.div
@@ -74,12 +87,12 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           rotateY: shouldReduceMotion ? 0 : rotateY,
           y: shouldReduceMotion ? 0 : translateY,
         }}
-        className="@container glass-neu-card project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
+        className="@container project-card-container project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
       >
-        <div>
-          {/* Image Container with Badges */}
+        <div className="flex flex-col flex-1">
+          {/* Image Container */}
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
-            <div className="absolute inset-[6px] overflow-hidden rounded-2xl">
+            <div className="absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
               {project.image ? (
                 <img
                   src={project.image}
@@ -95,50 +108,54 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                 <div className="flex h-full w-full items-center justify-center p-6 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-2xl">
                   <div className="flex flex-col items-center gap-3">
                     <i className="fa-solid fa-laptop-code text-4xl opacity-40" />
-                    <span className="text-xs font-mono opacity-60">Local System</span>
+                    <span className="text-xs font-mono opacity-70">Local System</span>
                   </div>
                 </div>
-              )}
-            </div>
-
-            {/* Badges Overlay */}
-            <div className="absolute inset-x-3 top-3 flex items-center justify-between pointer-events-none">
-              <span className="rounded-full border border-[var(--border-color)] bg-[var(--surface)]/90 px-2.5 py-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--text-main)] backdrop-blur-md">
-                {project.isLocal ? 'LOCAL' : (project.category ? project.category.toUpperCase() : 'PROJECT')}
-              </span>
-              {project.status && (
-                <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-500 backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  {project.status}
-                </span>
               )}
             </div>
           </div>
 
           {/* Content Section */}
-          <div className="p-4 @md:p-6">
+          <div className="p-4 sm:p-5 @md:p-6 flex flex-col flex-1">
+            {/* Badges Row placed directly below Image */}
+            <div className="flex items-center justify-between gap-2 mb-3">
+              {/* Category Pill */}
+              <span className="project-card-category inline-flex items-center rounded-md px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-xs transition-colors">
+                {getCategoryLabel(project)}
+              </span>
+
+              {/* Status Pill with Pulsing Indicator */}
+              <span className="project-card-status inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-semibold shadow-xs transition-colors">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{project.status || 'Completed'}</span>
+              </span>
+            </div>
+
+            {/* Title & Year */}
             <div className="flex items-baseline justify-between gap-2">
-              <h3 className="font-['Sora',_sans-serif] text-base @md:text-lg font-bold text-[var(--text-main)] tracking-tight break-words">
+              <h3 className="project-card-title font-['Sora',_sans-serif] text-base sm:text-lg @md:text-xl font-extrabold tracking-tight break-words transition-colors">
                 {project.title}
               </h3>
               {project.year && (
-                <span className="font-mono text-xs text-[var(--text-muted)] shrink-0">
+                <span className="font-mono text-xs opacity-60 shrink-0">
                   {project.year}
                 </span>
               )}
             </div>
 
+            {/* Subtitle / Meta */}
             {project.meta && (
-              <p className="mt-1 text-xs font-medium text-[var(--text-muted)] line-clamp-1">
+              <p className="project-card-meta mt-1 text-xs sm:text-[13px] font-semibold line-clamp-1 leading-snug transition-colors">
                 {project.meta}
               </p>
             )}
 
-            <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] line-clamp-3">
+            {/* Description */}
+            <p className="project-card-desc mt-2.5 text-xs sm:text-[13px] leading-relaxed line-clamp-3 transition-colors">
               {project.description}
             </p>
 
-            {/* Tech Tags */}
+            {/* Tech Tags / Icons */}
             {project.tags && project.tags.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => {
@@ -146,7 +163,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                   return (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-soft)] px-2.5 py-1 text-[11px] font-mono text-[var(--text-main)] shadow-2xs"
+                      className="project-card-tag inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-mono shadow-2xs transition-colors"
                     >
                       <i className={`${config.icon} text-xs shrink-0`} style={{ color: config.color }} />
                       <span>{tag}</span>
@@ -159,23 +176,49 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
         </div>
 
         {/* Action Buttons Footer */}
-        <div className="flex items-center justify-between border-t border-[var(--border-color)] px-4 @md:px-5 py-3 @md:py-3.5 bg-[var(--surface-soft)]/50 relative z-20">
+        <div className="project-card-footer flex items-center justify-between px-4 @md:px-5 py-3 @md:py-3.5 relative z-20 transition-colors">
           <div className="flex items-center gap-2">
-            {action ? (
+            {isWebsite && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+              >
+                <span>Live</span>
+                <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+              </a>
+            )}
+
+            {hasGithub && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+              >
+                <i className="fa-brands fa-github text-xs" />
+                <span>Source</span>
+              </a>
+            )}
+
+            {!isWebsite && !hasGithub && action && (
               <a
                 href={action.href}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90 shadow-xs transition-opacity cursor-pointer relative z-20"
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
                 <i className={`${action.icon} text-[10px]`} />
                 <span>{action.label}</span>
               </a>
-            ) : null}
+            )}
           </div>
 
-          {/* Details Action Button - opens modal */}
+          {/* Details Action Button */}
           <button
             ref={detailsBtnRef}
             type="button"
@@ -183,7 +226,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               e.stopPropagation();
               onOpenDetails?.(project, detailsBtnRef);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20"
+            className="project-card-details inline-flex items-center gap-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20"
             aria-label={`View details for ${project.title}`}
           >
             <span>Details</span>

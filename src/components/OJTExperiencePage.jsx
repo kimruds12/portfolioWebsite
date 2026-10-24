@@ -54,7 +54,7 @@ const OJTExperiencePage = () => {
           </button>
 
           <span className="font-mono text-[11px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider break-words">
-            11FTC ENTERPRISES, INC. // OJT DTR FOLDER FLOW
+            OJT DOCUMENTATION
           </span>
         </div>
 

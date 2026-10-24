@@ -406,25 +406,6 @@ textarea {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  .custom-cursor-active,
-  .custom-cursor-active * {
-    cursor: auto !important;
-  }
-}
-
-/* ── Custom Cursor Styles ── */
-@media (hover: hover) and (pointer: fine) {
-
-  .custom-cursor-active,
-  .custom-cursor-active *,
-  .custom-cursor-active a,
-  .custom-cursor-active button,
-  .custom-cursor-active input,
-  .custom-cursor-active textarea,
-  .custom-cursor-active [role="button"] {
-    cursor: none !important;
-  }
 }
 
 /* ── Floating Let's Connect Circle Button ── */
@@ -602,6 +583,283 @@ html.theme-light .credential-running-line {
   background-color: #0f172a;
   box-shadow: 0 0 4px rgba(15, 23, 42, 0.35);
 }
+
+/* ── Project Cards High-Contrast Solid Surface (Image 4 Dark Mode & Image 3 Light Mode) ── */
+.project-card-container {
+  background-color: #111622 !important;
+  border: 1px solid rgba(51, 65, 85, 0.7) !important;
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+.project-card-category {
+  background-color: #161c28 !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  color: #cbd5e1 !important;
+}
+
+.project-card-status {
+  background-color: rgba(6, 78, 59, 0.4) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
+}
+
+.project-card-title {
+  color: #ffffff !important;
+}
+
+.project-card-meta {
+  color: #e2e8f0 !important;
+}
+
+.project-card-desc {
+  color: #94a3b8 !important;
+}
+
+.project-card-tag {
+  background-color: #161c28 !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  color: #e2e8f0 !important;
+}
+
+.project-card-footer {
+  background-color: rgba(13, 18, 28, 0.95) !important;
+  border-top: 1px solid rgba(51, 65, 85, 0.7) !important;
+}
+
+.project-card-btn {
+  background-color: #161c28 !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+  color: #ffffff !important;
+}
+
+.project-card-btn:hover {
+  background-color: #1e2638 !important;
+  border-color: rgba(100, 116, 139, 0.6) !important;
+}
+
+.project-card-details {
+  color: #94a3b8 !important;
+}
+
+.project-card-details:hover {
+  color: #ffffff !important;
+}
+
+/* ── Light Mode (.theme-light / html.theme-light) - Matching Image 3 ── */
+.theme-light .project-card-container,
+html.theme-light .project-card-container {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.95) !important;
+  box-shadow: 0 12px 28px -10px rgba(148, 163, 184, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.theme-light .project-card-category,
+html.theme-light .project-card-category {
+  background-color: #eef2f6 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+.theme-light .project-card-status,
+html.theme-light .project-card-status {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+.theme-light .project-card-title,
+html.theme-light .project-card-title {
+  color: #0f172a !important;
+}
+
+.theme-light .project-card-meta,
+html.theme-light .project-card-meta {
+  color: #334155 !important;
+}
+
+.theme-light .project-card-desc,
+html.theme-light .project-card-desc {
+  color: #475569 !important;
+}
+
+.theme-light .project-card-tag,
+html.theme-light .project-card-tag {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+.theme-light .project-card-footer,
+html.theme-light .project-card-footer {
+  background-color: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+.theme-light .project-card-btn,
+html.theme-light .project-card-btn {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+.theme-light .project-card-btn:hover,
+html.theme-light .project-card-btn:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+
+.theme-light .project-card-details,
+html.theme-light .project-card-details {
+  color: #64748b !important;
+}
+
+.theme-light .project-card-details:hover,
+html.theme-light .project-card-details:hover {
+  color: #0f172a !important;
+}
+
+/* ── Interactive Navbar Resume / Download CV Button Hover Effect (Image 5) ── */
+.navbar-resume-btn {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.navbar-resume-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 255, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.navbar-resume-btn:active {
+  transform: translateY(0px) scale(0.96);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+.theme-light .navbar-resume-btn:hover,
+html.theme-light .navbar-resume-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(166, 180, 200, 0.55), -2px -2px 10px rgba(255, 255, 255, 0.95), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+  border-color: rgba(148, 163, 184, 0.8) !important;
+}
+
+.theme-light .navbar-resume-btn:active,
+html.theme-light .navbar-resume-btn:active {
+  transform: translateY(0px) scale(0.96);
+  box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.45) !important;
+}
+
+/* ── Credentials Carousel Theme Adaptive System (Matching Reference Images 1 & 5) ── */
+.credential-card-active {
+  background-color: #111726 !important;
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+}
+
+.credential-card-side {
+  background-color: #0d121c !important;
+  border: 1px solid rgba(51, 65, 85, 0.75) !important;
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75) !important;
+}
+
+.credential-card-title {
+  color: #ffffff !important;
+}
+
+.credential-card-eyebrow {
+  color: #94a3b8 !important;
+}
+
+.credential-card-preview {
+  background-color: #0d121c !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+.credential-tag-text {
+  color: #cbd5e1 !important;
+}
+
+.credential-tag-arrow {
+  color: #94a3b8 !important;
+}
+
+.credential-tag-track {
+  background-color: rgba(51, 65, 85, 0.7) !important;
+}
+
+.credential-view-cert-btn {
+  color: #cbd5e1 !important;
+}
+
+.credential-view-cert-btn:hover {
+  color: #ffffff !important;
+}
+
+/* ── Light Mode for Credentials (Image 1 fix) ── */
+.theme-light .credential-card-active,
+html.theme-light .credential-card-active {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.95) !important;
+  box-shadow: 0 20px 40px -12px rgba(148, 163, 184, 0.45), 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+.theme-light .credential-card-side,
+html.theme-light .credential-card-side {
+  background-color: #f8fafc !important;
+  border: 1px solid rgba(203, 213, 225, 0.95) !important;
+  box-shadow: 0 14px 30px -10px rgba(148, 163, 184, 0.4), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.theme-light .credential-card-title,
+html.theme-light .credential-card-title {
+  color: #0f172a !important;
+}
+
+.theme-light .credential-card-eyebrow,
+html.theme-light .credential-card-eyebrow {
+  color: #64748b !important;
+}
+
+.theme-light .credential-card-preview,
+html.theme-light .credential-card-preview {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.theme-light .credential-tag-text,
+html.theme-light .credential-tag-text {
+  color: #334155 !important;
+}
+
+.theme-light .credential-tag-text-hover,
+html.theme-light .credential-tag-text-hover {
+  color: #0f172a !important;
+}
+
+.theme-light .credential-tag-arrow,
+html.theme-light .credential-tag-arrow {
+  color: #64748b !important;
+}
+
+.theme-light .credential-tag-arrow-hover,
+html.theme-light .credential-tag-arrow-hover {
+  color: #0f172a !important;
+}
+
+.theme-light .credential-tag-track,
+html.theme-light .credential-tag-track {
+  background-color: #e2e8f0 !important;
+}
+
+.theme-light .credential-view-cert-btn,
+html.theme-light .credential-view-cert-btn {
+  color: #334155 !important;
+}
+
+.theme-light .credential-view-cert-btn:hover,
+html.theme-light .credential-view-cert-btn:hover {
+  color: #0f172a !important;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .project-tilt-card,

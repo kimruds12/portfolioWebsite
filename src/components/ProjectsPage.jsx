@@ -87,7 +87,7 @@ export const projects = [
     description: 'Built a local IT ticket management system for tracking issues, assigning solutions, and monitoring ongoing support requests. It also manages company devices and maintains accurate, audit-ready records for scanners, phones, and laptops.',
     role: 'Developer — Designed and built the full local system covering ticket lifecycle management, device inventory tracking, and audit-ready record keeping for the internship IT department.',
     href: 'https://github.com/kimruds12/11FTCTicketingManagementSystem',
-    image: '',
+    image: '/Assets/11FTCTicketingManagement.jpg',
     tags: ['JavaScript', 'TypeScript'],
     category: 'web',
     status: '',
