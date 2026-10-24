@@ -1,63 +1,65 @@
-import { useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import { getTagConfig } from './ProjectsPage';
 import { getProjectAction } from './ProjectDetailsDialog';
 
 const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
-  const cardRef = useRef(null);
+  const wrapperRef = useRef(null);
   const detailsBtnRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, translateY: 0, isActive: false });
+  // Framer Motion spring physics for ultra-smooth 60fps/120fps hardware-accelerated 3D tilt
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const translateYTarget = useMotionValue(0);
 
-  const updateTilt = (clientX, clientY) => {
-    if (shouldReduceMotion || !cardRef.current) return;
+  const springConfig = { stiffness: 260, damping: 26, mass: 0.4 };
+  const mouseXSpring = useSpring(x, springConfig);
+  const mouseYSpring = useSpring(y, springConfig);
+  const translateY = useSpring(translateYTarget, springConfig);
 
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (clientX - rect.left) / rect.width - 0.5; // -0.5 (left) to 0.5 (right)
-    const y = (clientY - rect.top) / rect.height - 0.5; // -0.5 (upper) to 0.5 (lower)
-
-    // Direction matching specification:
-    // Upper right (y < 0, x > 0): rotateX > 0, rotateY > 0 -> tilts upward and right
-    // Upper left (y < 0, x < 0): rotateX > 0, rotateY < 0 -> tilts upward and left
-    // Lower right (y > 0, x > 0): rotateX < 0, rotateY > 0 -> tilts downward and right
-    // Lower left (y > 0, x < 0): rotateX < 0, rotateY < 0 -> tilts downward and left
-    const maxRot = 6;
-    const rotateX = -y * maxRot * 2;
-    const rotateY = x * maxRot * 2;
-    const clampedRotateX = Math.max(-maxRot, Math.min(maxRot, rotateX));
-    const clampedRotateY = Math.max(-maxRot, Math.min(maxRot, rotateY));
-
-    setTilt({
-      rotateX: clampedRotateX,
-      rotateY: clampedRotateY,
-      translateY: -5,
-      isActive: true,
-    });
-  };
+  // Exact tilt mapping matching direction specifications:
+  // Upper right: rotateX > 0, rotateY > 0
+  // Lower right: rotateX < 0, rotateY > 0
+  // Upper left:  rotateX > 0, rotateY < 0
+  // Lower left:  rotateX < 0, rotateY < 0
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-6, 6]);
 
   const handlePointerMove = (e) => {
-    // Do not tilt while a button, link, tag, or Details action is being hovered/clicked
-    if (e.target.closest('button, a, input, select, [role="button"]')) {
-      setTilt({ rotateX: 0, rotateY: 0, translateY: 0, isActive: false });
-      return;
-    }
-    updateTilt(e.clientX, e.clientY);
+    if (shouldReduceMotion || e.pointerType === 'touch' || !wrapperRef.current) return;
+
+    // Use stable untransformed wrapper bounds to eliminate corner edge jitter
+    const rect = wrapperRef.current.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+
+    const normX = Math.max(-0.5, Math.min(0.5, (e.clientX - rect.left) / rect.width - 0.5));
+    const normY = Math.max(-0.5, Math.min(0.5, (e.clientY - rect.top) / rect.height - 0.5));
+
+    x.set(normX);
+    y.set(normY);
+    translateYTarget.set(-6);
   };
 
-  const handlePointerDown = (e) => {
-    if (e.target.closest('button, a, input, select, [role="button"]')) return;
-    updateTilt(e.clientX, e.clientY);
+  const handlePointerEnter = (e) => {
+    if (shouldReduceMotion || e.pointerType === 'touch') return;
+    translateYTarget.set(-6);
   };
 
-  const handleReset = () => {
-    setTilt({ rotateX: 0, rotateY: 0, translateY: 0, isActive: false });
+  const handlePointerLeave = () => {
+    x.set(0);
+    y.set(0);
+    translateYTarget.set(0);
   };
 
   const action = getProjectAction(project);
 
   return (
     <motion.div
+      ref={wrapperRef}
+      onPointerMove={handlePointerMove}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
@@ -65,24 +67,12 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
       className="w-full h-full"
       style={{ perspective: 1000 }}
     >
-      <article
-        ref={cardRef}
-        onPointerMove={handlePointerMove}
-        onPointerDown={handlePointerDown}
-        onPointerLeave={handleReset}
-        onPointerUp={handleReset}
-        onPointerCancel={handleReset}
+      <motion.article
         style={{
           transformStyle: 'preserve-3d',
-          transform: shouldReduceMotion
-            ? 'none'
-            : tilt.isActive
-            ? `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) translateY(${tilt.translateY}px)`
-            : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
-          transition: tilt.isActive
-            ? 'transform 100ms ease-out'
-            : 'transform 380ms cubic-bezier(0.16, 1, 0.3, 1)',
-          touchAction: 'pan-y',
+          rotateX: shouldReduceMotion ? 0 : rotateX,
+          rotateY: shouldReduceMotion ? 0 : rotateY,
+          y: shouldReduceMotion ? 0 : translateY,
         }}
         className="@container glass-neu-card project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
       >
@@ -169,14 +159,15 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
         </div>
 
         {/* Action Buttons Footer */}
-        <div className="flex items-center justify-between border-t border-[var(--border-color)] px-4 @md:px-5 py-3 @md:py-3.5 bg-[var(--surface-soft)]/50">
+        <div className="flex items-center justify-between border-t border-[var(--border-color)] px-4 @md:px-5 py-3 @md:py-3.5 bg-[var(--surface-soft)]/50 relative z-20">
           <div className="flex items-center gap-2">
             {action ? (
               <a
                 href={action.href}
                 target="_blank"
                 rel="noreferrer"
-                className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90 shadow-xs transition-opacity"
+                onClick={(e) => e.stopPropagation()}
+                className="glass-neu-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-[var(--text-main)] hover:opacity-90 shadow-xs transition-opacity cursor-pointer relative z-20"
               >
                 <i className={`${action.icon} text-[10px]`} />
                 <span>{action.label}</span>
@@ -192,14 +183,14 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               e.stopPropagation();
               onOpenDetails?.(project, detailsBtnRef);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-1 py-0.5"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20"
             aria-label={`View details for ${project.title}`}
           >
             <span>Details</span>
             <i className="fa-solid fa-arrow-right text-[10px]" />
           </button>
         </div>
-      </article>
+      </motion.article>
     </motion.div>
   );
 };
