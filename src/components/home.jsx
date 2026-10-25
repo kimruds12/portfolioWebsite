@@ -65,7 +65,7 @@ const ContactRow = ({ item, isLast }) => {
 
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
-    } catch (_) {}
+    } catch (_) { }
   };
 
   const handlePointerMove = (e) => {
@@ -136,9 +136,8 @@ const ContactRow = ({ item, isLast }) => {
         handlePointerEnd();
       }}
       onClick={handleClick}
-      className={`contact-drag-row group relative flex min-h-[58px] sm:min-h-[64px] items-center justify-between px-3 sm:px-5 py-3 border-b border-[var(--border-color)] bg-transparent select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-        isLast ? 'border-b-0' : ''
-      }`}
+      className={`contact-drag-row group relative flex min-h-[58px] sm:min-h-[64px] items-center justify-between px-3 sm:px-5 py-3 border-b border-[var(--border-color)] bg-transparent select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${isLast ? 'border-b-0' : ''
+        }`}
       style={{
         touchAction: 'pan-y',
       }}
@@ -184,11 +183,10 @@ const ContactRow = ({ item, isLast }) => {
         {/* Arrow-up-right icon on the right (turns blue just like in Image 2) */}
         <div className="flex w-8 shrink-0 items-center justify-end">
           <i
-            className={`fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm transition-all duration-300 ${
-              isActive
-                ? 'text-sky-400 translate-x-0.5 -translate-y-0.5'
-                : 'text-[var(--text-muted)]'
-            }`}
+            className={`fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm transition-all duration-300 ${isActive
+              ? 'text-sky-400 translate-x-0.5 -translate-y-0.5'
+              : 'text-[var(--text-muted)]'
+              }`}
           />
         </div>
       </div>
@@ -319,14 +317,11 @@ const Home = () => {
             viewport={{ once: true, margin: '-50px' }}
             className="text-center mb-14"
           >
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-              Portfolio
-            </span>
             <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2rem,4.5vw,3.2rem)] font-bold tracking-tight text-[var(--text-main)]">
               Recent Projects
             </h2>
             <p className="mt-3 max-w-xl mx-auto text-base text-[var(--text-muted)]">
-              A selection of my most recent work spanning web, mobile, and local systems.
+              A collection of my recent web and mobile application development projects.
             </p>
           </motion.div>
 
@@ -391,7 +386,7 @@ const Home = () => {
             </h2>
 
             <p className="mt-4 max-w-lg text-base leading-relaxed text-[var(--text-muted)]">
-              I am always open to collaborating on new web applications, engineering discussions, or discussing modern developer infrastructure. Feel free to reach out directly.
+              I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric oeprations. Feel free to reach out.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">

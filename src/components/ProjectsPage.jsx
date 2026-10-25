@@ -252,14 +252,11 @@ const ProjectsPage = () => {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-              Portfolio Archive
-            </span>
             <h1 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
-              Projects
+              PROJECTS
             </h1>
             <p className="mt-3 max-w-2xl text-sm sm:text-base text-[var(--text-muted)]">
-              Here are some of my projects and systems that I have built across web, mobile, games, and infrastructure.
+              Here are some of my works, including web and mobile apps, games, and network configurations.
             </p>
           </div>
 

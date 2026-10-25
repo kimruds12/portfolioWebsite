@@ -101,7 +101,7 @@ export function BootLoader({ show, progress, isReady, onExitComplete }) {
               className="mb-8 sm:mb-10"
             >
               <p className="font-['Space_Grotesk',_sans-serif] text-[11px] font-semibold tracking-[0.25em] text-[#8EA8C4] uppercase sm:text-xs sm:tracking-[0.3em]">
-                AI ENGINEER AND FRONT END DEVELOPER
+                FRONT END DEVELOPER
               </p>
             </motion.div>
 

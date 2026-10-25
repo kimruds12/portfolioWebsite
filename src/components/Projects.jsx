@@ -60,14 +60,11 @@ const Projects = () => {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-              Portfolio
-            </span>
             <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)]">
               Projects
             </h2>
             <p className="mt-3 max-w-2xl text-base text-[var(--text-muted)]">
-              Here are some of my projects and systems that I have built across web, mobile, games, and infrastructure.
+              Here are some of my works, including web and mobile apps, games, and network configurations.
             </p>
           </div>
 
@@ -105,19 +102,17 @@ const Projects = () => {
                 key={category.key}
                 type="button"
                 onClick={() => setActiveCategory(category.key)}
-                className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-                  isActive
-                    ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
-                    : 'bg-[var(--surface)] border border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--text-muted)] hover:text-[var(--text-main)] shadow-xs'
-                }`}
+                className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${isActive
+                  ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
+                  : 'bg-[var(--surface)] border border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--text-muted)] hover:text-[var(--text-main)] shadow-xs'
+                  }`}
               >
                 <span>{category.label}</span>
                 <span
-                  className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${
-                    isActive
-                      ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
-                      : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
-                  }`}
+                  className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${isActive
+                    ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
+                    : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
+                    }`}
                 >
                   {count}
                 </span>

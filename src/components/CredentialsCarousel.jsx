@@ -186,25 +186,22 @@ const CredentialsCarousel = () => {
       <div
         onMouseEnter={() => isCenterCard && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`group relative min-w-0 pb-2 select-none ${
-          isCenterCard ? 'cursor-pointer' : ''
-        } ${className}`}
+        className={`group relative min-w-0 pb-2 select-none ${isCenterCard ? 'cursor-pointer' : ''
+          } ${className}`}
       >
         <div className="flex items-center justify-between gap-2">
           <span
-            className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${
-              isHovered ? 'credential-tag-text-hover' : ''
-            }`}
+            className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${isHovered ? 'credential-tag-text-hover' : ''
+              }`}
           >
             {label}
           </span>
 
           <i
-            className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${
-              isHovered
+            className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${isHovered
                 ? 'credential-tag-arrow-hover translate-x-0.5'
                 : ''
-            }`}
+              }`}
             aria-hidden="true"
           />
         </div>
@@ -321,18 +318,16 @@ const CredentialsCarousel = () => {
             e.stopPropagation();
             openCertificate(record, e.currentTarget);
           }}
-          className={`credential-card-preview group relative mt-2 mb-1 aspect-[16/10] w-full rounded-xl overflow-hidden border flex items-center justify-center p-1.5 shadow-inner transition-all ${
-            isCenter ? 'cursor-zoom-in' : 'cursor-pointer'
-          }`}
+          className={`credential-card-preview group relative mt-2 mb-1 aspect-[16/10] w-full rounded-xl overflow-hidden border flex items-center justify-center p-1.5 shadow-inner transition-all ${isCenter ? 'cursor-zoom-in' : 'cursor-pointer'
+            }`}
           title={isCenter ? 'Click to enlarge certificate' : 'Click to select credential'}
         >
           <img
             src={record.image}
             alt={record.imageAlt || record.title}
             loading={isCenter ? 'eager' : 'lazy'}
-            className={`h-full w-full object-contain transition-transform duration-300 ${
-              isCenter ? 'group-hover:scale-105' : ''
-            }`}
+            className={`h-full w-full object-contain transition-transform duration-300 ${isCenter ? 'group-hover:scale-105' : ''
+              }`}
           />
           {/* Hover Enlarge Badge ONLY on Center Card */}
           {isCenter && (
@@ -371,14 +366,11 @@ const CredentialsCarousel = () => {
           viewport={{ once: true }}
           className="text-center mb-8 sm:mb-12"
         >
-          <span className="font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-            02 / Accomplishments
-          </span>
           <h2 className="mt-2 font-['Sora',_sans-serif] text-[clamp(1.8rem,4vw,2.75rem)] font-extrabold tracking-tight text-[var(--text-main)] uppercase">
             Achievements &amp; Credentials
           </h2>
           <p className="mt-2 max-w-lg mx-auto text-xs sm:text-sm text-[var(--text-muted)]">
-            A selection of certifications, awards, and technical milestones.
+            A collection of certifications, achievements, and technical accomplishments that reflect continuous learning and skill development. Click the side cards, use the arrows, or swipe to explore the collection.
           </p>
         </motion.div>
 

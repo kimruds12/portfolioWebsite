@@ -136,19 +136,15 @@ const Skills = () => {
             className="flex flex-col items-center text-center lg:items-start lg:text-left"
           >
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-              About & Skills
+              TECH STACK
             </span>
 
             <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(1.75rem,5vw,3.5rem)] font-bold leading-tight tracking-tight text-[var(--text-main)] break-words">
-              Engineering Clean <br className="hidden sm:inline" />Digital Systems
+              Skills & Technologies
             </h2>
 
             <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
-              I am a Front End Developer and Computer Engineering student at Pamantasan ng Lungsod ng Valenzuela. I specialize in building responsive, accessible web interfaces, component architectures, and reliable network setups.
-            </p>
-
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
-              By blending modern frontend tools with structured problem-solving and AI-assisted workflows, I create software experiences that feel seamless, fast, and engineered with precision.
+              A collection of technologies and tools that support my development work. Scroll through the skill categories to explore my technical proficiencies and experience.
             </p>
 
             {/* Quick Indicators for Scroll list */}
@@ -165,8 +161,8 @@ const Skills = () => {
                   }}
                   aria-label={`Jump to ${skillCategories[idx].title}`}
                   className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSkill
-                      ? 'w-8 bg-[var(--text-main)]'
-                      : 'w-2 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
+                    ? 'w-8 bg-[var(--text-main)]'
+                    : 'w-2 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
                     }`}
                 />
               ))}
@@ -193,8 +189,8 @@ const Skills = () => {
                       key={category.title}
                       ref={(el) => (skillCardRefs.current[index] = el)}
                       className={`snap-center transition-all duration-500 ease-out ${isActive
-                          ? 'opacity-100 scale-100'
-                          : 'opacity-35 scale-[0.93] blur-[1px]'
+                        ? 'opacity-100 scale-100'
+                        : 'opacity-35 scale-[0.93] blur-[1px]'
                         }`}
                     >
                       <div className="glass-neu-card rounded-2xl p-4 sm:p-7">
