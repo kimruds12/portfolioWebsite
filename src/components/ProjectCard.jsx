@@ -1,5 +1,11 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useMotionTemplate,
+} from 'framer-motion';
 import { getTagConfig } from './ProjectsPage';
 import { getProjectAction } from './ProjectDetailsDialog';
 
@@ -18,46 +24,83 @@ const getCategoryLabel = (project) => {
 const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   const wrapperRef = useRef(null);
   const detailsBtnRef = useRef(null);
-  const shouldReduceMotion = useReducedMotion();
 
-  // Framer Motion spring physics for ultra-smooth 60fps/120fps hardware-accelerated 3D tilt
+  // Framer Motion spring physics for ultra-smooth hardware-accelerated 3D tilt
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const translateYTarget = useMotionValue(0);
+  const scaleTarget = useMotionValue(1);
+  const glareOpacityTarget = useMotionValue(0);
 
-  const springConfig = { stiffness: 260, damping: 26, mass: 0.4 };
+  const springConfig = { stiffness: 280, damping: 22, mass: 0.35 };
   const mouseXSpring = useSpring(x, springConfig);
   const mouseYSpring = useSpring(y, springConfig);
   const translateY = useSpring(translateYTarget, springConfig);
+  const scale = useSpring(scaleTarget, springConfig);
+  const glareOpacity = useSpring(glareOpacityTarget, { stiffness: 200, damping: 25 });
 
-  // Exact tilt mapping
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [6, -6]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-6, 6]);
+  // 3D rotation angles (up to ±10 degrees for distinct, clear perspective)
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-10, 10]);
 
-  const handlePointerMove = (e) => {
-    if (shouldReduceMotion || e.pointerType === 'touch' || !wrapperRef.current) return;
+  // Interactive dynamic specular glare highlight
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ['0%', '100%']);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ['0%', '100%']);
+  const glareBackground = useMotionTemplate`radial-gradient(circle 350px at ${glareX} ${glareY}, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%)`;
 
-    // Use stable untransformed wrapper bounds to eliminate corner edge jitter
+  const handleMouseMove = (e) => {
+    if (!wrapperRef.current) return;
     const rect = wrapperRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
 
+    // Normalizing coordinates from -0.5 to 0.5 relative to card center
     const normX = Math.max(-0.5, Math.min(0.5, (e.clientX - rect.left) / rect.width - 0.5));
     const normY = Math.max(-0.5, Math.min(0.5, (e.clientY - rect.top) / rect.height - 0.5));
 
     x.set(normX);
     y.set(normY);
-    translateYTarget.set(-6);
+    translateYTarget.set(-8);
+    scaleTarget.set(1.02);
+    glareOpacityTarget.set(1);
   };
 
-  const handlePointerEnter = (e) => {
-    if (shouldReduceMotion || e.pointerType === 'touch') return;
-    translateYTarget.set(-6);
+  const handleMouseEnter = () => {
+    translateYTarget.set(-8);
+    scaleTarget.set(1.02);
+    glareOpacityTarget.set(1);
   };
 
-  const handlePointerLeave = () => {
+  const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
     translateYTarget.set(0);
+    scaleTarget.set(1);
+    glareOpacityTarget.set(0);
+  };
+
+  // Touch support for 2-in-1 laptops & touchscreens
+  const handleTouchMove = (e) => {
+    if (!wrapperRef.current || !e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const rect = wrapperRef.current.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+
+    const normX = Math.max(-0.5, Math.min(0.5, (touch.clientX - rect.left) / rect.width - 0.5));
+    const normY = Math.max(-0.5, Math.min(0.5, (touch.clientY - rect.top) / rect.height - 0.5));
+
+    x.set(normX);
+    y.set(normY);
+    translateYTarget.set(-6);
+    scaleTarget.set(1.01);
+    glareOpacityTarget.set(0.8);
+  };
+
+  const handleTouchEnd = () => {
+    x.set(0);
+    y.set(0);
+    translateYTarget.set(0);
+    scaleTarget.set(1);
+    glareOpacityTarget.set(0);
   };
 
   const action = getProjectAction(project);
@@ -70,28 +113,41 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   return (
     <motion.div
       ref={wrapperRef}
-      onPointerMove={handlePointerMove}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true, margin: '-30px' }}
-      className="w-full h-full"
+      className="w-full h-full relative"
       style={{ perspective: 1000 }}
     >
       <motion.article
         style={{
           transformStyle: 'preserve-3d',
-          rotateX: shouldReduceMotion ? 0 : rotateX,
-          rotateY: shouldReduceMotion ? 0 : rotateY,
-          y: shouldReduceMotion ? 0 : translateY,
+          rotateX,
+          rotateY,
+          y: translateY,
+          scale,
         }}
-        className="@container project-card-container project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
+        className="@container project-card-container project-tilt-card group relative flex flex-col justify-between rounded-3xl will-change-transform h-full select-none cursor-default"
       >
-        <div className="flex flex-col flex-1">
+        {/* Interactive 3D specular light glare */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 rounded-3xl z-30 overflow-hidden"
+          style={{
+            opacity: glareOpacity,
+            background: glareBackground,
+          }}
+        />
+
+        <div className="flex flex-col flex-1" style={{ transform: 'translateZ(16px)', transformStyle: 'preserve-3d' }}>
           {/* Image Container */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)] rounded-t-3xl">
             <div className="absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
               {project.image ? (
                 <img
@@ -116,7 +172,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           </div>
 
           {/* Content Section */}
-          <div className="p-4 sm:p-5 @md:p-6 flex flex-col flex-1">
+          <div className="p-4 sm:p-5 @md:p-6 flex flex-col flex-1" style={{ transform: 'translateZ(20px)' }}>
             {/* Badges Row placed directly below Image */}
             <div className="flex items-center justify-between gap-2 mb-3">
               {/* Category Pill */}
@@ -176,7 +232,10 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
         </div>
 
         {/* Action Buttons Footer */}
-        <div className="project-card-footer flex items-center justify-between px-4 @md:px-5 py-3 @md:py-3.5 relative z-20 transition-colors">
+        <div
+          className="project-card-footer flex items-center justify-between px-4 @md:px-5 py-3 @md:py-3.5 relative z-20 transition-colors rounded-b-3xl"
+          style={{ transform: 'translateZ(24px)' }}
+        >
           <div className="flex items-center gap-2">
             {isWebsite && (
               <a
