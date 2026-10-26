@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { getAllOjtMonths, internshipOverviewSections } from '../data/ojtDtr';
+import { getAllOjtMonths, internshipOverviewSections } from '../data/OjtExperience';
 
 const OJTExperiencePage = () => {
   const navigate = useNavigate();

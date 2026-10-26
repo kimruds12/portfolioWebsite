@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { getOjtWeekBySlug } from '../data/ojtDtr';
+import { getOjtWeekBySlug } from '../data/OjtExperience';
 import OJTDayReflection from './OJTDayReflection';
 
 const OJTWeekPage = () => {
