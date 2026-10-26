@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +14,8 @@ const RecordsSplitCarousel = ({
   const shouldReduceMotion = useReducedMotion();
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
+  const closeDialogRef = useRef(null);
+  const returnFocusRef = useRef(null);
 
   const total = records.length;
   const currentRecord = records[selectedIndex] || records[0];
@@ -30,11 +33,20 @@ const RecordsSplitCarousel = ({
     onSelectIndex((selectedIndex - 1 + total) % total);
   };
 
+  const openCertificate = (record, trigger) => {
+    returnFocusRef.current = trigger || document.activeElement;
+    setEnlargedCertificate(record);
+  };
+
+  const closeCertificate = () => {
+    setEnlargedCertificate(null);
+  };
+
   // Close modal on Escape, left/right keyboard navigation
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') {
-        setEnlargedCertificate(null);
+        closeCertificate();
       } else if (e.key === 'ArrowLeft' && !enlargedCertificate) {
         handlePrev();
       } else if (e.key === 'ArrowRight' && !enlargedCertificate) {
@@ -44,6 +56,21 @@ const RecordsSplitCarousel = ({
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [enlargedCertificate, selectedIndex, total]);
+
+  // Lock background scroll when modal is active, focus close button
+  useEffect(() => {
+    if (!enlargedCertificate) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => closeDialogRef.current?.focus(), 0);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+      returnFocusRef.current?.focus?.();
+    };
+  }, [enlargedCertificate]);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -74,7 +101,7 @@ const RecordsSplitCarousel = ({
       onClick={(e) => {
         if (!isCenter) return; // Disallow enlarging non-centered certificate
         e.stopPropagation();
-        setEnlargedCertificate(record);
+        openCertificate(record, e.currentTarget);
       }}
       className={`group relative h-full w-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[var(--surface)] border transition-all ${isCenter
           ? 'border-white/30 p-2 sm:p-2.5 shadow-2xl cursor-zoom-in ring-1 ring-white/10'
@@ -395,54 +422,59 @@ const RecordsSplitCarousel = ({
         </button>
       </div>
 
-      {/* ── ENLARGE CERTIFICATE MODAL DIALOG (Reference Image 2) ── */}
-      <AnimatePresence>
-        {enlargedCertificate && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setEnlargedCertificate(null)}
-            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-md"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Enlarge Certificate"
-          >
-            {/* Close Button at top-right (Image 2 style) */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setEnlargedCertificate(null);
-              }}
-              aria-label="Close dialog"
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 active:scale-95 text-white border border-white/20 backdrop-blur-lg transition-all shadow-xl"
-            >
-              <i className="fa-solid fa-xmark text-lg" />
-            </button>
+      {/* ── ENLARGE CERTIFICATE MODAL DIALOG (Portalled to document.body) ── */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {enlargedCertificate && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={closeCertificate}
+                className="fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/90 backdrop-blur-md select-none"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Enlarge Certificate"
+              >
+                {/* Close Button at top-right with high z-index and explicit click handler */}
+                <button
+                  type="button"
+                  ref={closeDialogRef}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeCertificate();
+                  }}
+                  aria-label="Close dialog"
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[1000000] flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 active:scale-95 text-white border border-white/20 backdrop-blur-lg transition-all shadow-xl cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  <i className="fa-solid fa-xmark text-lg" />
+                </button>
 
-            {/* Enlarged Certificate Container */}
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl max-h-[88vh] w-auto flex flex-col items-center justify-center"
-            >
-              <img
-                src={enlargedCertificate.image}
-                alt={enlargedCertificate.imageAlt || enlargedCertificate.title}
-                className="max-h-[82vh] max-w-full object-contain rounded-2xl border border-white/20 shadow-2xl bg-black/40"
-              />
-              <p className="mt-3 font-mono text-xs sm:text-sm text-zinc-300 text-center tracking-wide">
-                {enlargedCertificate.title}
-              </p>
-            </motion.div>
-          </motion.div>
+                {/* Enlarged Certificate Container */}
+                <motion.div
+                  initial={{ scale: 0.92, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.92, opacity: 0 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative max-w-5xl max-h-[88vh] w-auto flex flex-col items-center justify-center cursor-default"
+                >
+                  <img
+                    src={enlargedCertificate.image}
+                    alt={enlargedCertificate.imageAlt || enlargedCertificate.title}
+                    className="max-h-[82vh] max-w-full object-contain rounded-2xl border border-white/20 shadow-2xl bg-black/40"
+                  />
+                  <p className="mt-3 font-mono text-xs sm:text-sm text-zinc-300 text-center tracking-wide">
+                    {enlargedCertificate.title}
+                  </p>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </div>
   );
 };

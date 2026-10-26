@@ -284,8 +284,8 @@ const Navbar = () => {
 
             {/* Resume Button */}
             <a
-              href="/Assets/2026_GUSTON_CV.pdf"
-              download="2026_GUSTON_CV.pdf"
+              href="/Assets/2026_GustonCV.pdf"
+              download="2026_GustonCV.pdf"
               target="_blank"
               rel="noreferrer"
               title="Download Resume"

@@ -20,7 +20,7 @@ export const workExperienceRecords = [
     organization: 'Meycauayan, Bulacan',
     badge: 'OPERATIONS SUPPORT',
     title: 'Device Asset Custodian',
-    period: 'June 2025 to August 2025',
+    period: 'July 2025 to August 2025',
     location: 'Meycauayan, Bulacan',
     description:
       'Managed the issuance, retrieval, and secure storage of scanners, mobile phones, and laptops for warehouse employees each shift, ensuring full device accountability and zero equipment loss. Administered device and employee ID scanning procedures to track assignments accurately, strengthen asset-control compliance, and maintain audit-ready inventory records across the sortation facility.',

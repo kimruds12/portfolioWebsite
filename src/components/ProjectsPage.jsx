@@ -57,7 +57,7 @@ export const projects = [
     meta: 'Content Management System | Academic Project',
     year: '2025',
     description: 'Built a fully responsive website with a content management system for Amaro Resort, allowing non-technical admins to manage bookings, update amenities, and post promotions without developer help.',
-    role: 'Project Manager, UI/UX Designer & Communication Lead — Planned the project objectives, coordinated with the client to gather needed assets, designed the UI/UX, and tested the final output to make sure everything was functional and met the project goals.',
+    role: 'Project Manager, UI/UX Designer, Front-End Developer & Communication Lead — Planned the project objectives, coordinated with the client to gather needed assets, designed the UI/UX, handled frontend development, and tested the final output to make sure everything was functional and met the project goals.',
     href: 'https://github.com/kimruds12/AmaroResortWebsite',
     image: '/Assets/amaro_resort.png',
     tags: ['Content Management System', 'Informational Website', 'Client-Based'],
@@ -97,7 +97,7 @@ export const projects = [
   // ── GAME DEV ──
   {
     title: 'Accord',
-    meta: 'Game Development | Generalist',
+    meta: 'Game Development | Academic Project',
     year: '2025',
     description: 'A narrative-driven game built in Unity with node-based dialogue trees, custom dialogue state controllers, and branching storylines that respond to player choices in real time.',
     role: 'Generalist — Supported the lead developer by making sure all needed elements were in place — from game functionality to user-friendly design — keeping development on track.',
@@ -109,7 +109,7 @@ export const projects = [
   },
   {
     title: 'Barikada Nations Unite',
-    meta: 'Game Development | Generalist',
+    meta: 'Game Development | Academic Project',
     year: '2025',
     description: 'A cooperative tactics game in Unity with strategic unit management, turn-based combat, and team-based objectives, using Plastic SCM for collaborative version control.',
     role: 'Generalist — Supported the lead developer by making sure all needed elements were in place — from game functionality to user-friendly design — keeping development on track.',
@@ -123,7 +123,7 @@ export const projects = [
   // ── JAVA PROJECTS ──
   {
     title: 'School Rescue',
-    meta: 'Java | Developer | Academic Project',
+    meta: 'Java Application | Academic Project',
     year: '2025',
     description: "Built a Java-based emergency response app for schools with real-time incident reporting, evacuation management, and automated notifications to keep students and staff safe.",
     role: "Developer — Helped build the app's core logic, environment interactions, and the final quiz feature — making sure everything ran smoothly from start to finish.",
@@ -135,10 +135,10 @@ export const projects = [
   },
   {
     title: 'Library Management System',
-    meta: 'Java | Developer | Academic Project',
+    meta: 'Java Application | Academic Project',
     year: '2025',
     description: 'Built a standalone Library Management System using Java and Swing, with features including book addition, editing, deletion, search, borrowing, and inventory tracking.',
-    role: 'Developer',
+    role: 'Developer — Designed and developed the standalone desktop application, implemented book cataloging, search algorithms, borrowing workflows, and inventory tracking.',
     href: 'https://github.com/kimruds12/Library-Management-System',
     image: '/Assets/LibraryManagementSystem_Image.png',
     tags: ['Java', 'Swing', 'Inventory'],
@@ -152,7 +152,7 @@ export const projects = [
     meta: 'Cisco Networking | Academic Project',
     year: '2025',
     description: 'Designed and configured a comprehensive network infrastructure for the PLV CABA Building using Cisco Packet Tracer, implementing VLAN segmentation, inter-VLAN routing, and DHCP services.',
-    role: 'Network Engineer',
+    role: 'Network Engineer — Designed and simulated the enterprise topology, configured switch VLANs, trunk links, inter-VLAN routing, and subnet allocations.',
     href: '',
     image: '/Assets/CabaTopology.png',
     tags: ['Cisco', 'Networking', 'VLAN'],
@@ -167,7 +167,7 @@ export const projects = [
     meta: 'Web-Based Quality Assurance UI Prototype | Academic Project',
     year: '2025',
     description: 'High-fidelity frontend UI prototype for a web-based quality assurance tracking system tailored for Pamantasan ng Lungsod ng Valenzuela, featuring structured data visualization.',
-    role: 'UI/UX Designer',
+    role: 'UI/UX Designer — Created the interactive prototypes, user flows, accessibility guidelines, and component specifications in Figma.',
     href: 'https://github.com/kimruds12/project-qastrack.git',
     image: '/Assets/Qastrack UI Prototype.png',
     tags: ['UI/UX', 'Prototype', 'Web Design'],

@@ -102,7 +102,7 @@ const OJTExperiencePage = () => {
 
   return (
     <section className="min-h-screen px-4 pt-24 sm:pt-32 pb-16 sm:pb-28 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="mx-auto w-full max-w-7xl">
         {/* Top Back Navigation Bar */}
         <div className="mb-8 sm:mb-10 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <button
@@ -330,7 +330,7 @@ const OJTExperiencePage = () => {
           </motion.div>
 
           {/* Exactly Three Cards: 1 column on phones, 2 columns on tablets, 3 columns on wide screens */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {sampleWorksProjects.map((project, index) => (
               <ProjectCard
                 key={`${project.title}-${index}`}
@@ -343,7 +343,7 @@ const OJTExperiencePage = () => {
         </section>
 
         {/* Four Large Alternating Folder Bands */}
-        <div className="space-y-12 sm:space-y-16">
+        <div className="space-y-12 sm:space-y-16 max-w-5xl mx-auto">
           {months.map((month, index) => {
             const isRightTab = month.tabPosition === 'right';
             const weeksCount = month.weeks?.length || 0;

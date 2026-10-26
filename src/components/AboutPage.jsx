@@ -25,12 +25,12 @@ const AboutPage = () => {
               className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left"
             >
               <h1 className="mt-4 sm:mt-5 font-['Sora',_sans-serif] text-[clamp(1.85rem,5.5vw,4.2rem)] font-extrabold tracking-tight text-[var(--text-main)] leading-tight break-words">
-                Kim Ruds C. Guston
+                Kim Ruds Guston
               </h1>
 
               <div className="mt-5 sm:mt-6 space-y-4 text-sm sm:text-base md:text-lg leading-relaxed text-[var(--text-muted)] max-w-2xl">
                 <p>
-                  Hello, I’m <strong className="text-[var(--text-main)] font-semibold">Kim Ruds Guston</strong> — a fourth-year Bachelor of Science in Information Technology student at Pamantasan ng Lungsod ng Valenzuela (PLV). I'm a front-end developer, networking enthusiast, and aspiring system architect who enjoys building practical digital solutions and exploring how software and networks work together.
+                  Hello, I’m <strong className="text-[var(--text-main)] font-semibold">Kim Ruds</strong> — a fourth-year Bachelor of Science in Information Technology student at Pamantasan ng Lungsod ng Valenzuela (PLV). I'm a front-end developer, networking enthusiast, and aspiring system architect who enjoys building practical digital solutions and exploring how software and networks work together.
                 </p>
                 <p>
                   My experience spans web application development, user interface design, full-stack systems, and enterprise network simulation. As the project manager and front-end developer of PLV-QLib, I helped build a library management system using QR technology. I have also worked on the 11FTC Ticketing Management System as a full-stack developer and explored 2D game development with Unity.

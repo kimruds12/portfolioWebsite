@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTagConfig } from './ProjectsPage';
 
 export const getProjectAction = (project) => {
   if (!project) return null;
-  const isWebsite = project.title === 'PLV-QLib' || project.title.startsWith('ARTA-CSS');
+  const isWebsite =
+    project.title === 'PLV-QLib' ||
+    project.title.toLowerCase().includes('website') ||
+    (project.href && !project.href.includes('github.com') && !project.isLocal);
   if (isWebsite && project.href) {
     return {
       label: 'View Website',
@@ -57,10 +61,12 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
 
   const action = getProjectAction(project);
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-6 md:p-8"
+        className="fixed inset-0 z-[999999] flex items-center justify-center p-2.5 sm:p-6 md:p-8"
         role="dialog"
         aria-modal="true"
         aria-labelledby="dialog-project-title"
@@ -94,7 +100,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
                 {project.categoryLabel || (project.category ? project.category.toUpperCase() : 'PROJECT')}
-                {project.meta ? ` • ${project.meta.split('|')[0].trim()}` : ''}
+                {project.meta ? ` • ${project.meta.split('|')[0].trim().toUpperCase()}` : ''}
               </span>
 
               {project.status && (
@@ -127,14 +133,14 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
           <div className="mt-1">
             <h2
               id="dialog-project-title"
-              className="font-['Sora',_sans-serif] text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--text-main)] leading-tight break-words"
+              className="font-['Sora',_sans-serif] text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--text-main)] leading-tight break-words [overflow-wrap:anywhere]"
             >
               {project.title}
             </h2>
 
             {project.role && (
-              <p className="mt-1.5 text-xs sm:text-sm font-mono text-[var(--text-muted)]">
-                {project.role}
+              <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+                {project.role.replace(/^(Role:\s*)+/i, '')}
               </p>
             )}
           </div>
@@ -210,7 +216,8 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
           )}
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

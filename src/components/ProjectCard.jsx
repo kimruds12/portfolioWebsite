@@ -22,6 +22,20 @@ const getCategoryLabel = (project) => {
   return project.category ? project.category.toUpperCase() : 'PROJECT';
 };
 
+// Renders title with optional break opportunities for long camelCase / PascalCase words
+const formatTitleWithBreaks = (title) => {
+  if (!title || typeof title !== 'string') return title;
+  if (title.includes(' ')) return title;
+  const parts = title.split(/(?=[A-Z][a-z])|(?<=[a-z])(?=[A-Z])/g);
+  if (parts.length <= 1) return title;
+  return parts.map((part, idx) => (
+    <span key={idx}>
+      {part}
+      {idx < parts.length - 1 && <wbr />}
+    </span>
+  ));
+};
+
 const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   const wrapperRef = useRef(null);
   const detailsBtnRef = useRef(null);
@@ -40,9 +54,9 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
   const scale = useSpring(scaleTarget, springConfig);
   const glareOpacity = useSpring(glareOpacityTarget, { stiffness: 200, damping: 25 });
 
-  // 3D rotation angles (up to ±10 degrees for distinct, clear perspective)
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-10, 10]);
+  // 3D rotation angles (smooth, subtle tilt that stays within container bounds)
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-6, 6]);
 
   // Interactive dynamic specular glare highlight
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ['0%', '100%']);
@@ -60,14 +74,14 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
 
     x.set(normX);
     y.set(normY);
-    translateYTarget.set(-8);
-    scaleTarget.set(1.02);
+    translateYTarget.set(-6);
+    scaleTarget.set(1.015);
     glareOpacityTarget.set(1);
   };
 
   const handleMouseEnter = () => {
-    translateYTarget.set(-8);
-    scaleTarget.set(1.02);
+    translateYTarget.set(-6);
+    scaleTarget.set(1.015);
     glareOpacityTarget.set(1);
   };
 
@@ -91,7 +105,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
 
     x.set(normX);
     y.set(normY);
-    translateYTarget.set(-6);
+    translateYTarget.set(-4);
     scaleTarget.set(1.01);
     glareOpacityTarget.set(0.8);
   };
@@ -124,19 +138,18 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true, margin: '-30px' }}
-      className="w-full h-full relative"
+      className="w-full h-full relative min-w-0 flex flex-col"
       style={{ perspective: 1000 }}
     >
       <motion.article
         onClick={() => onOpenDetails?.(project, detailsBtnRef)}
         style={{
-          transformStyle: 'preserve-3d',
           rotateX,
           rotateY,
           y: translateY,
           scale,
         }}
-        className="@container project-card-container project-tilt-card group relative flex flex-col justify-between rounded-3xl will-change-transform h-full select-none cursor-pointer"
+        className="@container project-card-container project-tilt-card group relative flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-pointer min-w-0 w-full"
       >
         {/* Interactive 3D specular light glare */}
         <motion.div
@@ -147,9 +160,9 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           }}
         />
 
-        <div className="flex flex-col flex-1" style={{ transform: 'translateZ(16px)', transformStyle: 'preserve-3d' }}>
+        <div className="flex flex-col flex-1 min-w-0">
           {/* Image / Video Container */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)] rounded-t-3xl">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
             <div className="absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
               {project.video || (project.image && project.image.endsWith('.mp4')) ? (
                 <video
@@ -183,28 +196,28 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           </div>
 
           {/* Content Section */}
-          <div className="p-4 sm:p-5 @md:p-6 flex flex-col flex-1" style={{ transform: 'translateZ(20px)' }}>
+          <div className="p-4 sm:p-5 @md:p-6 flex flex-col flex-1 min-w-0">
             {/* Badges Row placed directly below Image */}
-            <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="flex items-center justify-between gap-2 mb-3 min-w-0">
               {/* Category Pill */}
-              <span className="project-card-category inline-flex items-center rounded-md px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-xs transition-colors">
+              <span className="project-card-category inline-flex items-center rounded-md px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-xs transition-colors shrink-0 max-w-[65%] truncate">
                 {getCategoryLabel(project)}
               </span>
 
               {/* Status Pill with Pulsing Indicator */}
-              <span className="project-card-status inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-semibold shadow-xs transition-colors">
+              <span className="project-card-status inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-semibold shadow-xs transition-colors shrink-0">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{project.status || 'Completed'}</span>
               </span>
             </div>
 
             {/* Title & Year */}
-            <div className="flex items-baseline justify-between gap-2">
-              <h3 className="project-card-title font-['Sora',_sans-serif] text-base sm:text-lg @md:text-xl font-extrabold tracking-tight break-words transition-colors">
-                {project.title}
+            <div className="flex items-start justify-between gap-2 min-w-0 w-full">
+              <h3 className="project-card-title font-['Sora',_sans-serif] text-base sm:text-lg @md:text-xl font-extrabold tracking-tight break-words [overflow-wrap:anywhere] min-w-0 transition-colors line-clamp-2">
+                {formatTitleWithBreaks(project.title)}
               </h3>
               {project.year && (
-                <span className="font-mono text-xs opacity-60 shrink-0">
+                <span className="font-mono text-xs opacity-60 shrink-0 pt-0.5 ml-1">
                   {project.year}
                 </span>
               )}
@@ -222,9 +235,9 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               {project.description}
             </p>
 
-            {/* Tech Tags / Icons */}
+            {/* Tech Tags / Icons - Anchored with mt-auto so footers align horizontally across all cards in the row */}
             {project.tags && project.tags.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-1.5">
+              <div className="mt-auto pt-4 flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => {
                   const config = getTagConfig(tag);
                   return (
@@ -242,12 +255,11 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           </div>
         </div>
 
-        {/* Action Buttons Footer */}
+        {/* Action Buttons Footer - Seamless with card background & clean top divider line */}
         <div
-          className="project-card-footer flex items-center justify-between px-4 @md:px-5 py-3 @md:py-3.5 relative z-20 transition-colors rounded-b-3xl"
-          style={{ transform: 'translateZ(24px)' }}
+          className="project-card-footer flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 sm:py-3.5 relative z-20 transition-colors mt-auto w-full"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {isWebsite && (
               <a
                 href={project.href}
@@ -296,7 +308,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               e.stopPropagation();
               onOpenDetails?.(project, detailsBtnRef);
             }}
-            className="project-card-details inline-flex items-center gap-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20"
+            className="project-card-details inline-flex items-center gap-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20 ml-auto"
             aria-label={`View details for ${project.title}`}
           >
             <span>Details</span>

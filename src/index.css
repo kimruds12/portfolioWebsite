@@ -631,6 +631,7 @@ html.theme-light .credential-running-line {
   background-color: #111622 !important;
   border: 1px solid rgba(51, 65, 85, 0.7) !important;
   box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden !important;
 }
 
 .project-card-category {
@@ -664,7 +665,7 @@ html.theme-light .credential-running-line {
 }
 
 .project-card-footer {
-  background-color: rgba(13, 18, 28, 0.95) !important;
+  background-color: transparent !important;
   border-top: 1px solid rgba(51, 65, 85, 0.7) !important;
 }
 
@@ -693,6 +694,7 @@ html.theme-light .project-card-container {
   background-color: #ffffff !important;
   border: 1px solid rgba(203, 213, 225, 0.95) !important;
   box-shadow: 0 12px 28px -10px rgba(148, 163, 184, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
 }
 
 .theme-light .project-card-category,
@@ -733,7 +735,7 @@ html.theme-light .project-card-tag {
 
 .theme-light .project-card-footer,
 html.theme-light .project-card-footer {
-  background-color: #f8fafc !important;
+  background-color: transparent !important;
   border-top-color: #e2e8f0 !important;
 }
 
