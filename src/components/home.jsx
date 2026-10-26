@@ -156,7 +156,7 @@ const ContactRow = ({ item, isLast }) => {
         <div
           className="flex flex-1 items-center gap-3 sm:gap-4 min-w-0"
           style={{
-            transform: shouldReduceMotion ? 'none' : `translateX(${totalShift}px)`,
+            transform: `translateX(${totalShift}px)`,
             transition: isDragging
               ? 'none'
               : 'transform 320ms cubic-bezier(0.16, 1, 0.3, 1)',
@@ -211,15 +211,20 @@ const Home = () => {
     setSelectedProject(null);
   };
 
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
+  const { scrollY } = useScroll();
 
-  const wallScale = useTransform(scrollYProgress, [0, 0.75], [1, 0.88]);
-  const wallOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0.12]);
-  const wallY = useTransform(scrollYProgress, [0, 1], ['0%', '24%']);
-  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
+  // Robust, screen-height independent scroll transforms
+  // As the visitor scrolls down toward Projects:
+  // - wallScale smoothly scales from 1 to 0.88
+  // - wallOpacity fades smoothly from 1 down to 0.05
+  // - wallY glides backward/down by 110px
+  // - scrollIndicatorOpacity quickly fades out within 90px
+  // - ambientY gives the background spotlight subtle counter-depth
+  const wallScale = useTransform(scrollY, [0, 450], [1, 0.88], { clamp: true });
+  const wallOpacity = useTransform(scrollY, [0, 380], [1, 0.05], { clamp: true });
+  const wallY = useTransform(scrollY, [0, 500], [0, 110], { clamp: true });
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 90], [1, 0], { clamp: true });
+  const ambientY = useTransform(scrollY, [0, 500], [0, -40], { clamp: true });
 
   return (
     <>
@@ -232,15 +237,18 @@ const Home = () => {
         {/* Background grid */}
         <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
           <div className="ambient-grid absolute inset-0" />
-          <div className="ambient-spotlight absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <motion.div
+            style={{ y: ambientY }}
+            className="ambient-spotlight absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          />
         </div>
 
         <div className="w-full h-2" aria-hidden="true" />
 
         {/* Main Hero Wall Content */}
         <motion.div
-          style={shouldReduceMotion ? {} : { scale: wallScale, opacity: wallOpacity, y: wallY }}
-          className="relative z-10 flex flex-col items-center justify-center w-full max-w-7xl mx-auto my-auto text-center px-2"
+          style={{ scale: wallScale, opacity: wallOpacity, y: wallY }}
+          className="relative z-10 flex flex-col items-center justify-center w-full max-w-7xl mx-auto my-auto text-center px-2 will-change-transform"
         >
           <motion.div
             initial={{ opacity: 0, y: -16 }}
@@ -259,16 +267,33 @@ const Home = () => {
             className="relative my-6 sm:my-8 flex items-center justify-center"
           >
             <div className="relative flex h-[13rem] w-[13rem] min-[360px]:h-[15rem] min-[360px]:w-[15rem] min-[420px]:h-[17rem] min-[420px]:w-[17rem] sm:h-[20rem] sm:w-[20rem] lg:h-[22rem] lg:w-[22rem] max-w-[85vw] max-h-[85vw] items-center justify-center">
-              <div className="absolute inset-0 rounded-full border border-[var(--antenna-line)]" aria-hidden="true" />
-              <div className="hero-orbit absolute inset-[1.25rem] sm:inset-[1.6rem] rounded-full border border-dashed border-[var(--antenna-dashed)]" aria-hidden="true" />
-              <svg className="pointer-events-none absolute inset-[-0.5rem] sm:inset-[-0.75rem] h-[calc(100%+1rem)] w-[calc(100%+1rem)] sm:h-[calc(100%+1.5rem)] sm:w-[calc(100%+1.5rem)] -rotate-45" viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="50" cy="50" r="48" fill="none" stroke="var(--antenna-arc)" strokeWidth="1.2" strokeDasharray="45 160" />
-              </svg>
-              <span aria-hidden="true" className="hero-signal absolute right-[10%] top-[14%] h-2.5 w-2.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-              <span aria-hidden="true" className="hero-signal absolute bottom-[18%] left-[8%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-              <span aria-hidden="true" className="hero-signal absolute bottom-[10%] right-[22%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-              <span aria-hidden="true" className="hero-signal absolute top-[26%] left-[10%] h-1.5 w-1.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-              <div className="absolute left-1/2 top-1/2 h-[75%] w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--glow-portrait)] blur-xl" aria-hidden="true" />
+              {/* ── OUTER ORBIT (Moves Circularly Counter-Clockwise) ── */}
+              <div className="hero-orbit-outer pointer-events-none absolute inset-0 rounded-full border border-[var(--antenna-line)]" aria-hidden="true">
+                {/* Curved Arc Highlight Segments */}
+                <svg className="pointer-events-none absolute inset-[-3px] sm:inset-[-4px] h-[calc(100%+6px)] w-[calc(100%+6px)] sm:h-[calc(100%+8px)] sm:w-[calc(100%+8px)]" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle cx="50" cy="50" r="49" fill="none" stroke="var(--antenna-arc)" strokeWidth="2.5" strokeDasharray="42 160" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="49" fill="none" stroke="var(--antenna-arc)" strokeWidth="2.5" strokeDasharray="26 174" strokeDashoffset="95" strokeLinecap="round" />
+                </svg>
+
+                {/* Outer Satellite Dots / Nodes */}
+                <span aria-hidden="true" className="hero-signal absolute -left-1 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+                <span aria-hidden="true" className="hero-signal absolute bottom-[14%] left-[12%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+                <span aria-hidden="true" className="hero-signal absolute top-[8%] right-[18%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+              </div>
+
+              {/* ── INNER ORBIT (Moves Circularly Clockwise) ── */}
+              <div className="hero-orbit-inner pointer-events-none absolute inset-[1.25rem] sm:inset-[1.6rem] rounded-full border border-dashed border-[var(--antenna-dashed)]" aria-hidden="true">
+                {/* Inner Satellite Dots / Nodes */}
+                <span aria-hidden="true" className="hero-signal absolute right-[8%] top-[16%] h-2.5 w-2.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+                <span aria-hidden="true" className="hero-signal absolute bottom-[12%] right-[18%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+                <span aria-hidden="true" className="hero-signal absolute top-[28%] left-[6%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+                <span aria-hidden="true" className="hero-signal absolute bottom-[24%] left-[10%] h-1.5 w-1.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
+              </div>
+
+              {/* Ambient Glow behind portrait */}
+              <div className="absolute left-1/2 top-1/2 h-[75%] w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--glow-portrait)] blur-xl pointer-events-none" aria-hidden="true" />
+
+              {/* Central Circular Portrait - Clean, Stationary & Sharp (Not Altered) */}
               <div className="relative z-10 flex h-[68%] w-[68%] items-center justify-center overflow-hidden rounded-full border-2 border-[var(--border-color)] bg-[var(--surface-soft)] shadow-xl">
                 <img
                   src="/Assets/homeKimImage.jpg"
@@ -293,7 +318,7 @@ const Home = () => {
 
         {/* Scroll Indicator */}
         <motion.div
-          style={shouldReduceMotion ? {} : { opacity: scrollIndicatorOpacity }}
+          style={{ opacity: scrollIndicatorOpacity }}
           className="relative z-10 flex flex-col items-center gap-2.5 mt-8 select-none"
         >
           <span className="font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-[0.32em] text-[var(--text-muted)]">

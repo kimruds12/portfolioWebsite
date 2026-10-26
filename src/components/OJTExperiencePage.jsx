@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { getAllOjtMonths, internshipOverviewSections } from '../data/ojtDtr';
+import { getAllOjtMonths, internshipOverviewSections } from '../data/OjtExperience';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 

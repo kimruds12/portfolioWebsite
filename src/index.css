@@ -558,6 +558,48 @@ html.theme-light .btn-discovery-cta span {
   transition-property: border-color, box-shadow, background-color !important;
 }
 
+/* ── Hero Portrait Orbital Rotations ── */
+@keyframes orbit-spin-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-counter-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.hero-orbit-inner {
+  animation: orbit-spin-clockwise 24s linear infinite !important;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.hero-orbit-outer {
+  animation: orbit-spin-counter-clockwise 32s linear infinite !important;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.project-card-container:hover {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 20px rgba(56, 189, 248, 0.15) !important;
+  border-color: rgba(99, 102, 241, 0.45) !important;
+}
+
+.theme-light .project-card-container:hover,
+html.theme-light .project-card-container:hover {
+  box-shadow: 0 20px 40px -10px rgba(100, 116, 139, 0.4), 0 0 15px rgba(56, 189, 248, 0.2) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
 .contact-drag-highlight,
 .contact-row-box {
   background-color: rgba(255, 255, 255, 0.07);
@@ -862,7 +904,6 @@ html.theme-light .credential-view-cert-btn:hover {
 
 
 @media (prefers-reduced-motion: reduce) {
-  .project-tilt-card,
   .contact-drag-row,
   .credential-running-line {
     transform: none !important;

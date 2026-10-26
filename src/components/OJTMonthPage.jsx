@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { getOjtMonthBySlug } from '../data/ojtDtr';
+import { getOjtMonthBySlug } from '../data/OjtExperience';
 
 const OJTMonthPage = () => {
   const { monthSlug } = useParams();
