@@ -1,7 +1,57 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { getAllOjtMonths, internshipOverviewSections } from '../data/ojtDtr';
+import ProjectCard from './ProjectCard';
+import ProjectDetailsDialog from './ProjectDetailsDialog';
+
+const sampleWorksProjects = [
+  {
+    title: 'IT Infrastructure Support & Workstation Servicing',
+    categoryLabel: 'IT Operations',
+    meta: 'On-site Technical Support',
+    year: '2026',
+    status: 'Completed',
+    description:
+      'Provided on-site workstation support at the 11FTC IT Office, including LAN cabling, internal cable management, damaged component replacement, system troubleshooting, and device restoration.',
+    role: 'On-site Technical Support — Provided on-site workstation support at the 11FTC IT Office, including LAN cabling, internal cable management, damaged component replacement, system troubleshooting, and device restoration.',
+    image: '/Assets/Networking.mp4',
+    video: '/Assets/Networking.mp4',
+    tags: ['Hardware Servicing', 'LAN Cabling', 'System Troubleshooting'],
+    tagsLabel: 'KEY TERMS & COMPETENCIES',
+    keyTerms: ['Hardware Servicing', 'LAN Cabling', 'System Troubleshooting'],
+  },
+  {
+    title: '11FTCTicketManagementSystem',
+    categoryLabel: 'Local System',
+    isLocal: true,
+    meta: 'Internship Project',
+    year: '2026',
+    status: 'Completed',
+    description:
+      'Built a local IT ticket management system for recording issues, assigning solutions, and tracking ongoing support work across company devices and services.',
+    role: 'Internship Project — Built a local IT ticket management system for recording issues, assigning solutions, and tracking ongoing support work across company devices and services.',
+    href: 'https://github.com/kimruds12/11FTCTicketingManagementSystem',
+    image: '/Assets/11FTCTicketingManagement.jpg',
+    tags: ['JavaScript', 'TypeScript'],
+    tagsLabel: 'TECHNOLOGIES USED',
+    keyTerms: ['JavaScript', 'TypeScript', 'Ticket Lifecycle', 'Device Tracking'],
+  },
+  {
+    title: 'IT Hardware Asset Management & Device Custody Tracking',
+    categoryLabel: 'IT Operations',
+    meta: 'Asset Operations',
+    year: '2026',
+    status: 'Completed',
+    description:
+      'Tracked laptops, monitors, and peripherals by fixed asset number while managing employee handovers, replacement records, and accountability for damaged equipment.',
+    role: 'Asset Operations — Tracked laptops, monitors, and peripherals by fixed asset number while managing employee handovers, replacement records, and accountability for damaged equipment.',
+    image: '/Assets/ITAsset.jpg',
+    tags: ['Hardware Inventory', 'FA Tagging', 'Accountability'],
+    tagsLabel: 'KEY TERMS & COMPETENCIES',
+    keyTerms: ['Hardware Inventory', 'FA Tagging', 'Accountability'],
+  },
+];
 
 const OJTExperiencePage = () => {
   const navigate = useNavigate();
@@ -9,6 +59,17 @@ const OJTExperiencePage = () => {
   const months = getAllOjtMonths();
   const [openReflections, setOpenReflections] = useState({});
   const [openOverviewSections, setOpenOverviewSections] = useState({});
+  const [selectedSampleProject, setSelectedSampleProject] = useState(null);
+  const sampleTriggerRef = useRef(null);
+
+  const handleOpenSampleDetails = (project, triggerRef) => {
+    sampleTriggerRef.current = triggerRef?.current || triggerRef;
+    setSelectedSampleProject(project);
+  };
+
+  const handleCloseSampleDetails = () => {
+    setSelectedSampleProject(null);
+  };
 
   const toggleOverviewSection = (id) => {
     setOpenOverviewSections((prev) => ({
@@ -240,6 +301,47 @@ const OJTExperiencePage = () => {
           })}
         </motion.div>
 
+        {/* ── 5. Sample Works Section (OJT_SAMPLE_WORKS_ANTIGRAVITY.md) ── */}
+        <section
+          id="sample-works"
+          aria-label="Sample Works"
+          className="mb-16 sm:mb-24"
+        >
+          {/* Section Heading matching exact texts from specification */}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)] px-3.5 py-1 mb-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--text-main)]" />
+              <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--text-main)]">
+                Selected OJT Projects
+              </span>
+            </div>
+            <h2 className="font-['Sora',_sans-serif] text-2xl min-[400px]:text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-main)]">
+              Sample Works
+            </h2>
+            <p className="mt-3 text-xs sm:text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+              Selected hands-on IT support, system, and asset management work completed during my OJT at 11FTC Enterprises, Inc.
+            </p>
+          </motion.div>
+
+          {/* Exactly Three Cards: 1 column on phones, 2 columns on tablets, 3 columns on wide screens */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+            {sampleWorksProjects.map((project, index) => (
+              <ProjectCard
+                key={`${project.title}-${index}`}
+                project={project}
+                index={index}
+                onOpenDetails={handleOpenSampleDetails}
+              />
+            ))}
+          </div>
+        </section>
+
         {/* Four Large Alternating Folder Bands */}
         <div className="space-y-12 sm:space-y-16">
           {months.map((month, index) => {
@@ -439,6 +541,13 @@ const OJTExperiencePage = () => {
           })}
         </div>
       </div>
+
+      {/* Sample Works Project Details Modal Dialog */}
+      <ProjectDetailsDialog
+        project={selectedSampleProject}
+        onClose={handleCloseSampleDetails}
+        triggerRef={sampleTriggerRef}
+      />
     </section>
   );
 };

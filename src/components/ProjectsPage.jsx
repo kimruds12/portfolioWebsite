@@ -192,6 +192,11 @@ export const getTagConfig = (tag) => {
   if (t.includes('java')) return { icon: 'fa-brands fa-java', color: '#EA2D2E' };
   if (t.includes('swing')) return { icon: 'fa-solid fa-window-maximize', color: '#F5820D' };
   if (t.includes('cisco')) return { icon: 'fa-solid fa-network-wired', color: '#1BA0D7' };
+  if (t.includes('lan') || t.includes('cabling')) return { icon: 'fa-solid fa-network-wired', color: '#38BDF8' };
+  if (t.includes('hardware servicing') || t.includes('hardware')) return { icon: 'fa-solid fa-screwdriver-wrench', color: '#10B981' };
+  if (t.includes('troubleshooting')) return { icon: 'fa-solid fa-wrench', color: '#F59E0B' };
+  if (t.includes('tagging') || t.includes('fa tag')) return { icon: 'fa-solid fa-tag', color: '#EC4899' };
+  if (t.includes('accountability')) return { icon: 'fa-solid fa-clipboard-check', color: '#8B5CF6' };
   if (t.includes('networking') || t.includes('vlan')) return { icon: 'fa-solid fa-diagram-project', color: '#6366F1' };
   if (t.includes('content management')) return { icon: 'fa-solid fa-file-pen', color: '#10B981' };
   if (t.includes('inventory')) return { icon: 'fa-solid fa-boxes-stacked', color: '#F59E0B' };

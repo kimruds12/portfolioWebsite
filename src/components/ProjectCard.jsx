@@ -4,6 +4,7 @@ import { getTagConfig } from './ProjectsPage';
 import { getProjectAction } from './ProjectDetailsDialog';
 
 const getCategoryLabel = (project) => {
+  if (project.categoryLabel) return project.categoryLabel.toUpperCase();
   if (project.isLocal) return 'LOCAL SYSTEM';
   if (project.meta && project.meta.toLowerCase().includes('academic')) return 'SCHOOL PROJECTS';
   if (project.category === 'web') return 'WEB APPLICATIONS';
@@ -81,19 +82,29 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
       style={{ perspective: 1000 }}
     >
       <motion.article
+        onClick={() => onOpenDetails?.(project, detailsBtnRef)}
         style={{
           transformStyle: 'preserve-3d',
           rotateX: shouldReduceMotion ? 0 : rotateX,
           rotateY: shouldReduceMotion ? 0 : rotateY,
           y: shouldReduceMotion ? 0 : translateY,
         }}
-        className="@container project-card-container project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-default"
+        className="@container project-card-container project-tilt-card group flex flex-col justify-between overflow-hidden rounded-3xl will-change-transform h-full select-none cursor-pointer"
       >
         <div className="flex flex-col flex-1">
-          {/* Image Container */}
+          {/* Image / Video Container */}
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
             <div className="absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
-              {project.image ? (
+              {project.video || (project.image && project.image.endsWith('.mp4')) ? (
+                <video
+                  src={project.video || project.image}
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none select-none"
+                />
+              ) : project.image ? (
                 <img
                   src={project.image}
                   alt={project.title}

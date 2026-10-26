@@ -93,7 +93,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
           <div className="flex items-start justify-between gap-4 pb-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)]">
-                {project.category ? project.category.toUpperCase() : 'PROJECT'}
+                {project.categoryLabel || (project.category ? project.category.toUpperCase() : 'PROJECT')}
                 {project.meta ? ` • ${project.meta.split('|')[0].trim()}` : ''}
               </span>
 
@@ -139,9 +139,18 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
             )}
           </div>
 
-          {/* Large Project Image Preview */}
+          {/* Large Project Image/Video Preview */}
           <div className="mt-6 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--surface-soft)] flex items-center justify-center shadow-inner">
-            {project.image ? (
+            {project.video || (project.image && project.image.endsWith('.mp4')) ? (
+              <video
+                src={project.video || project.image}
+                controls
+                autoPlay
+                loop
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            ) : project.image ? (
               <img
                 src={project.image}
                 alt={project.title}
@@ -162,11 +171,11 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
             </p>
           </div>
 
-          {/* Technology Tags */}
+          {/* Technology Tags / Key Terms */}
           {project.tags && project.tags.length > 0 && (
             <div className="mt-6">
               <span className="block font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-2.5">
-                TECHNOLOGIES USED
+                {project.tagsLabel || 'TECHNOLOGIES USED'}
               </span>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => {
