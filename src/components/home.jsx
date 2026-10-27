@@ -269,21 +269,15 @@ const Home = () => {
             <div className="relative flex h-[13rem] w-[13rem] min-[360px]:h-[15rem] min-[360px]:w-[15rem] min-[420px]:h-[17rem] min-[420px]:w-[17rem] sm:h-[20rem] sm:w-[20rem] lg:h-[22rem] lg:w-[22rem] max-w-[85vw] max-h-[85vw] items-center justify-center">
               {/* ── OUTER ORBIT (Moves Circularly Counter-Clockwise) ── */}
               <div className="hero-orbit-outer pointer-events-none absolute inset-0 rounded-full border border-[var(--antenna-line)]" aria-hidden="true">
-                {/* Curved Arc Highlight Segments */}
+                {/* Curved Arc Highlight Segments - Single Non-overlapping Stroke */}
                 <svg className="pointer-events-none absolute inset-[-3px] sm:inset-[-4px] h-[calc(100%+6px)] w-[calc(100%+6px)] sm:h-[calc(100%+8px)] sm:w-[calc(100%+8px)]" viewBox="0 0 100 100" aria-hidden="true">
-                  <circle cx="50" cy="50" r="49" fill="none" stroke="var(--antenna-arc)" strokeWidth="2.5" strokeDasharray="42 160" strokeLinecap="round" />
-                  <circle cx="50" cy="50" r="49" fill="none" stroke="var(--antenna-arc)" strokeWidth="2.5" strokeDasharray="26 174" strokeDashoffset="95" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="49" fill="none" stroke="var(--antenna-arc)" strokeWidth="2.5" strokeDasharray="46 108 32 122" strokeLinecap="round" />
                 </svg>
-
-                {/* Outer Satellite Dots / Nodes */}
-                <span aria-hidden="true" className="hero-signal absolute -left-1 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-                <span aria-hidden="true" className="hero-signal absolute bottom-[14%] left-[12%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
-                <span aria-hidden="true" className="hero-signal absolute top-[8%] right-[18%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
               </div>
 
               {/* ── INNER ORBIT (Moves Circularly Clockwise) ── */}
               <div className="hero-orbit-inner pointer-events-none absolute inset-[1.25rem] sm:inset-[1.6rem] rounded-full border border-dashed border-[var(--antenna-dashed)]" aria-hidden="true">
-                {/* Inner Satellite Dots / Nodes */}
+                {/* Inner Orbit Circle Nodes (Kept on the effect) */}
                 <span aria-hidden="true" className="hero-signal absolute right-[8%] top-[16%] h-2.5 w-2.5 rounded-full bg-[var(--antenna-node)] shadow-xs" />
                 <span aria-hidden="true" className="hero-signal absolute bottom-[12%] right-[18%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />
                 <span aria-hidden="true" className="hero-signal absolute top-[28%] left-[6%] h-2 w-2 rounded-full bg-[var(--antenna-node)] shadow-xs" />

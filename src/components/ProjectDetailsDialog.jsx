@@ -3,27 +3,58 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTagConfig } from './ProjectsPage';
 
-export const getProjectAction = (project) => {
-  if (!project) return null;
-  const isWebsite =
-    project.title === 'PLV-QLib' ||
-    project.title.toLowerCase().includes('website') ||
-    (project.href && !project.href.includes('github.com') && !project.isLocal);
-  if (isWebsite && project.href) {
-    return {
+export const getProjectActions = (project) => {
+  if (!project) return [];
+  const actions = [];
+
+  // 1. Download action (Mobile App APK, PKT files, etc.)
+  const downloadUrl = project.download || project.downloadUrl;
+  if (downloadUrl) {
+    actions.push({
+      label: 'Download Now',
+      href: downloadUrl,
+      icon: 'fa-solid fa-download',
+    });
+  }
+
+  // 2. Live Website action (excluded for mobile apps with download to prevent miscommunication)
+  const isExcludedFromLive = project.title === 'PLV-QLib Mobile App' || Boolean(downloadUrl);
+  const liveUrl =
+    project.live ||
+    project.liveUrl ||
+    (!isExcludedFromLive && (
+      project.title === 'PLV-QLib' ||
+      (project.href && !project.href.includes('github.com') && !project.isLocal)
+    ) ? project.href : null);
+
+  if (liveUrl) {
+    actions.push({
       label: 'View Website',
-      href: project.href,
+      href: liveUrl,
       icon: 'fa-solid fa-arrow-up-right-from-square',
-    };
+    });
   }
-  if (project.href) {
-    return {
+
+  // 3. Source repository action (GitHub)
+  const sourceUrl =
+    project.source ||
+    project.sourceUrl ||
+    (project.href && project.href.includes('github.com') ? project.href : null);
+
+  if (sourceUrl) {
+    actions.push({
       label: 'View Source',
-      href: project.href,
+      href: sourceUrl,
       icon: 'fa-brands fa-github',
-    };
+    });
   }
-  return null;
+
+  return actions;
+};
+
+export const getProjectAction = (project) => {
+  const actions = getProjectActions(project);
+  return actions.length > 0 ? actions[0] : null;
 };
 
 const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
@@ -59,7 +90,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
 
   if (!project) return null;
 
-  const action = getProjectAction(project);
+  const actions = getProjectActions(project);
 
   if (typeof document === 'undefined') return null;
 
@@ -200,18 +231,25 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
             </div>
           )}
 
-          {/* Allowed Action Buttons - Full Available Width */}
-          {action && (
-            <div className="mt-8 pt-6 border-t border-[var(--border-subtle)]">
-              <a
-                href={action.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group w-full inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface-soft)] hover:bg-[var(--surface-hover)] px-6 py-3 font-['Sora',_sans-serif] text-sm font-bold tracking-tight text-[var(--text-main)] shadow-sm hover:border-[var(--text-muted)] transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
-              >
-                <i className={`${action.icon} text-sm transition-transform duration-200 group-hover:translate-x-0.5`} />
-                <span>{action.label}</span>
-              </a>
+          {/* Allowed Action Buttons - Full Available Width or Side-by-Side Responsive Grid */}
+          {actions.length > 0 && (
+            <div
+              className={`mt-8 pt-6 border-t border-[var(--border-subtle)] grid gap-3 ${
+                actions.length > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'
+              }`}
+            >
+              {actions.map((act) => (
+                <a
+                  key={act.label}
+                  href={act.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group w-full inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface-soft)] hover:bg-[var(--surface-hover)] px-6 py-3 font-['Sora',_sans-serif] text-sm font-bold tracking-tight text-[var(--text-main)] shadow-sm hover:border-[var(--text-muted)] transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+                >
+                  <i className={`${act.icon} text-sm transition-transform duration-200 group-hover:translate-x-0.5`} />
+                  <span>{act.label}</span>
+                </a>
+              ))}
             </div>
           )}
         </motion.div>

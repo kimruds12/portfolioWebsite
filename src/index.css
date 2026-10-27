@@ -224,6 +224,11 @@ textarea {
   animation: signalPulse 2.8s ease-in-out infinite;
 }
 
+.hero-orbit-outer .hero-signal,
+.hero-orbit-outer span {
+  display: none !important;
+}
+
 /* ── Light & Dark Neumorphic Glassmorphism Utilities ── */
 .glass-neu-card {
   background: var(--surface);

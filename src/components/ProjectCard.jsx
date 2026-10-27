@@ -118,12 +118,19 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
     glareOpacityTarget.set(0);
   };
 
-  const action = getProjectAction(project);
-  const hasGithub = Boolean(project.href && project.href.includes('github.com'));
-  const isWebsite = Boolean(
-    project.title === 'PLV-QLib' ||
-    (project.href && !project.href.includes('github.com') && !project.isLocal)
-  );
+  const downloadUrl = project.download || project.downloadUrl;
+  const isExcludedFromLive = project.title === 'PLV-QLib Mobile App' || Boolean(downloadUrl);
+  const liveUrl =
+    project.live ||
+    project.liveUrl ||
+    (!isExcludedFromLive && (
+      project.title === 'PLV-QLib' ||
+      (project.href && !project.href.includes('github.com') && !project.isLocal)
+    ) ? project.href : null);
+  const sourceUrl =
+    project.source ||
+    project.sourceUrl ||
+    (project.href && project.href.includes('github.com') ? project.href : null);
 
   return (
     <motion.div
@@ -260,9 +267,22 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           className="project-card-footer flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 sm:py-3.5 relative z-20 transition-colors mt-auto w-full"
         >
           <div className="flex flex-wrap items-center gap-2">
-            {isWebsite && (
+            {downloadUrl && (
               <a
-                href={project.href}
+                href={downloadUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+              >
+                <span>Download Now</span>
+                <i className="fa-solid fa-download text-[10px]" />
+              </a>
+            )}
+
+            {liveUrl && (
+              <a
+                href={liveUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
@@ -273,9 +293,9 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               </a>
             )}
 
-            {hasGithub && (
+            {sourceUrl && (
               <a
-                href={project.href}
+                href={sourceUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
@@ -286,16 +306,16 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               </a>
             )}
 
-            {!isWebsite && !hasGithub && action && (
+            {!downloadUrl && !liveUrl && !sourceUrl && project.href && (
               <a
-                href={action.href}
+                href={project.href}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
-                <i className={`${action.icon} text-[10px]`} />
-                <span>{action.label}</span>
+                <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+                <span>View</span>
               </a>
             )}
           </div>
