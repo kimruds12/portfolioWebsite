@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 480px;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Sora", system-ui, sans-serif;
   --font-mono: "Space Grotesk", monospace;

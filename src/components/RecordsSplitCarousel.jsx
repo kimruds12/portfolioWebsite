@@ -154,15 +154,15 @@ const RecordsSplitCarousel = ({
                 onClick={() => onSelectIndex(prev2Index)}
                 initial={false}
                 animate={{
-                  x: '-96%',
-                  scale: 0.62,
+                  x: '-92%',
+                  scale: 0.65,
                   rotate: shouldReduceMotion ? 0 : -10,
-                  opacity: 0.42,
+                  opacity: 0.45,
                   zIndex: 5,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden md:block absolute w-[220px] md:w-[260px] aspect-[16/11] cursor-pointer"
+                className="hidden md:block absolute w-[200px] md:w-[250px] aspect-[16/11] cursor-pointer hover:opacity-80 transition-all"
               >
                 {renderCertificateImageSlide(records[prev2Index], false)}
               </motion.div>
@@ -173,15 +173,15 @@ const RecordsSplitCarousel = ({
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: '-52%',
+                  x: '-50%',
                   scale: 0.88,
-                  rotate: shouldReduceMotion ? 0 : -7,
-                  opacity: 0.76,
-                  zIndex: 10,
+                  rotate: shouldReduceMotion ? 0 : -6,
+                  opacity: 0.78,
+                  zIndex: 15,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden xs:block absolute w-[220px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
@@ -192,15 +192,15 @@ const RecordsSplitCarousel = ({
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: '52%',
+                  x: '50%',
                   scale: 0.88,
-                  rotate: shouldReduceMotion ? 0 : 7,
-                  opacity: 0.76,
-                  zIndex: 10,
+                  rotate: shouldReduceMotion ? 0 : 6,
+                  opacity: 0.78,
+                  zIndex: 15,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden xs:block absolute w-[220px] sm:w-[300px] md:w-[340px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
@@ -217,7 +217,7 @@ const RecordsSplitCarousel = ({
                   zIndex: 25,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-neu-card absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[390px] aspect-[16/11] shadow-2xl"
+                className="glass-neu-card absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
               </motion.div>
@@ -228,15 +228,15 @@ const RecordsSplitCarousel = ({
                 onClick={() => onSelectIndex(next2Index)}
                 initial={false}
                 animate={{
-                  x: '96%',
-                  scale: 0.62,
+                  x: '92%',
+                  scale: 0.65,
                   rotate: shouldReduceMotion ? 0 : 10,
-                  opacity: 0.42,
+                  opacity: 0.45,
                   zIndex: 5,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden md:block absolute w-[220px] md:w-[260px] aspect-[16/11] cursor-pointer"
+                className="hidden md:block absolute w-[200px] md:w-[250px] aspect-[16/11] cursor-pointer hover:opacity-80 transition-all"
               >
                 {renderCertificateImageSlide(records[next2Index], false)}
               </motion.div>
