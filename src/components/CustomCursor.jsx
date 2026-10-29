@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const checkIsTouchDevice = () => {
-  if (typeof window === 'undefined') return true;
+const checkIsMobileOnly = () => {
+  if (typeof window === 'undefined') return false;
   return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia('(pointer: coarse)').matches ||
-    window.innerWidth < 768
+    window.innerWidth < 768 ||
+    (window.matchMedia && window.matchMedia('(pointer: coarse) and (hover: none)').matches)
   );
 };
 
@@ -15,7 +13,8 @@ const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(checkIsTouchDevice);
+  const [isMobileOnly, setIsMobileOnly] = useState(checkIsMobileOnly);
+  const [tapRipples, setTapRipples] = useState([]);
 
   // High performance coordinate refs to avoid React re-renders during 60/120fps motion
   const mousePos = useRef({ x: -100, y: -100 });
@@ -26,18 +25,44 @@ const CustomCursor = () => {
   const isVisibleRef = useRef(false);
 
   useEffect(() => {
-    // Strictly disable on mobile responsiveness & touch-screen devices
-    const checkTouch = () => {
-      setIsTouchDevice(checkIsTouchDevice());
+    const handleResize = () => {
+      setIsMobileOnly(checkIsMobileOnly());
     };
 
-    checkTouch();
-    window.addEventListener('resize', checkTouch);
-    return () => window.removeEventListener('resize', checkTouch);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 1. Mobile & Touch Screen: Touch Tap Ripple Effect (Global Screen Taps)
   useEffect(() => {
-    if (isTouchDevice) return;
+    if (typeof window === 'undefined') return;
+
+    const handleTouchStart = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const newTap = {
+        id: `${Date.now()}-${Math.random()}`,
+        x: touch.clientX,
+        y: touch.clientY,
+      };
+
+      setTapRipples((prev) => [...prev.slice(-3), newTap]);
+
+      setTimeout(() => {
+        setTapRipples((prev) => prev.filter((t) => t.id !== newTap.id));
+      }, 450);
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { capture: true, passive: true });
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart, { capture: true });
+    };
+  }, []);
+
+  // 2. Desktop Mouse Tracking Cursor (Only active when not strictly mobile-only)
+  useEffect(() => {
+    if (isMobileOnly) return;
 
     let hasPositioned = false;
 
@@ -123,10 +148,8 @@ const CustomCursor = () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [isTouchDevice]);
+  }, [isMobileOnly]);
 
-  // Strictly disabled on mobile responsiveness
-  if (isTouchDevice) return null;
   if (typeof document === 'undefined') return null;
 
   // Portaled directly to document.body at max z-index (2147483647) to stay permanently above all modals, overlays and dialogs
@@ -135,48 +158,77 @@ const CustomCursor = () => {
       className="pointer-events-none fixed inset-0 overflow-hidden select-none"
       style={{
         zIndex: 2147483647,
-        opacity: isVisible ? 1 : 0,
-        transition: 'opacity 0.2s ease-out',
         pointerEvents: 'none',
       }}
       aria-hidden="true"
     >
-      {/* 38px Ring - trails pointer with springy lag and settles when stopped */}
-      <div
-        ref={ringRef}
-        className="will-change-transform pointer-events-none"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '38px',
-          height: '38px',
-          borderRadius: '50%',
-          border: '1.5px solid var(--cursor-ring, rgba(56, 189, 248, 0.45))',
-          backgroundColor: 'var(--cursor-ring-bg, rgba(56, 189, 248, 0.05))',
-          boxShadow: '0 0 14px var(--cursor-ring, rgba(56, 189, 248, 0.25))',
-          pointerEvents: 'none',
-          zIndex: 2147483647,
-        }}
-      />
+      {/* Desktop Cursor Elements */}
+      {!isMobileOnly && (
+        <div
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transition: 'opacity 0.2s ease-out',
+            pointerEvents: 'none',
+          }}
+        >
+          {/* 38px Ring - trails pointer with springy lag and settles when stopped */}
+          <div
+            ref={ringRef}
+            className="will-change-transform pointer-events-none"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '38px',
+              height: '38px',
+              borderRadius: '50%',
+              border: '1.5px solid var(--cursor-ring, rgba(56, 189, 248, 0.45))',
+              backgroundColor: 'var(--cursor-ring-bg, rgba(56, 189, 248, 0.05))',
+              boxShadow: '0 0 14px var(--cursor-ring, rgba(56, 189, 248, 0.25))',
+              pointerEvents: 'none',
+              zIndex: 2147483647,
+            }}
+          />
 
-      {/* 8px Accent Dot - sticks directly to the pointer */}
-      <div
-        ref={dotRef}
-        className="will-change-transform pointer-events-none"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          backgroundColor: 'var(--cursor-accent, #38bdf8)',
-          boxShadow: '0 0 10px var(--cursor-accent, #38bdf8)',
-          pointerEvents: 'none',
-          zIndex: 2147483647,
-        }}
-      />
+          {/* 8px Accent Dot - sticks directly to the pointer */}
+          <div
+            ref={dotRef}
+            className="will-change-transform pointer-events-none"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--cursor-accent, #38bdf8)',
+              boxShadow: '0 0 10px var(--cursor-accent, #38bdf8)',
+              pointerEvents: 'none',
+              zIndex: 2147483647,
+            }}
+          />
+        </div>
+      )}
+
+      {/* Mobile Touch Tap Ripples */}
+      {tapRipples.map((tap) => (
+        <div key={tap.id} className="pointer-events-none select-none">
+          <div
+            className="mobile-tap-ring"
+            style={{
+              left: `${tap.x}px`,
+              top: `${tap.y}px`,
+            }}
+          />
+          <div
+            className="mobile-tap-dot"
+            style={{
+              left: `${tap.x}px`,
+              top: `${tap.y}px`,
+            }}
+          />
+        </div>
+      ))}
     </div>,
     document.body
   );

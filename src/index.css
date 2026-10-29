@@ -85,9 +85,9 @@ html.theme-light {
   --glow-portrait: rgba(148, 163, 184, 0.25);
   --cursor-fill: #0f172a;
   --cursor-stroke: #ffffff;
-  --cursor-accent: #0284c7;
-  --cursor-ring: rgba(2, 132, 199, 0.45);
-  --cursor-ring-bg: rgba(2, 132, 199, 0.05);
+  --cursor-accent: #0f172a;
+  --cursor-ring: rgba(15, 23, 42, 0.4);
+  --cursor-ring-bg: rgba(15, 23, 42, 0.05);
 
   /* Navbar & Identity Tokens - Light Mode (Reference Image 1) */
   --nav-bg: rgba(255, 255, 255, 0.92);
@@ -616,16 +616,35 @@ html.theme-light .btn-discovery-cta span {
 
 .contact-drag-highlight,
 .contact-row-box {
-  background-color: rgba(255, 255, 255, 0.07);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.contact-drag-row:hover .contact-row-box {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 16px rgba(255, 255, 255, 0.1);
+}
+
+.contact-row-arrow-active {
+  color: #ffffff !important;
 }
 
 .theme-light .contact-drag-highlight,
 html.theme-light .contact-drag-highlight,
 .theme-light .contact-row-box,
 html.theme-light .contact-row-box {
-  background-color: rgba(15, 23, 42, 0.06);
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.07);
+  background-color: rgba(15, 23, 42, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.12);
+}
+
+.theme-light .contact-drag-row:hover .contact-row-box,
+html.theme-light .contact-drag-row:hover .contact-row-box {
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.4), 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.theme-light .contact-row-arrow-active,
+html.theme-light .contact-row-arrow-active {
+  color: #0f172a !important;
 }
 
 /* ── Credential Running Line Divider Highlight ── */
@@ -882,27 +901,40 @@ html.theme-light .project-dialog-btn:hover span {
 .theme-light .navbar-resume-btn:hover,
 html.theme-light .navbar-resume-btn:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(166, 180, 200, 0.55), -2px -2px 10px rgba(255, 255, 255, 0.95), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
-  border-color: rgba(148, 163, 184, 0.8) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1), 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+  border-color: rgba(15, 23, 42, 0.35) !important;
 }
 
 .theme-light .navbar-resume-btn:active,
 html.theme-light .navbar-resume-btn:active {
   transform: translateY(0px) scale(0.96);
-  box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.45) !important;
+  box-shadow: inset 1px 1px 3px rgba(15, 23, 42, 0.2) !important;
+  border-color: rgba(15, 23, 42, 0.45) !important;
 }
 
-/* ── Credentials Carousel Theme Adaptive System (Matching Reference Images 1 & 5) ── */
+/* ── Credentials Carousel Theme Adaptive System (White Outline Effect in Dark Mode) ── */
 .credential-card-active {
   background-color: #111726 !important;
-  border: 1px solid rgba(59, 130, 246, 0.25) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 255, 255, 0.06) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.credential-card-active:hover {
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.15) !important;
 }
 
 .credential-card-side {
   background-color: #0d121c !important;
-  border: 1px solid rgba(51, 65, 85, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+
+.credential-card-side:hover {
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 18px rgba(255, 255, 255, 0.1) !important;
 }
 
 .credential-card-title {
@@ -1217,7 +1249,7 @@ html.theme-light .lets-connect-glint-band {
   border-radius: 50%;
   pointer-events: none;
   transform: translate3d(calc(var(--stmt-x, -200px) - 41px), calc(var(--stmt-y, -200px) - 41px), 0);
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, rgba(56, 189, 248, 0.22) 48%, transparent 75%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.7) 0%, rgba(56, 189, 248, 0.28) 48%, transparent 75%);
   filter: blur(8px);
   opacity: var(--stmt-opacity, 0);
   transition: opacity 0.25s ease-out;
@@ -1226,13 +1258,13 @@ html.theme-light .lets-connect-glint-band {
 
 .theme-light .statement-light-circle,
 html.theme-light .statement-light-circle {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.55) 0%, rgba(2, 132, 199, 0.2) 48%, transparent 75%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.7) 0%, rgba(56, 189, 248, 0.28) 48%, transparent 75%);
 }
 
 .statement-revealed-text {
   position: absolute;
   inset: 0;
-  color: var(--cursor-accent, #38bdf8);
+  color: #38bdf8 !important;
   pointer-events: none;
   opacity: var(--stmt-opacity, 0);
   transition: opacity 0.25s ease-out;
@@ -1360,4 +1392,118 @@ html.theme-light .folder-arc-content {
 .theme-light .folder-arc-btn:hover .folder-arc-content,
 html.theme-light .folder-arc-btn:hover .folder-arc-content {
   background: #f1f5f9;
+}
+
+/* ── Skills Section Theme Adaptive Accents (White in Dark Mode, Black in Light Mode) ── */
+.skill-theme-accent-bg {
+  background-color: #0f172a;
+}
+
+.skill-theme-accent-text {
+  color: #0f172a;
+}
+
+.theme-dark .skill-theme-accent-bg,
+html.theme-dark .skill-theme-accent-bg {
+  background-color: #ffffff !important;
+}
+
+.theme-dark .skill-theme-accent-text,
+html.theme-dark .skill-theme-accent-text {
+  color: #ffffff !important;
+}
+
+
+/* ── Mobile Touch Tap Cursor Ripple Effect ── */
+@keyframes mobile-cursor-tap-ring {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0.6);
+    opacity: 1;
+    border-width: 2px;
+  }
+  60% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(1.55);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+@keyframes mobile-cursor-tap-dot {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(-50%, -50%, 0) scale(1.25);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(0.35);
+    opacity: 0;
+  }
+}
+
+.mobile-tap-ring {
+  position: fixed;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: mobile-cursor-tap-ring 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+  z-index: 2147483647;
+  border: 1.5px solid var(--cursor-ring, rgba(56, 189, 248, 0.45));
+  background-color: var(--cursor-ring-bg, rgba(56, 189, 248, 0.06));
+  box-shadow: 0 0 14px var(--cursor-ring, rgba(56, 189, 248, 0.25));
+}
+
+.mobile-tap-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: mobile-cursor-tap-dot 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+  z-index: 2147483647;
+  background-color: var(--cursor-accent, #38bdf8);
+  box-shadow: 0 0 10px var(--cursor-accent, #38bdf8);
+}
+
+/* Dark Mode Mobile Tap (Vibrant Cyan Theme) */
+.theme-dark .mobile-tap-ring,
+html.theme-dark .mobile-tap-ring {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  background-color: rgba(56, 189, 248, 0.08) !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.3) !important;
+}
+
+.theme-dark .mobile-tap-dot,
+html.theme-dark .mobile-tap-dot {
+  background-color: #38bdf8 !important;
+  box-shadow: 0 0 10px #38bdf8 !important;
+}
+
+/* Light Mode Mobile Tap (Subtle Dark Theme) */
+.theme-light .mobile-tap-ring,
+html.theme-light .mobile-tap-ring {
+  border-color: rgba(15, 23, 42, 0.35) !important;
+  background-color: rgba(15, 23, 42, 0.05) !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12) !important;
+}
+
+.theme-light .mobile-tap-dot,
+html.theme-light .mobile-tap-dot {
+  background-color: #0f172a !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-tap-ring,
+  .mobile-tap-dot {
+    animation-duration: 150ms;
+  }
 }

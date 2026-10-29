@@ -112,6 +112,20 @@ const Skills = () => {
   const [activeSkill, setActiveSkill] = useState(() =>
     checkIsDirectExperience() ? skillCategories.length - 1 : 0
   );
+  const [shuffledCategories, setShuffledCategories] = useState(skillCategories);
+
+  // Horizontal glide / shuffle of skill badges every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShuffledCategories((prev) =>
+        prev.map((cat) => {
+          if (!cat.skills || cat.skills.length <= 1) return cat;
+          return { ...cat, skills: [...cat.skills.slice(1), cat.skills[0]] };
+        })
+      );
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -287,7 +301,7 @@ const Skills = () => {
         className="px-4 py-20 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center"
       >
         <div className="mx-auto w-full max-w-7xl">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="grid gap-10 lg:gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
 
             {/* ── Left Side: About Context & Background ── */}
             <motion.div
@@ -319,7 +333,7 @@ const Skills = () => {
                     onClick={() => handleJumpToSkill(idx)}
                     aria-label={`Jump to ${category.title}`}
                     className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeSkill
-                      ? 'w-8 bg-sky-400 dark:bg-sky-400'
+                      ? 'w-8 skill-theme-accent-bg shadow-sm'
                       : 'w-2 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
                       }`}
                   />
@@ -328,18 +342,18 @@ const Skills = () => {
             </motion.div>
 
             {/* ── Right Side: Skills Clean Slide-Over Container (Solid Opaque Cards) ── */}
-            <div className="relative w-full max-w-xl mx-auto lg:mx-0">
+            <div className="relative w-full max-w-2xl mx-auto lg:mx-0">
               {/* Guide Bar Aligned with Container */}
               <div className="flex items-center justify-between mb-3.5 px-1">
                 <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400" />
+                  <span className="inline-block h-1.5 w-1.5 rounded-full skill-theme-accent-bg" />
                   <span>Stack {skillCategories[activeSkill]?.step} of 05</span>
                 </span>
 
                 <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 bg-[var(--surface-soft)] border border-[var(--border-color)] text-[var(--text-muted)] shadow-xs transition-colors duration-200">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full skill-theme-accent-bg opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 skill-theme-accent-bg"></span>
                   </span>
                   <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-main)]">
                     {activeSkill < skillCategories.length - 1 ? 'Scroll to Reveal' : 'Scroll to Continue'}
@@ -347,13 +361,13 @@ const Skills = () => {
                   <motion.i
                     animate={{ y: [0, 3, 0] }}
                     transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-                    className="fa-solid fa-arrow-down text-[10px] text-sky-400"
+                    className="fa-solid fa-arrow-down text-[10px] skill-theme-accent-text"
                   />
                 </div>
               </div>
 
               {/* Card Container: fixed height, overflow hidden so cards slide cleanly inside viewport */}
-              <div className="relative h-[360px] sm:h-[400px] overflow-hidden rounded-3xl">
+              <div className="relative h-[340px] sm:h-[365px] md:h-[375px] overflow-hidden rounded-3xl">
                 {skillCategories.map((category, index) => (
                   <div
                     key={category.title}
@@ -365,7 +379,7 @@ const Skills = () => {
                   >
                     {/* 100% Solid Opaque Background Card — ZERO bleed-through */}
                     <div
-                      className="rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-full select-none"
+                      className="rounded-3xl p-6 sm:p-7 md:p-8 flex flex-col justify-between h-full select-none"
                       style={{
                         backgroundColor: 'var(--surface-card-solid, #0d121c)',
                         border: '1px solid var(--border-color)',
@@ -378,7 +392,7 @@ const Skills = () => {
                       {/* Top: Step number & Header */}
                       <div>
                         <div className="flex items-center justify-between mb-3.5">
-                          <span className="font-mono text-xs sm:text-sm font-extrabold tracking-wider text-sky-400">
+                          <span className="font-mono text-xs sm:text-sm font-extrabold tracking-wider skill-theme-accent-text">
                             {category.step}
                           </span>
                           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--text-main)] border border-[var(--border-color)] shadow-2xs">
@@ -386,19 +400,23 @@ const Skills = () => {
                           </div>
                         </div>
 
-                        <h3 className="font-['Sora',_sans-serif] text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)]">
+                        <h3 className="font-['Sora',_sans-serif] text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-main)]">
                           {category.title}
                         </h3>
                         <p className="mt-1 text-xs sm:text-sm text-[var(--text-muted)] font-mono">
                           {category.description}
                         </p>
 
-                        {/* Skills Pills */}
+                        {/* Skills Pills with 5s horizontal glide layout animation */}
                         <div className="mt-5 sm:mt-6 flex flex-wrap gap-2 sm:gap-2.5">
-                          {category.skills.map((skill) => (
-                            <div
+                          {(shuffledCategories[index]?.skills || category.skills).map((skill) => (
+                            <motion.div
+                              layout
                               key={skill.name}
-                              className="glass-neu-pill flex items-center gap-2 rounded-xl px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold text-[var(--text-main)] transition-all hover:scale-102"
+                              transition={{
+                                layout: { type: 'spring', stiffness: 320, damping: 28 },
+                              }}
+                              className="glass-neu-pill flex items-center gap-2 rounded-xl px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold text-[var(--text-main)] transition-all hover:scale-102 cursor-default"
                             >
                               <span
                                 className="flex h-4 w-4 items-center justify-center shrink-0"
@@ -407,24 +425,12 @@ const Skills = () => {
                                 <i className={`${skill.icon} text-xs sm:text-sm`} />
                               </span>
                               <span>{skill.name}</span>
-                            </div>
+                            </motion.div>
                           ))}
                         </div>
                       </div>
 
-                      {/* Bottom Segmented Progress Bar (Matching Images 2 & 3) */}
-                      <div className="mt-6 pt-4 border-t border-[var(--border-color)]/60 flex items-center gap-2">
-                        {skillCategories.map((_, barIdx) => (
-                          <div
-                            key={barIdx}
-                            className={`h-1.5 sm:h-2 flex-1 rounded-full transition-colors duration-300 ${
-                              barIdx <= index
-                                ? 'bg-sky-400 dark:bg-sky-400 shadow-xs'
-                                : 'bg-[var(--surface-soft)] border border-[var(--border-color)]/60'
-                            }`}
-                          />
-                        ))}
-                      </div>
+
                     </div>
                   </div>
                 ))}

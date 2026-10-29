@@ -186,7 +186,7 @@ const ContactRow = ({ item, isLast }) => {
         <div className="flex w-8 shrink-0 items-center justify-end">
           <i
             className={`fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm transition-all duration-300 ${isActive
-              ? 'text-sky-400 translate-x-0.5 -translate-y-0.5'
+              ? 'contact-row-arrow-active translate-x-0.5 -translate-y-0.5'
               : 'text-[var(--text-muted)]'
               }`}
           />
