@@ -8,7 +8,7 @@ const formatActivitiesList = (raw) => {
   if (typeof raw === 'string') {
     return raw
       .split('\n')
-      .map((line) => line.trim().replace(/^[•\-\*]\s*/, ''))
+      .map((line) => line.trim().replace(/^[-•*]\s*/, ''))
       .filter(Boolean);
   }
   return [];

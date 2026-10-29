@@ -7,8 +7,6 @@ import {
   useMotionTemplate,
 } from 'framer-motion';
 import { getTagConfig } from './ProjectsPage';
-import { getProjectAction } from './ProjectDetailsDialog';
-
 const getCategoryLabel = (project) => {
   if (project.categoryLabel) return project.categoryLabel.toUpperCase();
   if (project.isLocal) return 'LOCAL SYSTEM';
@@ -36,7 +34,7 @@ const formatTitleWithBreaks = (title) => {
   ));
 };
 
-const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
+const ProjectCard = ({ project, index: _index = 0, onOpenDetails }) => {
   const wrapperRef = useRef(null);
   const detailsBtnRef = useRef(null);
 
@@ -269,7 +267,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
                 <span>Download Now</span>
                 <i className="fa-solid fa-download text-[10px]" />
@@ -282,7 +280,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
                 <span>Live</span>
                 <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
@@ -295,7 +293,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
                 <i className="fa-brands fa-github text-xs" />
                 <span>Source</span>
@@ -308,7 +306,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
+                className="project-card-btn inline-flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs"
               >
                 <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
                 <span>View</span>
@@ -324,7 +322,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
               e.stopPropagation();
               onOpenDetails?.(project, detailsBtnRef);
             }}
-            className="project-card-details inline-flex items-center gap-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--text-main)] rounded-md px-2 py-1 cursor-pointer relative z-20 ml-auto"
+            className="project-card-btn project-card-details inline-flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer relative z-20 shadow-xs ml-auto"
             aria-label={`View details for ${project.title}`}
           >
             <span>Details</span>

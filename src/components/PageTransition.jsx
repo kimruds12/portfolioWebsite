@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef } from 'react';
+import { useEffect, forwardRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 /**

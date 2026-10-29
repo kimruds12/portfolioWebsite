@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Skills from './Skills';
 import ExperienceTabs from './ExperienceTabs';
@@ -6,7 +5,6 @@ import ProjectDeliveryFramework from './ProjectDeliveryFramework';
 import { PageBlock } from './PageTransition';
 
 const AboutPage = () => {
-  const navigate = useNavigate();
 
   return (
     <div className="relative pt-20 sm:pt-28 pb-16 sm:pb-20 overflow-hidden">
@@ -26,8 +24,9 @@ const AboutPage = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left"
             >
-              <h1 className="mt-4 sm:mt-5 font-['Sora',_sans-serif] text-[clamp(1.85rem,5.5vw,4.2rem)] font-extrabold tracking-tight text-[var(--text-main)] leading-tight break-words">
-                Kim Ruds Guston
+              <h1 className="glint-headline mt-4 sm:mt-5 font-['Sora',_sans-serif] text-[clamp(1.85rem,5.5vw,4.2rem)] font-extrabold tracking-tight leading-tight select-none break-words">
+                <span className="glint-headline-base">Kim Ruds Guston</span>
+                <span className="glint-headline-band" aria-hidden="true">Kim Ruds Guston</span>
               </h1>
 
               <div className="mt-5 sm:mt-6 space-y-4 text-sm sm:text-base md:text-lg leading-relaxed text-[var(--text-muted)] max-w-2xl">

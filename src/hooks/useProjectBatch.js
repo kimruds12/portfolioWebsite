@@ -57,6 +57,7 @@ export const useProjectBatch = (gridRef, deps = []) => {
         });
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
 

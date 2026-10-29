@@ -78,11 +78,40 @@ const skillCategories = [
   },
 ];
 
+const HOLD_DURATION = 1.0;
+const SLIDE_DURATION = 1.6;
+// Timeline structure: hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6)
+// Total = 1.0 + 4*(1.6+1.0) - 1.0 = 10.4  (no trailing hold on last card)
+// Snap to the midpoint of each card's "visible/hold" window:
+// Card 0: visible 0..1.0         → snap at 0
+// Card 1: visible 2.6..3.6       → snap at 3.1/10.4
+// Card 2: visible 5.2..6.2       → snap at 5.7/10.4
+// Card 3: visible 7.8..8.8       → snap at 8.3/10.4
+// Card 4: visible 10.4           → snap at 1
+const TOTAL_DURATION = 10.4;
+const snapPoints = [0, 3.1 / TOTAL_DURATION, 5.7 / TOTAL_DURATION, 8.3 / TOTAL_DURATION, 1];
+
+const checkIsDirectExperience = () => {
+  if (typeof window === 'undefined') return false;
+  const hash = window.location.hash;
+  const search = window.location.search;
+  return (
+    hash === '#credentials' ||
+    hash === '#experience' ||
+    window.location.href.includes('#credentials') ||
+    window.location.href.includes('#experience') ||
+    search.includes('record=')
+  );
+};
+
 const Skills = () => {
   const sectionRef = useRef(null);
   const pinWrapperRef = useRef(null);
   const cardRefs = useRef([]);
-  const [activeSkill, setActiveSkill] = useState(0);
+  const tlRef = useRef(null);
+  const [activeSkill, setActiveSkill] = useState(() =>
+    checkIsDirectExperience() ? skillCategories.length - 1 : 0
+  );
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -94,82 +123,94 @@ const Skills = () => {
       const totalCards = cards.length;
       const slidingCards = totalCards - 1; // 4 sliding steps
 
-      // Check if user arrived targeting #credentials directly
-      const isDirectCredentials =
-        typeof window !== 'undefined' &&
-        (window.location.hash === '#credentials' ||
-          window.location.href.includes('#credentials'));
+      const isDirectCredentials = checkIsDirectExperience();
 
       // Initial placement:
-      // Card 0 starts in place (yPercent: 0, opacity: 1)
-      // Cards 1..4 start directly below the container at yPercent: 100, ready to slide up
-      cards.forEach((card, i) => {
-        if (i === 0) {
-          gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
-        } else {
-          gsap.set(card, { yPercent: 100, opacity: 1, scale: 1 });
-        }
-      });
+      // If arriving directly at Experience/Credentials from shortcut, initialize stack at the end (Cloud & Infrastructure)
+      if (isDirectCredentials) {
+        cards.forEach((card, i) => {
+          if (i < totalCards - 1) {
+            gsap.set(card, { yPercent: 0, opacity: 0, scale: 0.96 });
+          } else {
+            gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
+          }
+        });
+      } else {
+        cards.forEach((card, i) => {
+          if (i === 0) {
+            gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
+          } else {
+            gsap.set(card, { yPercent: 100, opacity: 1, scale: 1 });
+          }
+        });
+      }
 
-      // Pinned timeline with smooth magnetic snapping to each card step
+      // Pinned timeline with extended scroll distance, hold intervals, and smooth snapping
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: () => `+=${slidingCards * 85}vh`,
+          end: () => `+=${slidingCards * 170}vh`,
           pin: pinWrapper,
-          scrub: 0.8,
+          scrub: 1.2,
           snap: {
-            snapTo: 1 / slidingCards,
-            duration: { min: 0.25, max: 0.55 },
-            delay: 0.08,
+            snapTo: snapPoints,
+            duration: { min: 0.35, max: 0.75 },
+            delay: 0.12,
             ease: 'power2.out',
           },
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const currentIndex = Math.min(
-              slidingCards,
-              Math.round(self.progress * slidingCards)
-            );
-            setActiveSkill(currentIndex);
+            const p = self.progress;
+            // Determine which card is active based on timeline progress
+            // Midpoints between snap boundaries: 0, 0.298, 0.548, 0.798, 1
+            let current = 0;
+            if (p >= 0.899) current = 4;
+            else if (p >= 0.648) current = 3;
+            else if (p >= 0.423) current = 2;
+            else if (p >= 0.149) current = 1;
+            setActiveSkill(current);
           },
         },
       });
 
-      // Slide cards in one after another
+      tlRef.current = tl;
+
+      // Construct timeline: each card has a dedicated HOLD period ("stocked")
+      // followed by a deliberate, slower slide transition so users have ample time to read
       cards.forEach((card, i) => {
         if (i === 0) return;
 
-        const startTime = (i - 1) * 1;
+        // Start time incorporates previous card's hold and transition
+        const startTime = HOLD_DURATION + (i - 1) * (SLIDE_DURATION + HOLD_DURATION);
 
-        // Slide the new card cleanly up over the previous card
+        // Slide the new card cleanly and slowly up over the previous card
         tl.to(
           card,
           {
             yPercent: 0,
-            duration: 1,
-            ease: 'power1.inOut',
+            duration: SLIDE_DURATION,
+            ease: 'power2.inOut',
           },
           startTime
         );
 
-        // Once the new card reaches position, fade the previous card behind it
-        // to prevent any accidental ghosting or overlapping
+        // Fade and scale the previous card behind it
         tl.to(
           cards[i - 1],
           {
             scale: 0.96,
             opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut',
+            duration: SLIDE_DURATION * 0.65,
+            ease: 'power2.inOut',
           },
-          startTime + 0.4
+          startTime + SLIDE_DURATION * 0.35
         );
       });
 
-      // Scenario 2: Direct navigation to Experience, Education & Credentials
-      // Initialize timeline at 100% (Cloud & Infrastructure fully active)
+      // Scenario 2: Direct navigation to Experience, Education & Credentials from shortcut
+      // Initialize timeline at 100% (specifically Cloud & Infrastructure active)
       if (isDirectCredentials) {
         tl.progress(1);
         setActiveSkill(slidingCards);
@@ -187,16 +228,19 @@ const Skills = () => {
     };
   }, []);
 
-  // Handle in-page hashchange navigation to #credentials
+  // Handle in-page hashchange navigation to #credentials or #experience
   useEffect(() => {
     const handleHashCheck = () => {
-      if (window.location.hash === '#credentials') {
+      const hash = window.location.hash;
+      if (hash === '#credentials' || hash === '#experience') {
         const triggers = ScrollTrigger.getAll();
         const skillTrigger = triggers.find(
           (t) => t.vars?.trigger === sectionRef.current
         );
         if (skillTrigger) {
-          const targetScroll = skillTrigger.end + 20;
+          tlRef.current?.progress(1);
+          setActiveSkill(skillCategories.length - 1);
+          const targetScroll = skillTrigger.end + 30;
           if (window.lenis) {
             window.lenis.scrollTo(targetScroll, { duration: 0.8 });
           } else {
@@ -217,14 +261,13 @@ const Skills = () => {
     );
     if (!skillTrigger) return;
 
-    const totalCards = skillCategories.length - 1;
-    const targetProgress = idx / totalCards;
+    const targetProgress = snapPoints[idx] ?? idx / (skillCategories.length - 1);
     const scrollStart = skillTrigger.start;
     const scrollEnd = skillTrigger.end;
     const targetScroll = scrollStart + (scrollEnd - scrollStart) * targetProgress;
 
     if (window.lenis) {
-      window.lenis.scrollTo(targetScroll, { duration: 0.8 });
+      window.lenis.scrollTo(targetScroll, { duration: 0.9 });
     } else {
       window.scrollTo({
         top: targetScroll,
@@ -258,8 +301,9 @@ const Skills = () => {
                 TECH STACK
               </span>
 
-              <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(1.75rem,5vw,3.5rem)] font-bold leading-tight tracking-tight text-[var(--text-main)] break-words">
-                Skills & Technologies
+              <h2 className="glint-headline mt-4 font-['Sora',_sans-serif] text-[clamp(1.75rem,5vw,3.5rem)] font-bold leading-tight tracking-tight select-none break-words">
+                <span className="glint-headline-base">Skills & Technologies</span>
+                <span className="glint-headline-band" aria-hidden="true">Skills & Technologies</span>
               </h2>
 
               <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">

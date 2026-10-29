@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -23,13 +23,13 @@ const RecordsSplitCarousel = ({
   const prevIndex = (selectedIndex - 1 + total) % total;
   const nextIndex = (selectedIndex + 1) % total;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     onSelectIndex((selectedIndex + 1) % total);
-  };
+  }, [onSelectIndex, selectedIndex, total]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     onSelectIndex((selectedIndex - 1 + total) % total);
-  };
+  }, [onSelectIndex, selectedIndex, total]);
 
   const openCertificate = (record, trigger) => {
     returnFocusRef.current = trigger || document.activeElement;
@@ -53,7 +53,7 @@ const RecordsSplitCarousel = ({
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [enlargedCertificate, selectedIndex, total]);
+  }, [enlargedCertificate, handleNext, handlePrev]);
 
   // Lock background scroll when modal is active, focus close button
   useEffect(() => {

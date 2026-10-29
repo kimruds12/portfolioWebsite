@@ -15,7 +15,7 @@ const Contact = () => {
                         I enjoy working with others, sharing what I know, and getting things done — from writing code to planning projects, managing tasks, and making sure everything runs smoothly from start to finish.
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 w-full">
                         <a href="/Assets/2026_Resume_Guston.pdf" download="2026_Resume_Guston.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-gray-800 text-white transition-colors text-sm font-medium">
                             <i className="fa-solid fa-file-lines"></i>
                             Resume

@@ -10,6 +10,7 @@ import OJTMonthPage from './components/OJTMonthPage';
 import OJTWeekPage from './components/OJTWeekPage';
 import Footer from './components/Footer';
 import BootLoader from './components/BootLoader';
+import CustomCursor from './components/CustomCursor';
 import useBootSequence from './hooks/useBootSequence';
 import useLenisScroll from './hooks/useLenisScroll';
 
@@ -144,6 +145,7 @@ function AppInner() {
 
   return (
     <div className="relative min-h-screen bg-[var(--bg-page)] text-[var(--text-main)]">
+      <CustomCursor />
       {/* Boot Loading Screen */}
       <BootLoader
         show={phase === 'loading' || phase === 'ready'}

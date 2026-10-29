@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+
 import { getOjtWeekBySlug } from '../data/OjtExperience';
 import OJTDayReflection from './OJTDayReflection';
 import { PageBlock } from './PageTransition';
@@ -7,7 +7,6 @@ import { PageBlock } from './PageTransition';
 const OJTWeekPage = () => {
   const { monthSlug, weekSlug } = useParams();
   const navigate = useNavigate();
-  const shouldReduceMotion = useReducedMotion();
 
   const data = getOjtWeekBySlug(monthSlug, weekSlug);
   const month = data?.month;

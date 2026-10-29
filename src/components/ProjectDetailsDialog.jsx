@@ -80,11 +80,12 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
 
     window.addEventListener('keydown', handleKeyDown);
 
+    const triggerEl = triggerRef?.current;
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKeyDown);
-      triggerRef?.current?.focus?.();
+      triggerEl?.focus?.();
     };
   }, [project, onClose, triggerRef]);
 
@@ -244,7 +245,7 @@ const ProjectDetailsDialog = ({ project, onClose, triggerRef }) => {
                   href={act.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="group w-full inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface-soft)] hover:bg-[var(--surface-hover)] px-6 py-3 font-['Sora',_sans-serif] text-sm font-bold tracking-tight text-[var(--text-main)] shadow-sm hover:border-[var(--text-muted)] transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+                  className="project-dialog-btn group w-full inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface-soft)] hover:bg-[var(--surface-hover)] px-6 py-3 font-['Sora',_sans-serif] text-sm font-bold tracking-tight text-[var(--text-main)] shadow-sm hover:border-[var(--text-muted)] transition-all active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
                 >
                   <i className={`${act.icon} text-sm transition-transform duration-200 group-hover:translate-x-0.5`} />
                   <span>{act.label}</span>

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import RecordsSplitCarousel from './RecordsSplitCarousel';
 
-export const workExperienceRecords = [
+const workExperienceRecords = [
   {
     id: 'work-11ftc',
     organization: '11FTC Enterprises, Inc.',
@@ -28,7 +28,7 @@ export const workExperienceRecords = [
   },
 ];
 
-export const educationRecords = [
+const educationRecords = [
   {
     id: 'edu-plv',
     organization: 'Pamantasan ng Lungsod ng Valenzuela',
@@ -67,7 +67,7 @@ export const educationRecords = [
   },
 ];
 
-export const certificatesRecords = [
+const certificatesRecords = [
   {
     id: 'cert-itlympics',
     typeLabel: '// WEB DESIGN COMPETITION',
@@ -143,17 +143,12 @@ const TABS = [
 
 const ExperienceTabs = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState('experience');
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const queryRecord = new URLSearchParams(location.search).get('record');
+  const is11ftc = queryRecord === '11ftc';
+  const ftcIndex = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
 
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    if (query.get('record') === '11ftc') {
-      setActiveTab('experience');
-      const idx = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
-      setSelectedIndex(idx !== -1 ? idx : 1);
-    }
-  }, [location.search]);
+  const [activeTab, setActiveTab] = useState('experience');
+  const [selectedIndex, setSelectedIndex] = useState(is11ftc ? (ftcIndex !== -1 ? ftcIndex : 1) : 0);
 
   const getActiveRecords = () => {
     switch (activeTab) {
@@ -176,10 +171,11 @@ const ExperienceTabs = () => {
 
   return (
     <section
-      id="credentials"
+      id="experience"
       className="scroll-mt-24 px-4 py-20 sm:px-6 lg:px-8 relative overflow-hidden"
       aria-label="Experience, Education and Credentials records"
     >
+      <div id="credentials" className="absolute top-0 pointer-events-none" aria-hidden="true" />
       <div className="mx-auto w-full max-w-6xl relative z-10">
 
         {/* Section Heading */}
@@ -190,11 +186,12 @@ const ExperienceTabs = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="font-['Sora',_sans-serif] text-[clamp(1.75rem,4.5vw,3.4rem)] font-extrabold tracking-tight text-[var(--text-main)] break-words">
-            Experience, Education &amp; Credentials
+          <h2 className="glint-headline font-['Sora',_sans-serif] text-[clamp(1.75rem,4.5vw,3.4rem)] font-extrabold tracking-tight select-none break-words">
+            <span className="glint-headline-base">Experience, Education &amp; Credentials</span>
+            <span className="glint-headline-band" aria-hidden="true">Experience, Education &amp; Credentials</span>
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-xs sm:text-sm leading-relaxed text-[var(--text-muted)]">
-            A comprehensive record of client engagements, technical internships, computer engineering education, and industry certifications.
+            A record of work experience, Information Technology education, and industry certifications, highlighting technical skills, achievements, and academic excellence.
           </p>
         </motion.div>
 

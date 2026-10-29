@@ -112,11 +112,9 @@ const Navbar = () => {
   useEffect(() => {
     // Rotation ONLY runs on Home page when visitor is on the Home wall
     if (isHomePage && isOnHomeWall) {
-      setRotationState('name');
       startRotationLoop();
     } else {
       clearRotationTimer();
-      setRotationState('logo');
     }
 
     // Page visibility change handler (pauses rotation when tab is hidden)
@@ -167,7 +165,7 @@ const Navbar = () => {
   // Determine what identity to show:
   // If not on home, OR outside home wall -> always KD logo
   // If on home wall -> rotates between 'name' and 'logo'
-  const showFullName = isHomePage && isOnHomeWall && rotationState === 'name';
+  const showFullName = isHomePage && isOnHomeWall && (isHomePage && isOnHomeWall && rotationState === 'name');
 
   return (
     <>
@@ -284,7 +282,7 @@ const Navbar = () => {
             </div>
 
             {/* Resume Button */}
-            <DownloadCVButton className="hidden md:inline-flex" />
+            <DownloadCVButton className="hidden lg:inline-flex" />
 
             {/* Mobile Menu Button */}
             <button

@@ -32,6 +32,9 @@
   --glow-portrait: rgba(56, 189, 248, 0.1);
   --cursor-fill: #f8fafc;
   --cursor-stroke: #0a0d14;
+  --cursor-accent: #38bdf8;
+  --cursor-ring: rgba(56, 189, 248, 0.45);
+  --cursor-ring-bg: rgba(56, 189, 248, 0.05);
 
   /* Navbar & Identity Tokens - Dark Mode (Reference Image 2) */
   --nav-bg: rgba(18, 24, 35, 0.88);
@@ -69,10 +72,10 @@ html.theme-light {
   --surface-card-solid: #ffffff;
   --surface-soft: #e2eaf2;
   --surface-hover: #f1f5fa;
-  --border-color: rgba(203, 213, 225, 0.85);
-  --border-subtle: rgba(226, 232, 240, 0.9);
-  --btn-strong-bg: #0f172a;
-  --btn-strong-text: #ffffff;
+  --border-color: rgba(15, 23, 42, 0.14);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --btn-strong-bg: #ffffff;
+  --btn-strong-text: #0f172a;
   --badge-bg: #e2eaf2;
   --grid-line: rgba(15, 23, 42, 0.05);
   --antenna-line: rgba(30, 41, 59, 0.45);
@@ -82,6 +85,9 @@ html.theme-light {
   --glow-portrait: rgba(148, 163, 184, 0.25);
   --cursor-fill: #0f172a;
   --cursor-stroke: #ffffff;
+  --cursor-accent: #0284c7;
+  --cursor-ring: rgba(2, 132, 199, 0.45);
+  --cursor-ring-bg: rgba(2, 132, 199, 0.05);
 
   /* Navbar & Identity Tokens - Light Mode (Reference Image 1) */
   --nav-bg: rgba(255, 255, 255, 0.92);
@@ -92,12 +98,12 @@ html.theme-light {
   --nav-item-active-shadow: inset 2px 2px 4px rgba(166, 180, 200, 0.45), inset -2px -2px 4px rgba(255, 255, 255, 0.9);
   --nav-item-text: #556980;
   --identity-bg: rgba(255, 255, 255, 0.95);
-  --identity-border: rgba(203, 213, 225, 0.85);
+  --identity-border: rgba(15, 23, 42, 0.14);
   --identity-shadow: 6px 6px 18px rgba(166, 180, 200, 0.35), -4px -4px 14px rgba(255, 255, 255, 0.95);
   --resume-btn-bg: #ffffff;
   --resume-btn-text: #0f172a;
-  --resume-btn-border: rgba(203, 213, 225, 0.85);
-  --resume-btn-shadow: 4px 4px 12px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  --resume-btn-border: rgba(15, 23, 42, 0.15);
+  --resume-btn-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 
   /* Neumorphic & Glassmorphic Shadows */
   --shadow-neu-card: 0 12px 30px -10px rgba(148, 163, 184, 0.35), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.95);
@@ -131,6 +137,9 @@ html.theme-dark {
   --glow-portrait: rgba(56, 189, 248, 0.1);
   --cursor-fill: #f8fafc;
   --cursor-stroke: #0a0d14;
+  --cursor-accent: #38bdf8;
+  --cursor-ring: rgba(56, 189, 248, 0.45);
+  --cursor-ring-bg: rgba(56, 189, 248, 0.05);
 
   /* Navbar & Identity Tokens - Dark Mode (Reference Image 2) */
   --nav-bg: rgba(18, 24, 35, 0.88);
@@ -160,12 +169,16 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-page);
   color: var(--text-main);
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
   margin: 0;
   min-width: 0;
   width: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
   background-color: var(--bg-page);
   color: var(--text-main);
   font-family: "Inter", system-ui, sans-serif;
@@ -511,16 +524,17 @@ html.theme-light .lets-connect-tooltip {
 /* Light Mode (Image 5): dark slate gradient background, crisp white text, soft elevation shadow */
 .theme-light .btn-discovery-cta,
 html.theme-light .btn-discovery-cta {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #334155 100%) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(15, 23, 42, 0.45) !important;
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(15, 23, 42, 0.16) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
 .theme-light .btn-discovery-cta:hover,
 html.theme-light .btn-discovery-cta:hover {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.38) !important;
+  background: #f8fafc !important;
+  border-color: rgba(15, 23, 42, 0.28) !important;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12) !important;
   transform: translateY(-2px);
 }
 
@@ -533,7 +547,7 @@ html.theme-light .btn-discovery-cta:active {
 .theme-light .btn-discovery-cta span,
 html.theme-light .btn-discovery-cta i,
 html.theme-light .btn-discovery-cta span {
-  color: #ffffff !important;
+  color: #0f172a !important;
 }
 
 /* ── Boot Screen Scanlines ── */
@@ -598,16 +612,7 @@ html.theme-light .btn-discovery-cta span {
   will-change: transform;
 }
 
-.project-card-container:hover {
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 20px rgba(56, 189, 248, 0.15) !important;
-  border-color: rgba(99, 102, 241, 0.45) !important;
-}
 
-.theme-light .project-card-container:hover,
-html.theme-light .project-card-container:hover {
-  box-shadow: 0 20px 40px -10px rgba(100, 116, 139, 0.4), 0 0 15px rgba(56, 189, 248, 0.2) !important;
-  border-color: rgba(99, 102, 241, 0.4) !important;
-}
 
 .contact-drag-highlight,
 .contact-row-box {
@@ -635,12 +640,18 @@ html.theme-light .credential-running-line {
   box-shadow: 0 0 4px rgba(15, 23, 42, 0.35);
 }
 
-/* ── Project Cards High-Contrast Solid Surface (Image 4 Dark Mode & Image 3 Light Mode) ── */
+/* ── Project Cards High-Contrast Solid Surface (White Outline Effect in Dark Mode) ── */
 .project-card-container {
   background-color: #111622 !important;
-  border: 1px solid rgba(51, 65, 85, 0.7) !important;
-  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 255, 255, 0.06) !important;
   overflow: hidden !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+.project-card-container:hover {
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 255, 255, 0.15) !important;
 }
 
 .project-card-category {
@@ -675,25 +686,70 @@ html.theme-light .credential-running-line {
 
 .project-card-footer {
   background-color: transparent !important;
-  border-top: 1px solid rgba(51, 65, 85, 0.7) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-.project-card-btn {
-  background-color: #161c28 !important;
-  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+/* ── Project Outline Buttons with Left Flood (500ms) & Right Retract ── */
+.project-card-btn,
+.project-dialog-btn {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate;
+  background-color: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  transition: color 500ms cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 500ms cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 500ms cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.15s ease !important;
 }
 
-.project-card-btn:hover {
-  background-color: #1e2638 !important;
-  border-color: rgba(100, 116, 139, 0.6) !important;
+.project-card-btn::before,
+.project-dialog-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: rgba(255, 255, 255, 0.16);
+  transform: scaleX(0);
+  transform-origin: right; /* Retracts to the right on leave */
+  transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
 }
 
-.project-card-details {
-  color: #94a3b8 !important;
+.project-card-btn:hover,
+.project-dialog-btn:hover {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.22), 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
 
-.project-card-details:hover {
+.project-card-btn:hover::before,
+.project-dialog-btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left; /* Floods with soft white hover color effect motion from left (Image 2) */
+}
+
+.project-card-btn:active,
+.project-dialog-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.project-card-btn i,
+.project-card-btn span,
+.project-dialog-btn i,
+.project-dialog-btn span {
+  position: relative;
+  z-index: 1;
+  color: inherit !important;
+  transition: color 500ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-card-btn:hover i,
+.project-card-btn:hover span,
+.project-dialog-btn:hover i,
+.project-dialog-btn:hover span {
   color: #ffffff !important;
 }
 
@@ -701,9 +757,16 @@ html.theme-light .credential-running-line {
 .theme-light .project-card-container,
 html.theme-light .project-card-container {
   background-color: #ffffff !important;
-  border: 1px solid rgba(203, 213, 225, 0.95) !important;
-  box-shadow: 0 12px 28px -10px rgba(148, 163, 184, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 12px 28px -10px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
   overflow: hidden !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+.theme-light .project-card-container:hover,
+html.theme-light .project-card-container:hover {
+  border-color: rgba(15, 23, 42, 0.28) !important;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08) !important;
 }
 
 .theme-light .project-card-category,
@@ -745,32 +808,60 @@ html.theme-light .project-card-tag {
 .theme-light .project-card-footer,
 html.theme-light .project-card-footer {
   background-color: transparent !important;
-  border-top-color: #e2e8f0 !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
 }
 
 .theme-light .project-card-btn,
-html.theme-light .project-card-btn {
+html.theme-light .project-card-btn,
+.theme-light .project-dialog-btn,
+html.theme-light .project-dialog-btn {
   background-color: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
+  border: 1px solid rgba(15, 23, 42, 0.16) !important;
   color: #0f172a !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.theme-light .project-card-btn i,
+.theme-light .project-card-btn span,
+html.theme-light .project-card-btn i,
+html.theme-light .project-card-btn span,
+.theme-light .project-dialog-btn i,
+.theme-light .project-dialog-btn span,
+html.theme-light .project-dialog-btn i,
+html.theme-light .project-dialog-btn span {
+  color: #0f172a !important;
+  transition: color 500ms cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Light Mode: 500ms left-to-right soft black flood motion */
+.theme-light .project-card-btn::before,
+html.theme-light .project-card-btn::before,
+.theme-light .project-dialog-btn::before,
+html.theme-light .project-dialog-btn::before {
+  background-color: #0f172a !important;
 }
 
 .theme-light .project-card-btn:hover,
-html.theme-light .project-card-btn:hover {
-  background-color: #f1f5f9 !important;
-  border-color: #94a3b8 !important;
+html.theme-light .project-card-btn:hover,
+.theme-light .project-dialog-btn:hover,
+html.theme-light .project-dialog-btn:hover {
+  border-color: #0f172a !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.22) !important;
 }
 
-.theme-light .project-card-details,
-html.theme-light .project-card-details {
-  color: #64748b !important;
+.theme-light .project-card-btn:hover i,
+.theme-light .project-card-btn:hover span,
+html.theme-light .project-card-btn:hover i,
+html.theme-light .project-card-btn:hover span,
+.theme-light .project-dialog-btn:hover i,
+.theme-light .project-dialog-btn:hover span,
+html.theme-light .project-dialog-btn:hover i,
+html.theme-light .project-dialog-btn:hover span {
+  color: #ffffff !important;
 }
 
-.theme-light .project-card-details:hover,
-html.theme-light .project-card-details:hover {
-  color: #0f172a !important;
-}
+
 
 /* ── Interactive Navbar Resume / Download CV Button Hover Effect (Image 5) ── */
 .navbar-resume-btn {
@@ -1001,7 +1092,8 @@ html.theme-transition-to-light::view-transition-new(root) {
   }
 }
 
-/* ── Let's Connect: Big Gradient Headline with Soft Light Band (#47cceb) ── */
+/* ── Big Gradient Headline with Soft Light Band Sweep (#47cceb) ── */
+.glint-headline,
 .lets-connect-headline {
   position: relative;
   display: inline-block;
@@ -1009,6 +1101,7 @@ html.theme-transition-to-light::view-transition-new(root) {
 }
 
 /* Big gradient base headline */
+.glint-headline-base,
 .lets-connect-headline-base {
   display: inline-block;
   background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 45%, #94a3b8 100%);
@@ -1018,6 +1111,8 @@ html.theme-transition-to-light::view-transition-new(root) {
   color: transparent;
 }
 
+.theme-light .glint-headline-base,
+html.theme-light .glint-headline-base,
 .theme-light .lets-connect-headline-base,
 html.theme-light .lets-connect-headline-base {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #475569 100%);
@@ -1027,7 +1122,8 @@ html.theme-light .lets-connect-headline-base {
   color: transparent;
 }
 
-/* Soft light band using #47cceb (sampled from Image 2) sweeping left to right on a slow loop */
+/* Soft light band using #47cceb sweeping left to right on a slow loop */
+.glint-headline-band,
 .lets-connect-glint-band {
   position: absolute;
   inset: 0;
@@ -1050,38 +1146,218 @@ html.theme-light .lets-connect-headline-base {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: sweepLightBand 6.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  animation: sweepLightBand 10s cubic-bezier(0.25, 1, 0.5, 1) infinite;
   will-change: background-position, opacity;
+}
+
+.theme-light .glint-headline-band,
+html.theme-light .glint-headline-band,
+.theme-light .lets-connect-glint-band,
+html.theme-light .lets-connect-glint-band {
+  background-image: linear-gradient(115deg,
+      transparent 0%,
+      transparent 36%,
+      rgba(2, 132, 199, 0.22) 42%,
+      rgba(2, 132, 199, 0.78) 47%,
+      #0284c7 50%,
+      #e0f2fe 51.5%,
+      #0284c7 53%,
+      rgba(2, 132, 199, 0.78) 56%,
+      rgba(2, 132, 199, 0.22) 61%,
+      transparent 67%,
+      transparent 100%);
 }
 
 @keyframes sweepLightBand {
   0% {
-    background-position: 115% 0;
+    background-position: 125% 0;
     opacity: 0;
   }
 
-  2% {
+  3% {
     opacity: 1;
   }
 
-  28% {
-    background-position: -15% 0;
+  34% {
+    background-position: -25% 0;
     opacity: 1;
   }
 
-  32% {
+  38% {
     opacity: 0;
   }
 
   100% {
-    background-position: 115% 0;
+    background-position: 125% 0;
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .glint-headline-band,
   .lets-connect-glint-band {
     animation: none !important;
     display: none !important;
   }
+}
+
+/* ── Statement Text: Pointer 82px Soft Light Circle Accent Reveal ── */
+.statement-reveal-container {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.statement-light-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(calc(var(--stmt-x, -200px) - 41px), calc(var(--stmt-y, -200px) - 41px), 0);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, rgba(56, 189, 248, 0.22) 48%, transparent 75%);
+  filter: blur(8px);
+  opacity: var(--stmt-opacity, 0);
+  transition: opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.theme-light .statement-light-circle,
+html.theme-light .statement-light-circle {
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.55) 0%, rgba(2, 132, 199, 0.2) 48%, transparent 75%);
+}
+
+.statement-revealed-text {
+  position: absolute;
+  inset: 0;
+  color: var(--cursor-accent, #38bdf8);
+  pointer-events: none;
+  opacity: var(--stmt-opacity, 0);
+  transition: opacity 0.25s ease-out;
+  -webkit-mask-image: radial-gradient(circle 41px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 32%, transparent 100%);
+  mask-image: radial-gradient(circle 41px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 32%, transparent 100%);
+  will-change: mask-image, -webkit-mask-image, opacity;
+}
+
+/* Custom Cursor Desktop Replacement */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+
+/* ── Folder Button Traveling Arc 2px Outline (3s loop, soft, no neon glow) ── */
+.folder-arc-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 9999px;
+  background: var(--border-color);
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.folder-arc-btn:hover {
+  transform: translateY(-1.5px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.folder-arc-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Traveling Color Arc around the 2px outline */
+.folder-arc-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(420px, 260%);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 260deg,
+    rgba(56, 189, 248, 0.12) 290deg,
+    rgba(56, 189, 248, 0.55) 330deg,
+    var(--cursor-accent, #38bdf8) 350deg,
+    transparent 360deg
+  );
+  animation: folderArcSpin 3s linear infinite;
+  will-change: transform;
+}
+
+.theme-light .folder-arc-spinner,
+html.theme-light .folder-arc-spinner {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 260deg,
+    rgba(2, 132, 199, 0.12) 290deg,
+    rgba(2, 132, 199, 0.55) 330deg,
+    var(--cursor-accent, #0284c7) 350deg,
+    transparent 360deg
+  );
+}
+
+@keyframes folderArcSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder-arc-spinner {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* Inner button content adhering to button color theme */
+.folder-arc-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 40px;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  background: var(--surface);
+  color: var(--text-main);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.folder-arc-btn:hover .folder-arc-content {
+  background: var(--surface-hover);
+}
+
+.theme-light .folder-arc-content,
+html.theme-light .folder-arc-content {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.theme-light .folder-arc-btn:hover .folder-arc-content,
+html.theme-light .folder-arc-btn:hover .folder-arc-content {
+  background: #f1f5f9;
 }

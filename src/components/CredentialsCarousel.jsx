@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
@@ -98,13 +98,13 @@ const CredentialsCarousel = () => {
   const next1Index = (activeIndex + 1) % total;
   const next2Index = (activeIndex + 2) % total;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % total);
-  };
+  }, [total]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
-  };
+  }, [total]);
 
   const openCertificate = (record, trigger) => {
     returnFocusRef.current = trigger || document.activeElement;
@@ -128,7 +128,7 @@ const CredentialsCarousel = () => {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [enlargedCertificate]);
+  }, [enlargedCertificate, handleNext, handlePrev]);
 
   useEffect(() => {
     if (!enlargedCertificate) return undefined;
@@ -142,7 +142,7 @@ const CredentialsCarousel = () => {
       document.body.style.overflow = previousOverflow;
       returnFocusRef.current?.focus?.();
     };
-  }, [enlargedCertificate]);
+  }, [enlargedCertificate, handleNext, handlePrev]);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -200,8 +200,8 @@ const CredentialsCarousel = () => {
 
           <i
             className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${isHovered
-                ? 'credential-tag-arrow-hover translate-x-0.5'
-                : ''
+              ? 'credential-tag-arrow-hover translate-x-0.5'
+              : ''
               }`}
             aria-hidden="true"
           />
@@ -367,8 +367,9 @@ const CredentialsCarousel = () => {
           viewport={{ once: true }}
           className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="mt-2 font-['Sora',_sans-serif] text-[clamp(1.8rem,4vw,2.75rem)] font-extrabold tracking-tight text-[var(--text-main)] uppercase">
-            Achievements &amp; Credentials
+          <h2 className="glint-headline mt-2 font-['Sora',_sans-serif] text-[clamp(1.8rem,4vw,2.75rem)] font-extrabold tracking-tight uppercase select-none">
+            <span className="glint-headline-base">Achievements &amp; Credentials</span>
+            <span className="glint-headline-band" aria-hidden="true">Achievements &amp; Credentials</span>
           </h2>
           <p className="mt-2 max-w-lg mx-auto text-xs sm:text-sm text-[var(--text-muted)]">
             A collection of certifications, achievements, and technical accomplishments that reflect continuous learning and skill development. Click the side cards, use the arrows, or swipe to explore the collection.

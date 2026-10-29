@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import CredentialsCarousel from './CredentialsCarousel';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
@@ -51,7 +51,6 @@ const contactLinks = [
 
 // ── ContactRow with lighted box and rightward shift (matching Image 2) ──
 const ContactRow = ({ item, isLast }) => {
-  const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragShift, setDragShift] = useState(0);
@@ -68,7 +67,7 @@ const ContactRow = ({ item, isLast }) => {
 
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
-    } catch (_) { }
+    } catch { /* ignore */ }
   };
 
   const handlePointerMove = (e) => {
@@ -199,9 +198,25 @@ const ContactRow = ({ item, isLast }) => {
 
 const Home = () => {
   const heroRef = useRef(null);
-  const navigate = useNavigate();
-  const shouldReduceMotion = useReducedMotion();
+  const statementRef = useRef(null);
 
+  const handleStatementPointerMove = (e) => {
+    const el = statementRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty('--stmt-x', `${x}px`);
+    el.style.setProperty('--stmt-y', `${y}px`);
+    el.style.setProperty('--stmt-opacity', '1');
+  };
+
+  const handleStatementPointerLeave = () => {
+    const el = statementRef.current;
+    if (!el) return;
+    el.style.setProperty('--stmt-opacity', '0');
+  };
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
   const projectGridRef = useRef(null);
@@ -308,14 +323,35 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <motion.h1
+          <motion.div
+            ref={statementRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="poster-wall-title text-[clamp(1.75rem,8.2vw,8.5rem)] font-black tracking-[-0.04em] uppercase text-[var(--text-main)] select-none leading-[0.9] text-center w-full break-words"
+            onPointerMove={handleStatementPointerMove}
+            onPointerEnter={handleStatementPointerMove}
+            onPointerLeave={handleStatementPointerLeave}
+            className="statement-reveal-container relative w-full select-none cursor-default"
           >
-            CREATE WITHOUT LIMITS
-          </motion.h1>
+            {/* Base text: covered in the current text color */}
+            <h1 className="poster-wall-title text-[clamp(1.75rem,8.2vw,8.5rem)] font-black tracking-[-0.04em] uppercase text-[var(--text-main)] select-none leading-[0.9] text-center w-full break-words">
+              CREATE WITHOUT LIMITS
+            </h1>
+
+            {/* Soft 82px circle of light that follows pointer */}
+            <div
+              className="statement-light-circle pointer-events-none absolute rounded-full will-change-transform"
+              aria-hidden="true"
+            />
+
+            {/* Revealed text in accent color */}
+            <h1
+              className="statement-revealed-text poster-wall-title text-[clamp(1.75rem,8.2vw,8.5rem)] font-black tracking-[-0.04em] uppercase leading-[0.9] text-center w-full break-words absolute inset-0 select-none pointer-events-none"
+              aria-hidden="true"
+            >
+              CREATE WITHOUT LIMITS
+            </h1>
+          </motion.div>
         </motion.div>
 
         {/* Scroll Indicator */}
@@ -345,8 +381,9 @@ const Home = () => {
             viewport={{ once: true, margin: '-50px' }}
             className="text-center mb-14"
           >
-            <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(2rem,4.5vw,3.2rem)] font-bold tracking-tight text-[var(--text-main)]">
-              Recent Projects
+            <h2 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(2rem,4.5vw,3.2rem)] font-bold tracking-tight select-none">
+              <span className="glint-headline-base">Recent Projects</span>
+              <span className="glint-headline-band" aria-hidden="true">Recent Projects</span>
             </h2>
             <p className="mt-3 max-w-xl mx-auto text-base text-[var(--text-muted)]">
               A collection of my recent web and mobile application development projects.
@@ -425,7 +462,7 @@ const Home = () => {
               I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric oeprations. Feel free to reach out.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full">
               <DownloadCVButton
                 label="Download CV"
                 className="min-h-[48px] rounded-xl px-6 sm:px-7 py-3.5 text-xs sm:text-sm shadow-md"

@@ -1,6 +1,4 @@
 import { useState, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 import { PageBlock } from './PageTransition';
@@ -213,7 +211,6 @@ export const getTagConfig = (tag) => {
 };
 
 const ProjectsPage = () => {
-  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
@@ -265,8 +262,9 @@ const ProjectsPage = () => {
         <PageBlock className="projects-header-block">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h1 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
-              PROJECTS
+            <h1 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight select-none break-words">
+              <span className="glint-headline-base">PROJECTS</span>
+              <span className="glint-headline-band" aria-hidden="true">PROJECTS</span>
             </h1>
             <p className="mt-3 max-w-2xl text-sm sm:text-base text-[var(--text-muted)]">
               Here are some of my works, including web and mobile apps, games, and network configurations.

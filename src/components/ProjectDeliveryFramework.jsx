@@ -56,13 +56,14 @@ const ProjectDeliveryFramework = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true, margin: '-50px' }}
-          className="text-center mb-16"
+          className="flex flex-col items-center text-center mb-16"
         >
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
+          <span className="block text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
             Project Delivery Framework
           </span>
-          <h2 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.75rem,4.8vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
-            4-Sprint Lifecycle
+          <h2 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.75rem,4.8vw,3.6rem)] font-bold tracking-tight select-none break-words">
+            <span className="glint-headline-base">4-Sprint Lifecycle</span>
+            <span className="glint-headline-band" aria-hidden="true">4-Sprint Lifecycle</span>
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
             Our development methodology prioritizes transparent stakeholder communication, predictable milestone tracking, and iterative feedback loops to eliminate black-box development.

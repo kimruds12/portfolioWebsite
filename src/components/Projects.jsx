@@ -2,10 +2,8 @@ import { useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
-import { categories, projects, getTagConfig } from './ProjectsPage';
+import { categories, projects } from './ProjectsPage';
 import useProjectBatch from '../hooks/useProjectBatch';
-
-export { projects, categories, getTagConfig };
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('all');

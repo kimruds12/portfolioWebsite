@@ -127,7 +127,7 @@ const OJTExperiencePage = () => {
         </div>
 
         {/* Hero Header */}
-        <div className="mb-12 sm:mb-14 text-center max-w-3xl mx-auto">
+        <div className="mb-12 sm:mb-14 text-center max-w-3xl mx-auto flex flex-col items-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)] px-3.5 py-1 mb-4">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--text-main)] animate-pulse" />
             <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--text-main)]">
@@ -135,8 +135,9 @@ const OJTExperiencePage = () => {
             </span>
           </div>
 
-          <h1 className="font-['Sora',_sans-serif] text-2xl min-[360px]:text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--text-main)] break-words">
-            11FTC Enterprises, Inc.
+          <h1 className="glint-headline font-['Sora',_sans-serif] text-2xl min-[360px]:text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight select-none break-words">
+            <span className="glint-headline-base">11FTC Enterprises, Inc.</span>
+            <span className="glint-headline-band" aria-hidden="true">11FTC Enterprises, Inc.</span>
           </h1>
 
             <p className="mt-4 text-xs sm:text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
@@ -312,10 +313,11 @@ const OJTExperiencePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto"
+            className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto flex flex-col items-center"
           >
-            <h2 className="font-['Sora',_sans-serif] text-2xl min-[400px]:text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-main)]">
-              Sample Works
+            <h2 className="glint-headline font-['Sora',_sans-serif] text-2xl min-[400px]:text-3xl sm:text-4xl font-extrabold tracking-tight select-none">
+              <span className="glint-headline-base">Sample Works</span>
+              <span className="glint-headline-band" aria-hidden="true">Sample Works</span>
             </h2>
             <p className="mt-3 text-xs sm:text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
               Selected hands-on IT support, system, and asset management work completed during my OJT at 11FTC Enterprises, Inc.
@@ -413,8 +415,9 @@ const OJTExperiencePage = () => {
                       </div>
 
                       {/* Ordinal Title: 1st/2nd/3rd/4th Month OJT Experience */}
-                      <h2 className="font-['Sora',_sans-serif] text-xl min-[400px]:text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-main)] break-words">
-                        {displayTitle}
+                      <h2 className="glint-headline font-['Sora',_sans-serif] text-xl min-[400px]:text-2xl sm:text-3xl font-extrabold tracking-tight select-none break-words">
+                        <span className="glint-headline-base">{displayTitle}</span>
+                        <span className="glint-headline-band" aria-hidden="true">{displayTitle}</span>
                       </h2>
 
                       {/* Dropdown for Overall Monthly Reflection */}
@@ -494,10 +497,13 @@ const OJTExperiencePage = () => {
                               e.stopPropagation();
                               navigate(`/ojt-experience/${month.id}`);
                             }}
-                            className="inline-flex min-h-[44px] w-full sm:w-auto items-center justify-center gap-2.5 rounded-full border border-[var(--border-color)] bg-[var(--text-main)] px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--surface)] shadow-md transition-all duration-200 group-hover:scale-105 hover:bg-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] order-2 sm:order-1"
+                            className="folder-arc-btn group inline-flex min-h-[44px] w-full sm:w-auto items-center justify-center p-[2px] rounded-full shadow-md transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] order-2 sm:order-1 cursor-pointer"
                           >
-                            <i className="fa-solid fa-arrow-left text-xs" />
-                            <span>VIEW FOLDER</span>
+                            <span className="folder-arc-spinner" aria-hidden="true" />
+                            <span className="folder-arc-content inline-flex min-h-[40px] w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors duration-200">
+                              <i className="fa-solid fa-arrow-left text-xs" />
+                              <span>VIEW FOLDER</span>
+                            </span>
                           </button>
 
                           {/* Lower Right 5 Weeks details for right-aligned folder */}
@@ -519,10 +525,13 @@ const OJTExperiencePage = () => {
                               e.stopPropagation();
                               navigate(`/ojt-experience/${month.id}`);
                             }}
-                            className="inline-flex min-h-[44px] w-full sm:w-auto items-center justify-center gap-2.5 rounded-full border border-[var(--border-color)] bg-[var(--text-main)] px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--surface)] shadow-md transition-all duration-200 group-hover:scale-105 hover:bg-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] order-2 sm:order-2"
+                            className="folder-arc-btn group inline-flex min-h-[44px] w-full sm:w-auto items-center justify-center p-[2px] rounded-full shadow-md transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] order-2 sm:order-2 cursor-pointer"
                           >
-                            <span>VIEW FOLDER</span>
-                            <i className="fa-solid fa-arrow-right text-xs" />
+                            <span className="folder-arc-spinner" aria-hidden="true" />
+                            <span className="folder-arc-content inline-flex min-h-[40px] w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors duration-200">
+                              <span>VIEW FOLDER</span>
+                              <i className="fa-solid fa-arrow-right text-xs" />
+                            </span>
                           </button>
                         </>
                       )}
