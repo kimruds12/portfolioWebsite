@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Skills from './Skills';
 import ExperienceTabs from './ExperienceTabs';
 import ProjectDeliveryFramework from './ProjectDeliveryFramework';
+import { PageBlock } from './PageTransition';
 
 const AboutPage = () => {
   const navigate = useNavigate();
@@ -10,7 +11,8 @@ const AboutPage = () => {
   return (
     <div className="relative pt-20 sm:pt-28 pb-16 sm:pb-20 overflow-hidden">
       {/* ── 1. ABOUT ME HERO & INTRODUCTION ── */}
-      <section
+      <PageBlock
+        as="section"
         id="about-me"
         className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 relative"
       >
@@ -53,7 +55,7 @@ const AboutPage = () => {
               className="lg:col-span-5 flex justify-center"
             >
               <div className="w-full max-w-md">
-                <div className="group relative w-full overflow-hidden rounded-3xl">
+                <div className="photo-card-skew group relative w-full overflow-hidden rounded-3xl">
                   <img
                     src="/Assets/AboutMyImage.jpg"
                     alt="Kim Ruds Guston portrait"
@@ -72,16 +74,20 @@ const AboutPage = () => {
 
           </div>
         </div>
-      </section>
+      </PageBlock>
 
-      {/* ── 2. SKILLS & TOOLS (Restored from Skills component) ── */}
+      {/* ── 2. SKILLS & TOOLS (GSAP ScrollTrigger Pinned Deck Stack) ── */}
       <Skills />
 
       {/* ── 3, 4, 5. EXPERIENCE, EDUCATION & CREDENTIALS (Tabbed) ── */}
-      <ExperienceTabs />
+      <PageBlock className="page-block-experience">
+        <ExperienceTabs />
+      </PageBlock>
 
       {/* ── 6. PROJECT DELIVERY FRAMEWORK (4-Sprint Lifecycle + CTA) ── */}
-      <ProjectDeliveryFramework />
+      <PageBlock className="page-block-framework">
+        <ProjectDeliveryFramework />
+      </PageBlock>
     </div>
   );
 };

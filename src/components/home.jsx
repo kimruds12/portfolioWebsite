@@ -5,6 +5,9 @@ import CredentialsCarousel from './CredentialsCarousel';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 import { projects } from './ProjectsPage';
+import DownloadCVButton from './DownloadCVButton';
+import { PageBlock } from './PageTransition';
+import useProjectBatch from '../hooks/useProjectBatch';
 
 // The 3 recent projects shown on home
 const RECENT_PROJECTS = [
@@ -201,6 +204,10 @@ const Home = () => {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
+  const projectGridRef = useRef(null);
+
+  // GSAP ScrollTrigger.batch: rise project cards from 34px below in groups of up to 4, staggered 0.1s
+  useProjectBatch(projectGridRef);
 
   const handleOpenDetails = (project, triggerRef) => {
     activeTriggerRef.current = triggerRef?.current || triggerRef;
@@ -229,7 +236,8 @@ const Home = () => {
   return (
     <>
       {/* ── HERO WALL SECTION ── */}
-      <section
+      <PageBlock
+        as="section"
         ref={heroRef}
         id="home"
         className="relative min-h-screen flex flex-col justify-between items-center px-4 pt-28 pb-10 sm:px-6 lg:px-8 overflow-hidden select-none"
@@ -320,10 +328,11 @@ const Home = () => {
           </span>
           <div className="h-9 w-px bg-gradient-to-b from-[var(--text-muted)] via-[var(--text-muted)]/50 to-transparent animate-pulse" />
         </motion.div>
-      </section>
+      </PageBlock>
 
       {/* ── RECENT PROJECTS SECTION ── */}
-      <section
+      <PageBlock
+        as="section"
         id="projects"
         className="scroll-mt-28 px-4 py-24 sm:px-6 lg:px-8"
       >
@@ -345,7 +354,7 @@ const Home = () => {
           </motion.div>
 
           {/* 3 Cards with 3D tilt & interaction */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div ref={projectGridRef} className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {recentProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}
@@ -375,13 +384,16 @@ const Home = () => {
             </button>
           </motion.div>
         </div>
-      </section>
+      </PageBlock>
 
       {/* ── CREDENTIALS SECTION ── */}
-      <CredentialsCarousel />
+      <PageBlock className="page-block-credentials">
+        <CredentialsCarousel />
+      </PageBlock>
 
       {/* ── CONTACT / LET'S CONNECT SECTION ── */}
-      <section
+      <PageBlock
+        as="section"
         id="connect"
         className="scroll-mt-28 px-4 py-20 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center relative"
       >
@@ -400,8 +412,13 @@ const Home = () => {
               Get in Touch
             </span>
 
-            <h2 className="mt-4 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.6rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
-              Let's Connect
+            <h2 className="lets-connect-headline mt-4 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.6rem)] font-bold tracking-tight break-words relative inline-block select-none">
+              <span className="lets-connect-headline-base">
+                Let's Connect
+              </span>
+              <span className="lets-connect-glint-band" aria-hidden="true">
+                Let's Connect
+              </span>
             </h2>
 
             <p className="mt-4 max-w-lg text-base leading-relaxed text-[var(--text-muted)]">
@@ -409,16 +426,10 @@ const Home = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
-              <a
-                href="/Assets/2026_GUSTON_CV.pdf"
-                download="2026_GUSTON_CV.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border px-6 sm:px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
-              >
-                <i className="fa-solid fa-file-arrow-down text-xs transition-transform duration-200 group-hover:translate-y-0.5" />
-                <span>Download CV</span>
-              </a>
+              <DownloadCVButton
+                label="Download CV"
+                className="min-h-[48px] rounded-xl px-6 sm:px-7 py-3.5 text-xs sm:text-sm shadow-md"
+              />
 
               <button
                 type="button"
@@ -451,7 +462,7 @@ const Home = () => {
           </motion.div>
 
         </div>
-      </section>
+      </PageBlock>
 
       {/* Project Details Modal Dialog */}
       <ProjectDetailsDialog

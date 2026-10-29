@@ -133,7 +133,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
     (project.href && project.href.includes('github.com') ? project.href : null);
 
   return (
-    <motion.div
+    <div
       ref={wrapperRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
@@ -141,11 +141,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      viewport={{ once: true, margin: '-30px' }}
-      className="w-full h-full relative min-w-0 flex flex-col"
+      className="w-full h-full relative min-w-0 flex flex-col gsap-project-card"
       style={{ perspective: 1000 }}
     >
       <motion.article
@@ -170,7 +166,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
         <div className="flex flex-col flex-1 min-w-0">
           {/* Image / Video Container */}
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-soft)] border-b border-[var(--border-color)]">
-            <div className="absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
+            <div className="photo-card-skew absolute inset-[6px] overflow-hidden rounded-2xl bg-[var(--surface)]">
               {project.video || (project.image && project.image.endsWith('.mp4')) ? (
                 <video
                   src={project.video || project.image}
@@ -336,7 +332,7 @@ const ProjectCard = ({ project, index = 0, onOpenDetails }) => {
           </button>
         </div>
       </motion.article>
-    </motion.div>
+    </div>
   );
 };
 

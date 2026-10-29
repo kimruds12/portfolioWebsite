@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 import { categories, projects, getTagConfig } from './ProjectsPage';
+import useProjectBatch from '../hooks/useProjectBatch';
 
 export { projects, categories, getTagConfig };
 
@@ -11,6 +12,10 @@ const Projects = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
+  const gridRef = useRef(null);
+
+  // GSAP ScrollTrigger.batch: rise project cards from 34px below in groups of up to 4, staggered 0.1s
+  useProjectBatch(gridRef, [filteredProjects]);
 
   const handleOpenDetails = (project, triggerRef) => {
     activeTriggerRef.current = triggerRef?.current || triggerRef;
@@ -122,7 +127,7 @@ const Projects = () => {
         </div>
 
         {/* ── Project Cards Grid ── */}
-        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={`${project.title}-${index}`}

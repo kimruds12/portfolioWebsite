@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { getOjtMonthBySlug } from '../data/OjtExperience';
+import { PageBlock } from './PageTransition';
 
 const OJTMonthPage = () => {
   const { monthSlug } = useParams();
@@ -47,8 +48,8 @@ const OJTMonthPage = () => {
   return (
     <section className="min-h-screen px-4 pt-24 sm:pt-32 pb-16 sm:pb-24 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="mx-auto w-full max-w-6xl">
-        {/* Top Navigation & Back Button */}
-        <div className="mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        {/* Top Navigation & Back Button (Block 1) */}
+        <PageBlock className="ojt-month-nav mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <button
             type="button"
             onClick={handleBack}
@@ -71,15 +72,10 @@ const OJTMonthPage = () => {
               {month.id}
             </span>
           </div>
-        </div>
+        </PageBlock>
 
-        {/* Month Header Banner */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 sm:mb-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 md:p-10 shadow-sm backdrop-blur-xl relative overflow-hidden"
-        >
+        {/* Month Header Banner (Block 2) */}
+        <PageBlock className="ojt-month-banner mb-8 sm:mb-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 md:p-10 shadow-sm backdrop-blur-xl relative overflow-hidden">
           {/* Subtle background glow */}
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-[var(--text-muted)]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -102,10 +98,10 @@ const OJTMonthPage = () => {
               {month.description}
             </p>
           </div>
-        </motion.div>
+        </PageBlock>
 
-        {/* Week Folders Grid (Inspired by Reference Image 3) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Week Folders Grid (Block 3) */}
+        <PageBlock className="ojt-month-weeks-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {weeks.map((week, index) => {
             const daysCount = week.days?.length || 0;
             const weekHours = (week.days || []).reduce((acc, d) => {
@@ -132,7 +128,7 @@ const OJTMonthPage = () => {
                 </div>
 
                 {/* Main Folder Body Card */}
-                <div className="relative w-full rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 shadow-md transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-[var(--text-muted)] group-hover:shadow-xl backdrop-blur-xl flex flex-col justify-between min-h-[200px]">
+                <div className="photo-card-skew relative w-full rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 shadow-md transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-[var(--text-muted)] group-hover:shadow-xl backdrop-blur-xl flex flex-col justify-between min-h-[200px]">
                   {/* Top row: Folder icon + Week name */}
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -169,7 +165,7 @@ const OJTMonthPage = () => {
               </motion.div>
             );
           })}
-        </div>
+        </PageBlock>
       </div>
     </section>
   );

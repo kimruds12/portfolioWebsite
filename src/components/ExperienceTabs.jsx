@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import RecordsSplitCarousel from './RecordsSplitCarousel';
 
 export const workExperienceRecords = [
@@ -198,12 +198,12 @@ const ExperienceTabs = () => {
           </p>
         </motion.div>
 
-        {/* Three Tab Controls */}
+        {/* Three Tab Controls - Segmented Control with Sliding White Thumb */}
         <div className="flex justify-center mb-10 sm:mb-12">
           <div
             role="tablist"
             aria-label="Records categories"
-            className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-color)] shadow-xs w-full sm:w-auto"
+            className="relative flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 p-1.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-color)] shadow-xs w-full sm:w-auto"
           >
             {TABS.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -216,32 +216,54 @@ const ExperienceTabs = () => {
                   aria-controls={`panel-${tab.id}`}
                   type="button"
                   onClick={() => handleTabChange(tab.id)}
-                  className={`flex min-h-[42px] items-center justify-center gap-2 rounded-xl px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] w-full min-[480px]:w-auto ${isActive
-                    ? 'bg-[var(--text-main)] text-[var(--surface)] shadow-md'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface)]/50'
-                    }`}
+                  className={`relative flex min-h-[42px] items-center justify-center gap-2 rounded-xl px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] w-full min-[480px]:w-auto select-none cursor-pointer ${
+                    isActive
+                      ? 'text-neutral-950 font-bold'
+                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                  }`}
                 >
-                  <i className={`${tab.icon} text-xs ${isActive ? 'text-[var(--surface)]' : 'opacity-70'}`} />
-                  <span>{tab.label}</span>
+                  {/* Sliding White Thumb */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="segmented-thumb"
+                      className="absolute inset-0 rounded-xl bg-white shadow-md border border-white/80 z-0"
+                      transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <i
+                      className={`${tab.icon} text-xs transition-colors duration-200 ${
+                        isActive ? 'text-neutral-950' : 'opacity-70'
+                      }`}
+                    />
+                    <span>{tab.label}</span>
+                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Split Carousel Content */}
-        <div
-          role="tabpanel"
-          id={`panel-${activeTab}`}
-          aria-labelledby={`tab-${activeTab}`}
-        >
-          <RecordsSplitCarousel
-            tabType={activeTab}
-            records={records}
-            selectedIndex={selectedIndex}
-            onSelectIndex={setSelectedIndex}
-          />
-        </div>
+        {/* Split Carousel Content with Smooth Section Swapping */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            role="tabpanel"
+            id={`panel-${activeTab}`}
+            aria-labelledby={`tab-${activeTab}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <RecordsSplitCarousel
+              tabType={activeTab}
+              records={records}
+              selectedIndex={selectedIndex}
+              onSelectIndex={setSelectedIndex}
+            />
+          </motion.div>
+        </AnimatePresence>
 
       </div>
     </section>

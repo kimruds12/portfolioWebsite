@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { getOjtWeekBySlug } from '../data/OjtExperience';
 import OJTDayReflection from './OJTDayReflection';
+import { PageBlock } from './PageTransition';
 
 const OJTWeekPage = () => {
   const { monthSlug, weekSlug } = useParams();
@@ -53,8 +54,8 @@ const OJTWeekPage = () => {
   return (
     <section className="min-h-screen px-4 pt-24 sm:pt-32 pb-16 sm:pb-24 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="mx-auto w-full max-w-5xl">
-        {/* Top Navigation & Back Button */}
-        <div className="mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        {/* Top Navigation & Back Button (Block 1) */}
+        <PageBlock className="ojt-week-nav mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <button
             type="button"
             onClick={handleBack}
@@ -84,15 +85,10 @@ const OJTWeekPage = () => {
               {week.id}
             </span>
           </div>
-        </div>
+        </PageBlock>
 
-        {/* Week Header Banner */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 shadow-sm backdrop-blur-xl"
-        >
+        {/* Week Header Banner (Block 2) */}
+        <PageBlock className="ojt-week-banner mb-8 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 shadow-sm backdrop-blur-xl">
           <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-2">
             <span className="font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
               // {month.name.toUpperCase()} • {week.name.toUpperCase()}
@@ -110,15 +106,10 @@ const OJTWeekPage = () => {
           <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)]">
             Daily Time Record (DTR) log entries and technical reflections for this week.
           </p>
-        </motion.div>
+        </PageBlock>
 
-        {/* Daily DTR Rows Container (Line-based accordion matching Image 4) */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] shadow-lg overflow-hidden backdrop-blur-xl"
-        >
+        {/* Daily DTR Rows Container (Block 3) */}
+        <PageBlock className="ojt-week-dtr rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] shadow-lg overflow-hidden backdrop-blur-xl">
           {/* Header Bar */}
           <div className="border-b border-[var(--border-color)] bg-[var(--surface-soft)]/70 px-4 sm:px-6 py-3 flex items-center justify-between font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">
             <span>DTR ENTRIES ({totalDays} DAYS)</span>
@@ -134,7 +125,7 @@ const OJTWeekPage = () => {
               />
             ))}
           </div>
-        </motion.div>
+        </PageBlock>
       </div>
     </section>
   );

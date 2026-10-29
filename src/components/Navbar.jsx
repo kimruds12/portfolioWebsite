@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
+import DownloadCVButton from './DownloadCVButton';
 
 // ── Concentric Signal Rings SVG Logo for floating Let's Connect button ──
 const SignalRingsLogo = ({ className = '' }) => (
@@ -174,10 +175,10 @@ const Navbar = () => {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-1.5 sm:py-2' : 'py-3 sm:py-4'
           }`}
       >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 min-[360px]:px-4 sm:px-6">
+        <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-3 min-[360px]:px-4 sm:px-6">
 
           {/* ── LEFT: Identity Pill with 5-Second Rotation ── */}
-          <div className="flex items-center min-w-0 h-11">
+          <div className="flex items-center min-w-0 h-11 z-10">
             <AnimatePresence mode="wait">
               {showFullName ? (
                 <motion.div
@@ -241,7 +242,7 @@ const Navbar = () => {
           {/* ── CENTER: Navigation Pill (Home, Projects, About Me) ── */}
           <nav
             aria-label="Primary navigation"
-            className="hidden md:flex items-center gap-1 rounded-full p-1.5 backdrop-blur-xl transition-all duration-300 border border-[var(--border-color)] shadow-md"
+            className="hidden md:flex md:absolute md:left-1/2 md:-translate-x-1/2 items-center gap-1 rounded-full p-1.5 backdrop-blur-xl transition-all duration-300 border border-[var(--border-color)] shadow-md z-10"
             style={{
               backgroundColor: 'var(--nav-bg)',
               borderColor: 'var(--nav-border)',
@@ -276,31 +277,14 @@ const Navbar = () => {
           </nav>
 
           {/* ── RIGHT: Theme Toggle & Resume Button ── */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 z-10">
             {/* Theme Toggle */}
             <div className="hidden md:flex items-center">
               <ThemeToggle />
             </div>
 
             {/* Resume Button */}
-            <a
-              href="/Assets/2026_GustonCV.pdf"
-              download="2026_GustonCV.pdf"
-              target="_blank"
-              rel="noreferrer"
-              title="Download Resume"
-              className="navbar-resume-btn group hidden md:inline-flex min-h-[38px] min-w-[44px] items-center justify-center gap-2 rounded-2xl px-5 py-2 text-xs font-bold uppercase tracking-wider backdrop-blur-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
-              style={{
-                backgroundColor: 'var(--resume-btn-bg)',
-                color: 'var(--resume-btn-text)',
-                borderColor: 'var(--resume-btn-border)',
-                borderWidth: '1px',
-                boxShadow: 'var(--resume-btn-shadow)',
-              }}
-            >
-              <i className="fa-solid fa-file-arrow-down text-[11px] opacity-75 transition-transform duration-200 group-hover:translate-y-0.5" />
-              <span>Download CV</span>
-            </a>
+            <DownloadCVButton className="hidden md:inline-flex" />
 
             {/* Mobile Menu Button */}
             <button
@@ -436,23 +420,7 @@ const Navbar = () => {
                   <span className="text-sm font-medium text-[var(--text-muted)]">Theme mode</span>
                   <ThemeToggle />
                 </div>
-                <a
-                  href="/Assets/2026_GUSTON_CV.pdf"
-                  download="2026_GUSTON_CV.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold uppercase tracking-wider shadow-sm hover:opacity-90 active:scale-98 transition-all"
-                  style={{
-                    backgroundColor: 'var(--resume-btn-bg)',
-                    color: 'var(--resume-btn-text)',
-                    borderColor: 'var(--resume-btn-border)',
-                    borderWidth: '1px',
-                    boxShadow: 'var(--resume-btn-shadow)',
-                  }}
-                >
-                  <i className="fa-solid fa-file-arrow-down text-sm" />
-                  <span>Download Resume</span>
-                </a>
+                <DownloadCVButton className="w-full min-h-[48px]" label="DOWNLOAD RESUME" />
               </div>
             </motion.div>
           </>

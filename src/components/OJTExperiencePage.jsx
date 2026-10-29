@@ -4,6 +4,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { getAllOjtMonths, internshipOverviewSections } from '../data/OjtExperience';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
+import { PageBlock } from './PageTransition';
+import useProjectBatch from '../hooks/useProjectBatch';
 
 const sampleWorksProjects = [
   {
@@ -61,6 +63,10 @@ const OJTExperiencePage = () => {
   const [openOverviewSections, setOpenOverviewSections] = useState({});
   const [selectedSampleProject, setSelectedSampleProject] = useState(null);
   const sampleTriggerRef = useRef(null);
+  const sampleGridRef = useRef(null);
+
+  // GSAP ScrollTrigger.batch: rise project cards from 34px below in groups of up to 4, staggered 0.1s
+  useProjectBatch(sampleGridRef);
 
   const handleOpenSampleDetails = (project, triggerRef) => {
     sampleTriggerRef.current = triggerRef?.current || triggerRef;
@@ -103,8 +109,9 @@ const OJTExperiencePage = () => {
   return (
     <section className="min-h-screen px-4 pt-24 sm:pt-32 pb-16 sm:pb-28 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="mx-auto w-full max-w-7xl">
-        {/* Top Back Navigation Bar */}
-        <div className="mb-8 sm:mb-10 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        {/* Block 1: Top Back Navigation Bar & Hero Header */}
+        <PageBlock className="ojt-header-block mb-12 sm:mb-14">
+          <div className="mb-8 sm:mb-10 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <button
             type="button"
             onClick={handleBack}
@@ -120,12 +127,7 @@ const OJTExperiencePage = () => {
         </div>
 
         {/* Hero Header */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 sm:mb-14 text-center max-w-3xl mx-auto"
-        >
+        <div className="mb-12 sm:mb-14 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)] px-3.5 py-1 mb-4">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--text-main)] animate-pulse" />
             <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--text-main)]">
@@ -137,18 +139,14 @@ const OJTExperiencePage = () => {
             11FTC Enterprises, Inc.
           </h1>
 
-          <p className="mt-4 text-xs sm:text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
-            11 FTC is the leading Retail Marketing Solutions company in the Philippines with 30 years of industry experience, providing unique value to its clients by offering a comprehensive scope of services across all touchpoints in the consumer journey.
-          </p>
-        </motion.div>
+            <p className="mt-4 text-xs sm:text-sm md:text-base text-[var(--text-muted)] leading-relaxed">
+              11 FTC is the leading Retail Marketing Solutions company in the Philippines with 30 years of industry experience, providing unique value to its clients by offering a comprehensive scope of services across all touchpoints in the consumer journey.
+            </p>
+          </div>
+        </PageBlock>
 
-        {/* ── 3 Overview Accordion Rows: Top & Bottom Borders Only (Roles, Technologies, Skills) ── */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16 sm:mb-20 max-w-4xl mx-auto border-y border-[var(--border-color)] divide-y divide-[var(--border-subtle)]"
-        >
+        {/* ── Block 2: 3 Overview Accordion Rows ── */}
+        <PageBlock className="ojt-overview-block mb-16 sm:mb-20 max-w-4xl mx-auto border-y border-[var(--border-color)] divide-y divide-[var(--border-subtle)]">
           {internshipOverviewSections.map((section) => {
             const isOpen = Boolean(openOverviewSections[section.id]);
 
@@ -299,10 +297,11 @@ const OJTExperiencePage = () => {
               </div>
             );
           })}
-        </motion.div>
+        </PageBlock>
 
-        {/* ── 5. Sample Works Section (OJT_SAMPLE_WORKS_ANTIGRAVITY.md) ── */}
-        <section
+        {/* ── Block 3: Sample Works Section ── */}
+        <PageBlock
+          as="section"
           id="sample-works"
           aria-label="Sample Works"
           className="mb-16 sm:mb-24"
@@ -315,12 +314,6 @@ const OJTExperiencePage = () => {
             transition={{ duration: shouldReduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-soft)] px-3.5 py-1 mb-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--text-main)]" />
-              <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--text-main)]">
-                Selected OJT Projects
-              </span>
-            </div>
             <h2 className="font-['Sora',_sans-serif] text-2xl min-[400px]:text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-main)]">
               Sample Works
             </h2>
@@ -330,7 +323,7 @@ const OJTExperiencePage = () => {
           </motion.div>
 
           {/* Exactly Three Cards: 1 column on phones, 2 columns on tablets, 3 columns on wide screens */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+          <div ref={sampleGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {sampleWorksProjects.map((project, index) => (
               <ProjectCard
                 key={`${project.title}-${index}`}
@@ -340,10 +333,10 @@ const OJTExperiencePage = () => {
               />
             ))}
           </div>
-        </section>
+        </PageBlock>
 
-        {/* Four Large Alternating Folder Bands */}
-        <div className="space-y-12 sm:space-y-16 max-w-5xl mx-auto">
+        {/* Block 4: Four Large Alternating Folder Bands */}
+        <PageBlock className="ojt-folders-block space-y-12 sm:space-y-16 max-w-5xl mx-auto">
           {months.map((month, index) => {
             const isRightTab = month.tabPosition === 'right';
             const weeksCount = month.weeks?.length || 0;
@@ -390,7 +383,7 @@ const OJTExperiencePage = () => {
                 </div>
 
                 {/* ── Main Full-Width Folder Band ── */}
-                <div className="relative w-full rounded-2xl sm:rounded-3xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 md:p-10 shadow-lg backdrop-blur-xl transition-all duration-300 group-hover:border-[var(--text-muted)] group-hover:shadow-2xl">
+                <div className="photo-card-skew relative w-full rounded-2xl sm:rounded-3xl border border-[var(--border-color)] bg-[var(--surface)] p-4 sm:p-8 md:p-10 shadow-lg backdrop-blur-xl transition-all duration-300 group-hover:border-[var(--text-muted)] group-hover:shadow-2xl">
                   {/* Subtle Monochrome Ambient Inset */}
                   <div
                     className={`absolute top-0 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-10 transition-opacity duration-300 group-hover:opacity-20 ${isRightTab ? 'left-0 bg-[var(--text-muted)]' : 'right-0 bg-[var(--text-muted)]'
@@ -539,7 +532,7 @@ const OJTExperiencePage = () => {
               </motion.div>
             );
           })}
-        </div>
+        </PageBlock>
       </div>
 
       {/* Sample Works Project Details Modal Dialog */}

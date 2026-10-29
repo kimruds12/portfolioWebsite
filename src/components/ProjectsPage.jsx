@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
+import { PageBlock } from './PageTransition';
+import useProjectBatch from '../hooks/useProjectBatch';
 
 export const categories = [
   { key: 'all', label: 'All Projects' },
@@ -216,6 +218,7 @@ const ProjectsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
+  const gridRef = useRef(null);
 
   const handleOpenDetails = (project, triggerRef) => {
     activeTriggerRef.current = triggerRef?.current || triggerRef;
@@ -248,6 +251,9 @@ const ProjectsPage = () => {
     return projects.filter((p) => p.category === key).length;
   };
 
+  // GSAP ScrollTrigger.batch: rise project cards from 34px below in groups of up to 4, staggered 0.1s
+  useProjectBatch(gridRef, [filteredProjects]);
+
   return (
     <section
       id="projects-page"
@@ -255,13 +261,9 @@ const ProjectsPage = () => {
     >
       <div className="mx-auto w-full max-w-7xl">
 
-        {/* ── Section Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
-        >
+        {/* ── Section Header (Block 1) ── */}
+        <PageBlock className="projects-header-block">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <h1 className="mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight text-[var(--text-main)] break-words">
               PROJECTS
@@ -292,15 +294,12 @@ const ProjectsPage = () => {
               </button>
             )}
           </div>
-        </motion.div>
+          </div>
+        </PageBlock>
 
-        {/* ── Category Filter Pills ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 flex flex-wrap items-center gap-2"
-        >
+        {/* ── Category Filter Pills (Block 2) ── */}
+        <PageBlock className="projects-filter-block mt-8">
+          <div className="flex flex-wrap items-center gap-2">
           {categories.map((cat) => {
             const count = getCategoryCount(cat.key);
             const isActive = activeCategory === cat.key;
@@ -326,10 +325,12 @@ const ProjectsPage = () => {
               </button>
             );
           })}
-        </motion.div>
+          </div>
+        </PageBlock>
 
-        {/* ── Project Cards Grid ── */}
-        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* ── Project Cards Grid (Block 3) ── */}
+        <PageBlock className="projects-grid-block mt-12">
+          <div ref={gridRef} className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={`${project.title}-${index}`}
@@ -340,14 +341,15 @@ const ProjectsPage = () => {
           ))}
         </div>
 
-        {/* Empty state */}
-        {filteredProjects.length === 0 && (
-          <div className="mt-16 flex flex-col items-center justify-center py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--surface)]">
-            <i className="fa-solid fa-folder-open text-4xl text-[var(--text-muted)] opacity-40 mb-3" />
-            <p className="text-sm font-semibold text-[var(--text-main)]">No projects found</p>
-            <p className="text-xs text-[var(--text-muted)] mt-1">Try another search keyword or select a different category.</p>
-          </div>
-        )}
+          {/* Empty state */}
+          {filteredProjects.length === 0 && (
+            <div className="mt-16 flex flex-col items-center justify-center py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--surface)]">
+              <i className="fa-solid fa-folder-open text-4xl text-[var(--text-muted)] opacity-40 mb-3" />
+              <p className="text-sm font-semibold text-[var(--text-main)]">No projects found</p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Try another search keyword or select a different category.</p>
+            </div>
+          )}
+        </PageBlock>
 
         {/* Project Details Modal Dialog */}
         <ProjectDetailsDialog

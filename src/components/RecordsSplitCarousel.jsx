@@ -22,8 +22,6 @@ const RecordsSplitCarousel = ({
 
   const prevIndex = (selectedIndex - 1 + total) % total;
   const nextIndex = (selectedIndex + 1) % total;
-  const prev2Index = (selectedIndex - 2 + total) % total;
-  const next2Index = (selectedIndex + 2) % total;
 
   const handleNext = () => {
     onSelectIndex((selectedIndex + 1) % total);
@@ -103,13 +101,13 @@ const RecordsSplitCarousel = ({
         e.stopPropagation();
         openCertificate(record, e.currentTarget);
       }}
-      className={`group relative h-full w-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[var(--surface)] border transition-all ${isCenter
+      className={`group relative h-full w-full rounded-[22px] sm:rounded-[26px] overflow-hidden bg-[var(--surface)] border transition-all ${isCenter
           ? 'border-white/30 p-2 sm:p-2.5 shadow-2xl cursor-zoom-in ring-1 ring-white/10'
-          : 'border-[var(--border-color)] p-2 shadow-lg cursor-pointer'
+          : 'border-[var(--border-color)] p-2 shadow-lg cursor-pointer hover:border-white/30'
         }`}
-      title={isCenter ? 'Click to enlarge certificate' : 'Click to select certificate'}
+      title={isCenter ? 'Click to enlarge certificate' : 'Click to view certificate'}
     >
-      <div className="relative h-full w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--surface-soft)] flex items-center justify-center">
+      <div className="relative h-full w-full rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[var(--surface-soft)] flex items-center justify-center">
         <img
           src={record.image}
           alt={record.imageAlt || record.title}
@@ -144,30 +142,11 @@ const RecordsSplitCarousel = ({
         /* ── Split Layout for Certificates & Honors (Pure Image Carousel on Left) ── */
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-12 lg:gap-16 xl:gap-20 items-center">
 
-          {/* ── LEFT COLUMN: Five-image layered certificate stage ── */}
+          {/* ── LEFT COLUMN: Three-certificate layered stage ── */}
           <div className="min-w-0 flex items-center justify-center min-h-[280px] xs:min-h-[340px] sm:min-h-[450px] md:min-h-[500px] relative px-2 sm:px-4 lg:pr-6 overflow-hidden sm:overflow-visible">
             <div className="relative w-full max-w-[620px] h-[250px] xs:h-[310px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
 
-              {/* 1. FAR PREVIOUS CERTIFICATE IMAGE (-2) */}
-              <motion.div
-                key={`far-left-cert-${records[prev2Index].id}`}
-                onClick={() => onSelectIndex(prev2Index)}
-                initial={false}
-                animate={{
-                  x: '-92%',
-                  scale: 0.65,
-                  rotate: shouldReduceMotion ? 0 : -10,
-                  opacity: 0.45,
-                  zIndex: 5,
-                }}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-                aria-hidden="true"
-                className="hidden md:block absolute w-[200px] md:w-[250px] aspect-[16/11] cursor-pointer hover:opacity-80 transition-all"
-              >
-                {renderCertificateImageSlide(records[prev2Index], false)}
-              </motion.div>
-
-              {/* 2. PREVIOUS CERTIFICATE IMAGE (-1) */}
+              {/* 1. PREVIOUS CERTIFICATE IMAGE (-1) */}
               <motion.div
                 key={`left-cert-${records[prevIndex].id}`}
                 onClick={handlePrev}
@@ -177,16 +156,16 @@ const RecordsSplitCarousel = ({
                   scale: 0.88,
                   rotate: shouldReduceMotion ? 0 : -6,
                   opacity: 0.78,
-                  zIndex: 15,
+                  zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
 
-              {/* 3. NEXT CERTIFICATE IMAGE (+1) */}
+              {/* 2. NEXT CERTIFICATE IMAGE (+1) */}
               <motion.div
                 key={`right-cert-${records[nextIndex].id}`}
                 onClick={handleNext}
@@ -196,16 +175,16 @@ const RecordsSplitCarousel = ({
                   scale: 0.88,
                   rotate: shouldReduceMotion ? 0 : 6,
                   opacity: 0.78,
-                  zIndex: 15,
+                  zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] cursor-pointer hover:opacity-100 transition-all"
+                className="hidden min-[480px]:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
 
-              {/* 4. ACTIVE CENTER CERTIFICATE IMAGE */}
+              {/* 3. ACTIVE CENTER CERTIFICATE IMAGE */}
               <motion.div
                 key={`active-cert-${currentRecord.id}`}
                 initial={{ scale: 0.94, opacity: 0.85 }}
@@ -217,28 +196,9 @@ const RecordsSplitCarousel = ({
                   zIndex: 25,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-neu-card absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] shadow-2xl"
+                className="absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
-              </motion.div>
-
-              {/* 5. FAR NEXT CERTIFICATE IMAGE (+2) */}
-              <motion.div
-                key={`far-right-cert-${records[next2Index].id}`}
-                onClick={() => onSelectIndex(next2Index)}
-                initial={false}
-                animate={{
-                  x: '92%',
-                  scale: 0.65,
-                  rotate: shouldReduceMotion ? 0 : 10,
-                  opacity: 0.45,
-                  zIndex: 5,
-                }}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-                aria-hidden="true"
-                className="hidden md:block absolute w-[200px] md:w-[250px] aspect-[16/11] cursor-pointer hover:opacity-80 transition-all"
-              >
-                {renderCertificateImageSlide(records[next2Index], false)}
               </motion.div>
 
             </div>
