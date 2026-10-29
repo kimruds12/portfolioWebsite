@@ -255,7 +255,7 @@ const Home = () => {
         as="section"
         ref={heroRef}
         id="home"
-        className="relative min-h-screen flex flex-col justify-between items-center px-4 pt-28 pb-10 sm:px-6 lg:px-8 overflow-hidden select-none"
+        className="relative min-h-screen flex flex-col justify-between items-center px-4 pt-24 pb-8 sm:pt-28 sm:pb-10 lg:px-8 overflow-hidden select-none"
       >
         {/* Background grid */}
         <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
@@ -289,7 +289,7 @@ const Home = () => {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="relative my-6 sm:my-8 flex items-center justify-center"
           >
-            <div className="relative flex h-[13rem] w-[13rem] min-[360px]:h-[15rem] min-[360px]:w-[15rem] min-[420px]:h-[17rem] min-[420px]:w-[17rem] sm:h-[20rem] sm:w-[20rem] lg:h-[22rem] lg:w-[22rem] max-w-[85vw] max-h-[85vw] items-center justify-center">
+            <div className="relative flex h-[13rem] w-[13rem] min-[360px]:h-[15rem] min-[360px]:w-[15rem] min-[420px]:h-[17rem] min-[420px]:w-[17rem] sm:h-[min(20rem,42vh)] sm:w-[min(20rem,42vh)] lg:h-[min(22rem,46vh)] lg:w-[min(22rem,46vh)] max-w-[85vw] max-h-[85vw] items-center justify-center">
               {/* ── OUTER ORBIT (Moves Circularly Counter-Clockwise) ── */}
               <div className="hero-orbit-outer pointer-events-none absolute inset-0 rounded-full border border-[var(--antenna-line)]" aria-hidden="true">
                 {/* Curved Arc Highlight Segments - Single Non-overlapping Stroke */}
@@ -391,7 +391,7 @@ const Home = () => {
           </motion.div>
 
           {/* 3 Cards with 3D tilt & interaction */}
-          <div ref={projectGridRef} className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div ref={projectGridRef} className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {recentProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}

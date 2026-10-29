@@ -125,7 +125,7 @@ const Projects = () => {
         </div>
 
         {/* ── Project Cards Grid ── */}
-        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={`${project.title}-${index}`}

@@ -1504,6 +1504,7 @@ html.theme-light .mobile-tap-dot {
 @media (prefers-reduced-motion: reduce) {
   .mobile-tap-ring,
   .mobile-tap-dot {
-    animation-duration: 150ms;
+    animation-duration: 120ms;
+    animation-timing-function: linear;
   }
 }

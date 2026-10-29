@@ -298,7 +298,7 @@ const Skills = () => {
     >
       <div
         ref={pinWrapperRef}
-        className="px-4 py-20 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center"
+        className="px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center"
       >
         <div className="mx-auto w-full max-w-7xl">
           <div className="grid gap-10 lg:gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">

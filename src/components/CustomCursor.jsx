@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const checkIsMobileOnly = () => {
-  if (typeof window === 'undefined') return false;
-  return (
-    window.innerWidth < 768 ||
-    (window.matchMedia && window.matchMedia('(pointer: coarse) and (hover: none)').matches)
-  );
+const canUseFinePointer = () => {
+  if (typeof window === 'undefined' || !window.matchMedia) return false;
+
+  return window.matchMedia(
+    '(any-hover: hover) and (any-pointer: fine)'
+  ).matches;
 };
 
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobileOnly, setIsMobileOnly] = useState(checkIsMobileOnly);
+  const [hasFinePointer, setHasFinePointer] = useState(canUseFinePointer);
   const [tapRipples, setTapRipples] = useState([]);
 
   // High performance coordinate refs to avoid React re-renders during 60/120fps motion
@@ -24,45 +24,72 @@ const CustomCursor = () => {
   const rafId = useRef(null);
   const isVisibleRef = useRef(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileOnly(checkIsMobileOnly());
-    };
+  const rippleTimersRef = useRef(new Set());
+  const rippleIdRef = useRef(0);
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+  // 1. Capability detection: update hasFinePointer when pointer/hover capability changes
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+
+    const query = window.matchMedia(
+      '(any-hover: hover) and (any-pointer: fine)'
+    );
+
+    const updateCapability = () => setHasFinePointer(query.matches);
+
+    updateCapability();
+    query.addEventListener('change', updateCapability);
+
+    return () => query.removeEventListener('change', updateCapability);
   }, []);
 
-  // 1. Mobile & Touch Screen: Touch Tap Ripple Effect (Global Screen Taps)
+  // 2. Touch & Pen Input: Pointer Events tap feedback (Reliable on all touchscreens, hybrid laptops, pens)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !window.PointerEvent) return undefined;
 
-    const handleTouchStart = (e) => {
-      if (!e.touches || e.touches.length === 0) return;
-      const touch = e.touches[0];
-      const newTap = {
-        id: `${Date.now()}-${Math.random()}`,
-        x: touch.clientX,
-        y: touch.clientY,
+    const activeTimers = rippleTimersRef.current;
+
+    const handlePointerDown = (event) => {
+      const isTouchInput = event.pointerType === 'touch';
+      const isPenInput = event.pointerType === 'pen';
+
+      if (!event.isPrimary || (!isTouchInput && !isPenInput)) return;
+
+      const id = `tap-${++rippleIdRef.current}`;
+      const ripple = {
+        id,
+        x: event.clientX,
+        y: event.clientY,
       };
 
-      setTapRipples((prev) => [...prev.slice(-3), newTap]);
+      setTapRipples((current) => [...current.slice(-2), ripple]);
 
-      setTimeout(() => {
-        setTapRipples((prev) => prev.filter((t) => t.id !== newTap.id));
+      const timer = window.setTimeout(() => {
+        setTapRipples((current) => current.filter((item) => item.id !== id));
+        activeTimers.delete(timer);
       }, 450);
+
+      activeTimers.add(timer);
     };
 
-    window.addEventListener('touchstart', handleTouchStart, { capture: true, passive: true });
+    window.addEventListener('pointerdown', handlePointerDown, {
+      capture: true,
+      passive: true,
+    });
+
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart, { capture: true });
+      window.removeEventListener('pointerdown', handlePointerDown, {
+        capture: true,
+      });
+
+      activeTimers.forEach((timer) => window.clearTimeout(timer));
+      activeTimers.clear();
     };
   }, []);
 
-  // 2. Desktop Mouse Tracking Cursor (Only active when not strictly mobile-only)
+  // 3. Desktop Mouse Tracking Cursor (Only active when fine pointer and hover are available)
   useEffect(() => {
-    if (isMobileOnly) return;
+    if (!hasFinePointer) return undefined;
 
     let hasPositioned = false;
 
@@ -148,7 +175,7 @@ const CustomCursor = () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [isMobileOnly]);
+  }, [hasFinePointer]);
 
   if (typeof document === 'undefined') return null;
 
@@ -162,8 +189,8 @@ const CustomCursor = () => {
       }}
       aria-hidden="true"
     >
-      {/* Desktop Cursor Elements */}
-      {!isMobileOnly && (
+      {/* Desktop Cursor Elements - Only rendered when fine pointer and hover are available */}
+      {hasFinePointer && (
         <div
           style={{
             opacity: isVisible ? 1 : 0,
@@ -210,9 +237,9 @@ const CustomCursor = () => {
         </div>
       )}
 
-      {/* Mobile Touch Tap Ripples */}
+      {/* Mobile Touch & Pen Tap Ripples */}
       {tapRipples.map((tap) => (
-        <div key={tap.id} className="pointer-events-none select-none">
+        <div key={tap.id} className="pointer-events-none select-none" aria-hidden="true">
           <div
             className="mobile-tap-ring"
             style={{
