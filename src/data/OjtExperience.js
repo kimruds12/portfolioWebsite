@@ -375,14 +375,10 @@ Performed hardware troubleshooting on a printer with no power by cleaning the se
             status: 'Completed',
             // Daily activities & tasks for July 20:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Diagnosed and repaired Windows startup issues by running SFC, DISM, and Check Disk, cleaning the laptop internally, and restoring normal system operation.
+Configured printer connectivity by connecting the printer to the company network, defining the required Windows credentials, locating the correct network printer, and verifying successful printing through the host computer.
+Provided user support by explaining the Google Sheets file import process and assisting with SketchUp account access through license verification and login guidance.
+Issued a replacement mouse after the original mouse was found to be faulty.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -392,14 +388,11 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 21:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Provided account support by assisting with SketchUp and Dropbox login credentials and verifying successful account access.
+Configured printer connectivity by adding the required printer, setting it as the default printer, configuring the host printer connection, and verifying successful printing.
+Configured employee computers to the company network by updating the required network settings and restoring internet access.
+Optimized computer performance by adjusting application settings to reduce CPU usage and improve editing performance.
+Issued a replacement mouse after the original mouse was found to be faulty.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -409,14 +402,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 22:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connectivity by updating the host IP address, restarting the Print Spooler, configuring Windows credentials, reconnecting the printer to the host computer, setting the correct default printer, and verifying successful printing.
+Diagnosed and restored network connectivity by checking the network connection, replacing the wireless dongle when needed, restarting the access point, reconnecting employee devices, and verifying internet access through ping and speed tests.
+Installed and configured a graphics card by installing the required driver and verifying that the device was functioning properly.
+Replaced a faulty system unit and cleaned the internal components of a laptop to restore normal computer operation.
+Restored Microsoft Office functionality by activating the required applications and verifying that they were working properly.
+Diagnosed a slow laptop and verified that the device was functioning properly after testing.
+Issued a keyboard and mouse after verifying that both devices were ready for use.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -426,14 +418,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 23:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connectivity by reconnecting the USB cable, setting the correct default printer, configuring the Brother printer, and verifying successful printing.
+Restored network connectivity by replacing a faulty wireless dongle, updating the network settings, reconnecting employee devices, and verifying a stable internet connection.
+Issued a replacement mouse after confirming that the original mouse and touchpad were no longer functioning.
+Diagnosed a laptop startup issue by replacing the charger and restoring normal operation.
+Installed Nitro PDF to restore access to the required application.
+Corrected a laptop display issue by adjusting the power settings to prevent the screen from turning black.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -443,14 +433,10 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 24:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connections by connecting employee laptops to the printer, performing print tests, and troubleshooting different printer configurations and connection methods. Although the issue was not resolved, the troubleshooting process improved my understanding of printer configuration and will continue on the next working day.
+Recovered the required files and safely transferred them to the employee's computer after verifying that the initial file transfer was completed.
+Documented the access point (AP) port numbers and passwords to support the configuration and management of the company's managed network switches.
+Issued a replacement mouse after the original mouse became faulty.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -467,14 +453,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 27:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured and restored network connectivity by updating the Sophos Firewall settings, refreshing network drivers, reconnecting employee devices to the company network, and verifying stable internet access.
+Configured printer connectivity by restarting the printer and Print Spooler service, reconnecting the printer, updating the printer IP address, and verifying successful printing.
+Diagnosed and repaired hardware issues by crimping a loose network cable and restoring a system unit that had no display.
+Optimized laptop performance by forcing a restart and improving system responsiveness to restore normal operation.
+Verified and restored Google Calendar synchronization on a mobile device by checking the account settings and restarting the application.
+Reconfigured a printer workstation by disabling the WSD port, changing the printer port and IP address, and restoring access to department print files.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -484,14 +468,10 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 28:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connectivity by reconnecting printers to the host computer, restarting the Print Spooler service when needed, installing the required printer driver, and verifying successful printing through print tests.
+Diagnosed and repaired hardware issues by replacing a faulty keyboard, crimping a damaged network cable, and verifying that both devices were functioning properly.
+Restored laptop display issues by replacing faulty hardware components and verifying normal display output.
+Resolved a printer paper jam by removing the jammed paper and restoring normal printer operation.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -501,14 +481,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 29:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Restored network connectivity by renewing the IP configuration, refreshing the DNS settings, restarting the computer, and troubleshooting an application-specific network issue.
+Issued a replacement keyboard after the original keyboard became faulty.
+Prepared, checked, and released a replacement laptop, as instructed by the Site Internship Supervisor, after verifying that it was ready for deployment to the employee.
+Reset a laptop password through the Windows User Accounts settings to restore user access.
+Optimized a laptop by ending unnecessary background tasks, reinstalling the required web browser, and restoring normal application performance.
+Improved laptop performance by cleaning the internal cooling fan and upgrading the memory to restore stable system operation.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -518,14 +496,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for July 30:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connectivity by installing the required printer drivers, updating the printer IP address, removing and re-adding printer devices, restarting the Print Spooler service, clearing the print queue, and verifying successful printing through print tests.
+Configured an Outlook email account by assigning the required email credentials and verifying successful account access.
+Restored network connectivity by updating the network driver, removing incorrect proxy and Wi-Fi settings, reconnecting devices to the company network, and verifying a stable internet connection.
+Restarted the Viber application to restore normal internet connectivity.
+Diagnosed a printer maintenance issue by checking the printer settings and verifying normal printer operation.
+Issued a replacement laptop for temporary use after the employee's assigned laptop was borrowed.
+Improved printer performance by installing all required printer drivers and assigning a new IP address to increase printing speed
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -557,14 +534,11 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 4:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Installed Adobe Photoshop and Illustrator and added the required firewall rules for the applications.
+Configured printer connections by connecting printers to the company network, adding Windows credentials, accessing the host computer, and verifying successful printing.
+Repaired a faulty power supply by replacing the PSU and cleaning the CPU.
+Configured BIOS settings to fix startup issues by setting up the BIOS and disabling Secure Boot.
+Reconnected an offline printer by checking its Wi-Fi connection, refreshing Microsoft Word, and completing a test print.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -574,14 +548,11 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 7:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Restored printer connectivity by restarting the printer and Print Spooler, updating the printer driver, and verifying successful printing.
+Updated the printer firmware and performed a test print to correct the print output issue.
+Signed in to the required Outlook account to restore email access.
+Restored internet connectivity by renewing the IP settings, refreshing the network connection, and restarting the computer.
+Reconnected a laptop to the company network by adding its MAC address and verified internet access through a speed test.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -598,14 +569,15 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 10:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connections by switching devices to the Enterprise network, adding printers by IP address, restarting the Print Spooler, installing the required Epson driver and scanner app, and completing print tests.
+Improved slow printer output by changing the printer mode to Ink Saved Mode.
+Connected a computer to the Enterprise network by adding its MAC address and verifying internet access.
+Restored Viber access by reinstalling the application and checking message synchronization on the mobile phone.
+Provided the required SketchUp login code to restore account access.
+Provided an external keyboard after the laptop keyboard became difficult to use and helped address the need for an HDMI cable for an additional monitor.
+Guided an employee with an iPhone issue by recommending browser access while the required office applications remained available.
+Managed a Windows Check Disk issue by allowing the disk check to complete before planning to disable it after startup.
+Bypassed an Excel popup using PowerShell to restore access to Windows and Microsoft applications.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -615,14 +587,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 11:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured printer connections by connecting computers to the Enterprise network, adding printers by IP address, and completing test prints.
+Replaced a faulty keyboard and verified that the new keyboard was working properly.
+Reconnected a computer to the Enterprise network by removing the previous internet access and setting the Enterprise network as default.
+Removed WPS Office to set the required default printing application.
+Removed the existing Microsoft account from a computer and restarted the device to stop the account prompt.
+Checked a computer's specifications and verified that the monitor matched the required specifications.
+Cleaned the scanner glass to remove dirt and prevent lines from appearing on scanned documents.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -632,14 +603,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 13:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Issued a good-condition mouse and verified that it was functioning properly.
+Handled an Acumatica printing issue by waiting for the application to respond before reformatting.
+Configured multiple Epson L5290Tooling printer connections by connecting laptops to the Enterprise network, adding the printers, and completing print tests.
+Dried a water-damaged laptop with a blower before opening it and checked the fans and keyboard.
+Installed a 512 GB SSD for additional storage.
+Reconnected an offline printer by removing and adding the printer again.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -649,14 +618,9 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 14:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Restored internet connectivity by restarting affected devices and testing the connection.
+Retested multi-page printing to check the printer output.
+Issued a 5-meter HDMI cable for temporary use.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -673,14 +637,11 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 18:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Restored internet access by checking the IP address, updating it as needed, and verifying the connection.
+Restored network access by disabling and updating the network adapter driver, then testing the connection.
+Deployed a good-condition system unit and replaced the SSD before testing the device.
+Issued new mice to employees and verified that each mouse was working properly.
+Secured an SSD by reinstalling it and adding a screw to prevent movement, then tested the laptop for proper booting.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -690,14 +651,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 20:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Deployed a 1 TB NVMe external device for file backup.
+Restored printer access by switching printers to the Enterprise Wi-Fi, re-adding offline printers, restarting the Print Spooler, and completing test prints.
+Improved printing performance by restarting the laptop, reopening Excel, and testing the printer through Wi-Fi.
+Improved internet performance by closing unnecessary background apps, refreshing the connection, and reconnecting devices to the Enterprise network.
+Prepared a Lenovo laptop for deployment by adding it to the available laptop list and checking its physical keyboard.
+Checked Sophos registration and subscription status through the Sophos Firewall.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -714,14 +673,21 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 24:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Deployed good-condition laptops for apprentice use and checked available units for deployment.
+Added a Lenovo laptop to the available list and checked it with a physical keyboard before use.
+Issued good-condition mice and keyboards to employees after replacing faulty devices.
+Replaced an external keyboard after troubleshooting unresponsive keys.
+Fixed a laptop display issue by securing the power adapter.
+Improved laptop performance by removing unneeded software and updating Windows.
+Issued a 1 TB SSD-based charger replacement? Wait this is not in image — remove.
+Connected devices to the guest Wi-Fi network and verified internet access.
+Replaced a faulty laptop charger and verified proper charging.
+Configured printer access by changing the default printer and testing the connection.
+Cleared a printer paper jam and performed printer maintenance.
+Improved computer performance by removing temporary files and enabling high-performance power settings.
+Replaced a faulty monitor power adapter and restored normal display operation.
+Fixed a Google account access issue by correcting the Sophos settings.
+Troubleshooted laptop keyboard issues and replaced the external keyboard when the original keys remained faulty
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -731,14 +697,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 26:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Made more space on the laptop by transferring files from another account and deleting them from the laptop.
+Repaired a LAN connection by re-crimping the RJ45 cable, testing all eight wires, and reconnecting the Wi-Fi dongle.
+Fixed a printer ink issue by flushing and preparing the ink system.
+Reconnected a laptop to a printer through Wi-Fi and added the printer device.
+Removed foreign objects from a printer, cleaned its internal parts, and performed a head cleaning test.
+Replaced a faulty mouse and issued a working keyboard, mouse, and monitor.
+Improved a slow-booting PC by optimizing its system performance.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -748,14 +713,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 27:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Configured multiple printers and completed test prints to restore printing access.
+Fixed a printer error by cleaning the circular disk and testing the printer.
+Added a network printer to a tablet using its IP address and verified printing.
+Checked a laptop with screen flickering and monitor lines as part of hardware troubleshooting.
+Disabled Secure Boot in the BIOS and tested the laptop.
+Activated Microsoft software and enabled Windows Security access.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -765,14 +728,10 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for August 28:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Completed three invitation designs with the required information for proposal.
+Deployed a good-condition laptop for employee use.
+Audited the required logs and completed the remaining ongoing task.
+Checked and verified the completed work to ensure everything was ready for use.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -804,14 +763,11 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 1:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Removed the WPS add-in from Excel and verified that the prompt no longer appeared when opening files.
+Prepared a good-condition speaker cable and tested it to ensure it was working properly.
+Replaced the laptop thermal paste and cleaned the hardware parts.
+Restored printer access by restarting the Print Spooler service and performing a test print.
+Fixed another printer connection issue by updating the printer driver and completing a test print.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -821,14 +777,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 2:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Provided the SketchUp login code and created the required email accounts.
+Cleaned the printer's internal parts and circular disk and performed head cleaning to address the red blinking printer issue.
+Uninstalled WPS software to remove the issue caused by the application.
+Replaced the visionsetting.xml file using the backup copy and verified that the I-CUT software worked properly.
+Enabled the touchpad and tested it to ensure it was functioning properly.
+Prepared and configured a LAN connection by setting the required access point settings to allow the connection.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -838,14 +792,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 3:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Disabled Secure Boot in the BIOS and saved the changes to stop the BIOS prompt from appearing.
+Installed a new SSD and verified that it was working properly.
+Removed the online chat blocking policy to restore access to Web WhatsApp.
+Replaced the VisionSetting.xml file with the backup copy in the MachineController folder and renamed the old file to restore I-CUT.
+Logged in to SketchUp to restore account access.
+Installed the Brother DCP-T420W printer driver and connected the printer to the Enterprise network.
+Reconfigured host printer connections by changing the IP address to 192.168.3.7, restarting the Print Spooler, adding the required credentials, reconnecting the printers to the host PC, and performing test prints.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -855,14 +808,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 4:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Restored Viber internet access by ending the Viber process, connecting the device to the Enterprise network, and testing the application.
+Used the remote connection to cast a device to a TV and tested whether casting worked properly.
+Deployed a good-condition laptop for employee regular use.
+Troubleshooting a printer connection issue by restarting the printer and Print Spooler, reconnecting it to the host PC, and performing a test print.
+Restored monitor display by checking the connection and securing the HDMI cable before testing the display.
+Updated the network adapter to the Microsoft driver, restarted Wi-Fi, connected the device to the Enterprise network, and performed a speed test.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -879,14 +830,16 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 8:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Fixed a printer error by removing the connected ports, reconnecting the printer, and applying troubleshooting steps to clear the paper jam issue.
+Removed unnecessary prefetch files by using remote access and entering the required administrator password.
+Restored department-wide internet access by restarting the access point and performing a speed test.
+Improved PC performance by clearing temporary files, restarting the computer, and disabling unnecessary startup applications.
+Connected multiple laptops to the L5290TOOLING printer and performed test prints to verify printing access.
+Connected a printer through the host computer using the required host connection and verified successful printing.
+Reconnected a printer to the Enterprise network and linked it to the computer before performing a test print.
+Activated Microsoft Office applications using the required PowerShell command and disabled updates afterward.
+Improved laptop performance by turning off the energy saver setting.
+Force-restarted a laptop to restore normal operation after the device became unresponsive.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -896,14 +849,14 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 9:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Removed the OneNote printer and scanner, then installed the printer through the printer setup.
+Cleared a printer paper jam by removing the stuck paper, restarting the printer, and performing a test print.
+Reset the network connection using network commands and restarted the computer to restore internet access.
+Tested another charger for an Acer laptop and verified that it was working properly.
+Connected the computer to the 11FTC Enterprise network and tested printing.
+Upgraded the computer's RAM by installing an additional 8 GB and testing the system.
+Verified the account information to confirm that the listed Gmail account was not provided by the company.
+Replaced the TV HDMI cable with a 5-meter cable.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -913,14 +866,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 10:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Cleaned the internal parts of a PC and tested the device to verify proper operation.
+Fixed a PC boot and frozen display issue after relocation by using Hiren's tools and BCDEdit, then testing the system outside Safe Mode.
+Relocated a monitor and PC to the newly assigned workspace.
+Deployed good-condition mice for laptop use and verified that they were working properly.
+Optimized a slow PC by deleting temporary files and prefetch data and clearing the standby memory list using RAMMap.
+Logged in to the required Jit.ph account using the POP account and completed the same account setup process used previously.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -930,14 +881,15 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 11:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Borrowed a Smart Wi-Fi device to provide temporary internet access.
+Activated the SketchUp license by adding the required account and accessing it remotely.
+Replaced faulty speaker audio with a working audio component from another laptop.
+Installed a new power supply to restore proper power to the PC.
+Added 8 GB of RAM to provide more memory space.
+Installed a 10-meter LAN cable to provide internet access to the PC.
+Deployed a Smart Wi-Fi device for the warehouse dead spot with 65 GB of data and no expiration.
+Installed a new 512 GB SSD to provide additional storage.
+Force-restarted a laptop by holding the power button to restore operation.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -954,14 +906,13 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 15:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Changed the primary boot device to the NVMe drive and tested the PC to verify that it could enter the operating system.
+Restored printer access by restarting the laptop and connecting the printer through a USB cable.
+Replaced an old laptop with a new laptop.
+Connected an employee's computer to the printer and verified the connection.
+Created a new email account.
+Connected a computer to the printer and fixed the printing error in Excel.
+Connected a computer to the tooling printer.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -971,14 +922,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 16:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Repaired Viber by installing the Microsoft Visual C++ Redistributable for both x86 and x64 versions and restarting the computer.
+Logged in to Outlook and reset the required account login.
+Replaced the faulty Acer laptop charger with a good-condition charger and tested the charging function.
+Reinstalled ArtCamPro by removing the faulty application and following the required installation steps from the provided folder.
+Installed the required Adobe Illustrator extension by using the administrator password and a plug adapter for the laptop charger.
+Disabled Secure Boot and tested the laptop to verify that it was working properly.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -988,14 +937,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 17:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Troubleshoot a monitor display issue by reconnecting the monitor, restarting the system unit, and updating the graphics driver.
+Restored scanner functionality by restarting the laptop and reconnecting the USB cable.
+Assisted with printer access by connecting the printer in the IT office and verifying printing through the device driver.
+Changed the network connection from static IP to DHCP to improve internet stability.
+Reconnected the Epson machine printer by moving the USB cable to another port, restarting the machine and PC, and performing a test print.
+Connected the printer to the Enterprise network and performed a test print to verify printing access.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -1005,14 +952,16 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 18:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Fixed a Viber error by uninstalling the application and removing its cached files.
+Opened the required file in Sophos and advised the user about the access issue.
+Checked an old Viber and PC file issue and advised the user about the file's age.
+Reset a panel password to restore account access.
+Assisted with an email handler issue for the required email account.
+Replaced a faulty charger with an alternative charger and verified that it was charging.
+Connected the printer to the Enterprise network and L5290Tooling then performed a test print.
+Created a JIT email through cPanel using the same password.
+Assisted with the Dropbox login code to restore account access.
+Removed the old Adobe Illustrator 2024 version and replaced it with the 2021 version.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -1029,14 +978,10 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 22:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Checked the laptop and recommended replacing the fan and applying new thermal paste due to excessive fan noise. 
+Activated Windows and Microsoft Office remotely using PowerShell. 
+Prepared a crimped RJ45 LAN cable that was 12 feet long for the required machine. 
+Accessed the computer remotely and removed Nitro Pro as requested.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -1046,14 +991,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 23:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Cleaned the printer in strong cleaning mode and checked the nozzles to restore proper color printing. 
+Reinstalled Adobe Illustrator 2020 after removing the 2021 version due to an error that caused the application to force close. 
+Downloaded a printer resetter and reset the printer ink settings then performed a test print. ● Refreshed the Dropbox tab and tested it to verify that it was working properly. 
+Saved the required files and removed WPS Office and 360 Security using Geek Uninstaller then restarted the computer and tested its performance.
+Reformatted the system unit, added a functional power cable, and provided a VGA cable for the monitor. 
+Set up a JIT email in Outlook Classic using POP and updated another JIT email account in Outlook.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -1063,14 +1006,14 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 24:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Deactivated Viber and synced it using a QR scan from a mobile device to resolve the Viber error. 
+Provided the SketchUp account login credentials as requested. 
+Accessed the computer remotely through PowerShell and completed the Microsoft Office activation. 
+Checked the internet connection remotely, closed and reopened Viber through Task Manager, restarted the computer, and verified that it was working. 
+Deleted the requested entry from the Google Sheet. 
+Ran a head cleaning cycle on the printer to improve print quality. 
+Performed printer head cleaning and printed a test page to verify the print output. 
+Replaced the damaged LCD with a working model laptop.
 `.trim().split('\n').map(activity => activity.trim()),
           },
           {
@@ -1080,14 +1023,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 25:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Upgraded the PC to 16 GB of RAM and downloaded AutoCAD for multitasking. 
+Downloaded and installed the full Epson L3210 driver package, set the printer as default, and verified printing and scanning through a test. 
+Deployed a working power adapter for the charger and verified that it was functioning properly.
+Deployed a working laptop with an external keyboard and mouse to replace the damaged laptop screen. 
+Changed the default printer in AnyDesk to resolve the error when saving files as PDF. 
+Deployed a new laptop for the required user.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],
@@ -1104,14 +1045,12 @@ Restored network access by reconnecting the network cable and verifying a succes
             status: 'Completed',
             // Daily activities & tasks for September 29:
             activities: `
-Prepared and checked a replacement laptop to ensure it was working properly and ready for deployment to an employee of 11FTC Enterprises, Inc.
-Released the laptop after confirming it was fully configured and working properly.
-Fixed Adobe Acrobat file associations and removed conflicting software.
-Restored Microsoft Office default application settings on an employee's computer.
-Configured access to the required design application using the appropriate login credentials.
-Set up an email account using POP settings to restore email access.
-Reconfigured a printer and updated the required Windows credentials.
-Restored network access by reconnecting the network cable and verifying a successful DHCP connection.
+Connected the printer to the host computer through the assigned network connection and verified the setup.
+Cleaned the RAM using an eraser to address the personal computer display issue.
+Connected and set up a computer to Wi-Fi for network access.
+Replaced the laptop charger to address the charging issue.
+Set up the monitor and verified that it was ready for use.
+Completed the remaining work for the 11FTC Enterprises ticketing management system, including its web page with the company’s mission and vision and information about the IT Team.
 `.trim().split('\n').map(activity => activity.trim()),
           },
         ],

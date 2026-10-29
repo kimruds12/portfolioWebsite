@@ -116,7 +116,11 @@ const ProjectCard = ({ project, index: _index = 0, onOpenDetails }) => {
     glareOpacityTarget.set(0);
   };
 
-  const downloadUrl = project.download || project.downloadUrl;
+  const downloadUrl =
+    project.download ||
+    project.downloadUrl ||
+    (project.category === 'game' && project.href ? project.href : null) ||
+    (project.href && project.href.includes('itch.io') ? project.href : null);
   const isExcludedFromLive = project.title === 'PLV-QLib Mobile App' || Boolean(downloadUrl);
   const liveUrl =
     project.live ||

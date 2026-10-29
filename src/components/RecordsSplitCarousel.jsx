@@ -313,14 +313,16 @@ const RecordsSplitCarousel = ({
             )}
 
             {currentRecord.id === 'work-11ftc' && (
-              <button
-                type="button"
-                onClick={() => navigate('/ojt-experience')}
-                className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--text-main)] px-5 py-2.5 text-sm font-semibold text-[var(--surface)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]"
-              >
-                See OJT Experience
-                <i className="fa-solid fa-arrow-right text-xs" />
-              </button>
+              <div className="mt-6 mb-3">
+                <button
+                  type="button"
+                  onClick={() => navigate('/ojt-experience')}
+                  className="chunky-3d-btn group"
+                >
+                  <span>See OJT Experience</span>
+                  <i className="fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1" />
+                </button>
+              </div>
             )}
 
             {/* Subtle Divider Line */}

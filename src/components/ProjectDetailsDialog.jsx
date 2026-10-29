@@ -7,8 +7,12 @@ export const getProjectActions = (project) => {
   if (!project) return [];
   const actions = [];
 
-  // 1. Download action (Mobile App APK, PKT files, etc.)
-  const downloadUrl = project.download || project.downloadUrl;
+  // 1. Download action (Mobile App APK, PKT files, Game Downloads, etc.)
+  const downloadUrl =
+    project.download ||
+    project.downloadUrl ||
+    (project.category === 'game' && project.href ? project.href : null) ||
+    (project.href && project.href.includes('itch.io') ? project.href : null);
   if (downloadUrl) {
     actions.push({
       label: 'Download Now',
