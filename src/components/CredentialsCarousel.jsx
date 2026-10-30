@@ -172,7 +172,8 @@ const CredentialsCarousel = () => {
 
   // Responsive offsets calibrated to guarantee clean 30-40px clearance from navigation arrows
   const isDesktop = windowWidth >= 1150;
-  const isTablet = windowWidth >= 768 && windowWidth < 1150;
+  const isTablet = windowWidth >= 640 && windowWidth < 1150;
+  const isMobile = windowWidth < 640;
 
   const farOffset = isDesktop ? '112%' : isTablet ? '96%' : '80%';
   const nearOffset = isDesktop ? '58%' : isTablet ? '50%' : '40%';
@@ -180,32 +181,64 @@ const CredentialsCarousel = () => {
 
 
   // ── Sub-component: Individual credential tag with smooth generating line on hover ──
-  const CredentialTagItem = ({ label, isCenterCard, shouldReduceMotion, className = '' }) => {
+  const CredentialTagItem = ({
+    label,
+    isCenterCard,
+    shouldReduceMotion,
+    className = '',
+    itemRecord,
+    onOpenCertificate,
+  }) => {
     const [isHovered, setIsHovered] = useState(false);
+
+    const handleOpenCertificate = (event) => {
+      if (!isCenterCard) return;
+      event.stopPropagation();
+      onOpenCertificate?.(itemRecord, event.currentTarget);
+    };
 
     return (
       <div
         onMouseEnter={() => isCenterCard && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`group relative min-w-0 pb-2 select-none ${isCenterCard ? 'cursor-pointer' : ''
-          } ${className}`}
+        className={`group relative min-w-0 pb-2 select-none ${className}`}
       >
-        <div className="flex items-center justify-between gap-2">
-          <span
-            className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${isHovered ? 'credential-tag-text-hover' : ''
-              }`}
+        {isCenterCard ? (
+          <button
+            type="button"
+            onClick={handleOpenCertificate}
+            onFocus={() => setIsHovered(true)}
+            onBlur={() => setIsHovered(false)}
+            className="credential-tag-button"
+            aria-label={`View ${itemRecord?.title || 'certificate'} certificate for ${label}`}
           >
-            {label}
-          </span>
-
-          <i
-            className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${isHovered
-              ? 'credential-tag-arrow-hover translate-x-0.5'
-              : ''
+            <span
+              className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${
+                isHovered ? 'credential-tag-text-hover' : ''
               }`}
-            aria-hidden="true"
-          />
-        </div>
+            >
+              {label}
+            </span>
+
+            <i
+              className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${
+                isHovered ? 'credential-tag-arrow-hover translate-x-0.5' : ''
+              }`}
+              aria-hidden="true"
+            />
+          </button>
+        ) : (
+          <div className="flex items-center justify-between gap-2 w-full">
+            <span className="truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider credential-tag-text">
+              {label}
+            </span>
+
+            <i
+              className="fa-solid fa-arrow-right shrink-0 text-[10px] credential-tag-arrow"
+              aria-hidden="true"
+            />
+          </div>
+        )}
 
         {/* Static base divider track */}
         <div className="credential-tag-track absolute bottom-0 left-0 right-0 h-[1px]" />
@@ -246,11 +279,15 @@ const CredentialsCarousel = () => {
                 label={tags[0] || 'BASICS'}
                 isCenterCard={isCenterCard}
                 shouldReduceMotion={shouldReduceMotion}
+                itemRecord={itemRecord}
+                onOpenCertificate={onOpenCertificate}
               />
               <CredentialTagItem
                 label={tags[2] || 'ADDRESSING'}
                 isCenterCard={isCenterCard}
                 shouldReduceMotion={shouldReduceMotion}
+                itemRecord={itemRecord}
+                onOpenCertificate={onOpenCertificate}
                 className="mt-2.5"
               />
             </div>
@@ -261,11 +298,15 @@ const CredentialsCarousel = () => {
                 label={tags[1] || 'DEVICES'}
                 isCenterCard={isCenterCard}
                 shouldReduceMotion={shouldReduceMotion}
+                itemRecord={itemRecord}
+                onOpenCertificate={onOpenCertificate}
               />
               <CredentialTagItem
                 label={tags[3] || 'SECURITY'}
                 isCenterCard={isCenterCard}
                 shouldReduceMotion={shouldReduceMotion}
+                itemRecord={itemRecord}
+                onOpenCertificate={onOpenCertificate}
                 className="mt-2.5"
               />
             </div>
@@ -378,12 +419,10 @@ const CredentialsCarousel = () => {
 
         {/* 5-Card Layered Panoramic Carousel Stage */}
         <div
-          className="relative h-[430px] sm:h-[470px] md:h-[490px] w-full flex items-center justify-center select-none px-2 sm:px-6 md:px-10"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          className="relative w-full flex items-center justify-center select-none"
+          style={{ isolation: 'isolate' }}
         >
-          {/* Previous Arrow Button */}
+          {/* Arrow Buttons - overflow: visible, z-40 */}
           <button
             type="button"
             onClick={handlePrev}
@@ -393,7 +432,6 @@ const CredentialsCarousel = () => {
             <i className="fa-solid fa-chevron-left text-xs sm:text-sm" />
           </button>
 
-          {/* Next Arrow Button */}
           <button
             type="button"
             onClick={handleNext}
@@ -403,102 +441,110 @@ const CredentialsCarousel = () => {
             <i className="fa-solid fa-chevron-right text-xs sm:text-sm" />
           </button>
 
-          {/* The 5 Cards Stack Container - 100% Solid Surfaces, zero background bleed */}
-          <div className="relative w-full max-w-[1180px] h-full flex items-center justify-center">
+          {/* Carousel Stage - margin-inline: 12px, padding-inline: 16px, overflow: clip */}
+          <div
+            className="relative w-full max-w-[1180px] h-[435px] sm:h-[470px] md:h-[490px] flex items-center justify-center overflow-clip mx-3 sm:mx-auto px-4 sm:px-6"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* The 5 Cards Stack Container */}
+            <div className="relative w-full h-full flex items-center justify-center">
 
-            {/* ── 1. FAR-LEFT CARD (-2) ── */}
-            <motion.div
-              key={`prev2-${prev2Record.id}`}
-              onClick={() => setActiveIndex(prev2Index)}
-              initial={false}
-              animate={{
-                x: `-${farOffset}`,
-                scale: 0.82,
-                rotate: shouldReduceMotion ? 0 : -3.5,
-                opacity: 0.55,
-                zIndex: 12,
-              }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              aria-hidden="true"
-              className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
-            >
-              {renderCardContent(prev2Record, false)}
-            </motion.div>
+              {/* ── 1. FAR-LEFT CARD (-2) ── */}
+              <motion.div
+                key={`prev2-${prev2Record.id}`}
+                onClick={() => setActiveIndex(prev2Index)}
+                initial={false}
+                animate={{
+                  x: `-${farOffset}`,
+                  scale: 0.82,
+                  rotate: shouldReduceMotion ? 0 : -3.5,
+                  opacity: 0.55,
+                  zIndex: 12,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
+              >
+                {renderCardContent(prev2Record, false)}
+              </motion.div>
 
-            {/* ── 2. PREVIOUS CARD (-1) ── */}
-            <motion.div
-              key={`prev1-${prev1Record.id}`}
-              onClick={handlePrev}
-              initial={false}
-              animate={{
-                x: `-${nearOffset}`,
-                scale: 0.91,
-                rotate: shouldReduceMotion ? 0 : -1.8,
-                opacity: 0.80,
-                zIndex: 22,
-              }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              aria-hidden="true"
-              className="hidden min-[400px]:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
-            >
-              {renderCardContent(prev1Record, false)}
-            </motion.div>
+              {/* ── 2. PREVIOUS CARD (-1) ── */}
+              <motion.div
+                key={`prev1-${prev1Record.id}`}
+                onClick={handlePrev}
+                initial={false}
+                animate={{
+                  x: isMobile ? '-54%' : `-${nearOffset}`,
+                  scale: isMobile ? 0.72 : isTablet ? 0.88 : 0.91,
+                  rotate: shouldReduceMotion ? 0 : isMobile ? -5 : isTablet ? -2.2 : -1.8,
+                  opacity: isMobile ? 0.32 : isTablet ? 0.75 : 0.80,
+                  zIndex: 22,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="flex absolute w-[min(46vw,190px)] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-48px)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              >
+                {renderCardContent(prev1Record, false)}
+              </motion.div>
 
-            {/* ── 3. ACTIVE CENTER CARD (0) ── */}
-            <motion.div
-              key={`active-${activeRecord.id}`}
-              initial={{ scale: 0.96, opacity: 0.9 }}
-              animate={{
-                x: '0%',
-                scale: 1,
-                rotate: 0,
-                opacity: 1,
-                zIndex: 35,
-              }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
-            >
-              {renderCardContent(activeRecord, true)}
-            </motion.div>
+              {/* ── 3. ACTIVE CENTER CARD (0) ── */}
+              <motion.div
+                key={`active-${activeRecord.id}`}
+                initial={{ scale: 0.96, opacity: 0.9 }}
+                animate={{
+                  x: '0%',
+                  scale: 1,
+                  rotate: 0,
+                  opacity: 1,
+                  zIndex: 35,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute w-[min(100%,360px)] max-w-[calc(100vw-48px)] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
+              >
+                {renderCardContent(activeRecord, true)}
+              </motion.div>
 
-            {/* ── 4. NEXT CARD (+1) ── */}
-            <motion.div
-              key={`next1-${next1Record.id}`}
-              onClick={handleNext}
-              initial={false}
-              animate={{
-                x: nearOffset,
-                scale: 0.91,
-                rotate: shouldReduceMotion ? 0 : 1.8,
-                opacity: 0.80,
-                zIndex: 22,
-              }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              aria-hidden="true"
-              className="hidden min-[400px]:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
-            >
-              {renderCardContent(next1Record, false)}
-            </motion.div>
+              {/* ── 4. NEXT CARD (+1) ── */}
+              <motion.div
+                key={`next1-${next1Record.id}`}
+                onClick={handleNext}
+                initial={false}
+                animate={{
+                  x: isMobile ? '54%' : nearOffset,
+                  scale: isMobile ? 0.72 : isTablet ? 0.88 : 0.91,
+                  rotate: shouldReduceMotion ? 0 : isMobile ? 5 : isTablet ? 2.2 : 1.8,
+                  opacity: isMobile ? 0.32 : isTablet ? 0.75 : 0.80,
+                  zIndex: 22,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="flex absolute w-[min(46vw,190px)] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-48px)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+              >
+                {renderCardContent(next1Record, false)}
+              </motion.div>
 
-            {/* ── 5. FAR-RIGHT CARD (+2) ── */}
-            <motion.div
-              key={`next2-${next2Record.id}`}
-              onClick={() => setActiveIndex(next2Index)}
-              initial={false}
-              animate={{
-                x: farOffset,
-                scale: 0.82,
-                rotate: shouldReduceMotion ? 0 : 3.5,
-                opacity: 0.55,
-                zIndex: 12,
-              }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-              aria-hidden="true"
-              className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
-            >
-              {renderCardContent(next2Record, false)}
-            </motion.div>
+              {/* ── 5. FAR-RIGHT CARD (+2) ── */}
+              <motion.div
+                key={`next2-${next2Record.id}`}
+                onClick={() => setActiveIndex(next2Index)}
+                initial={false}
+                animate={{
+                  x: farOffset,
+                  scale: 0.82,
+                  rotate: shouldReduceMotion ? 0 : 3.5,
+                  opacity: 0.55,
+                  zIndex: 12,
+                }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+                className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
+              >
+                {renderCardContent(next2Record, false)}
+              </motion.div>
 
+            </div>
           </div>
         </div>
 

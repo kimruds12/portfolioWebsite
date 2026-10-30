@@ -98,8 +98,10 @@ const checkIsDirectExperience = () => {
   return (
     hash === '#credentials' ||
     hash === '#experience' ||
+    hash === '#education' ||
     window.location.href.includes('#credentials') ||
     window.location.href.includes('#experience') ||
+    window.location.href.includes('#education') ||
     search.includes('record=')
   );
 };
@@ -139,25 +141,15 @@ const Skills = () => {
 
       const isDirectCredentials = checkIsDirectExperience();
 
-      // Initial placement:
-      // If arriving directly at Experience/Credentials from shortcut, initialize stack at the end (Cloud & Infrastructure)
-      if (isDirectCredentials) {
-        cards.forEach((card, i) => {
-          if (i < totalCards - 1) {
-            gsap.set(card, { yPercent: 0, opacity: 0, scale: 0.96 });
-          } else {
-            gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
-          }
-        });
-      } else {
-        cards.forEach((card, i) => {
-          if (i === 0) {
-            gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
-          } else {
-            gsap.set(card, { yPercent: 100, opacity: 1, scale: 1 });
-          }
-        });
-      }
+      // Always initialize cards in clean, consistent starting geometry:
+      // Card 0 at yPercent 0 (visible base), Cards 1..N at yPercent 100 (below view)
+      cards.forEach((card, i) => {
+        if (i === 0) {
+          gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
+        } else {
+          gsap.set(card, { yPercent: 100, opacity: 1, scale: 1 });
+        }
+      });
 
       // Pinned timeline with extended scroll distance, hold intervals, and smooth snapping
       const tl = gsap.timeline({
@@ -177,11 +169,12 @@ const Skills = () => {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress;
-            // Determine which card is active based on timeline progress
-            // Midpoints between snap boundaries: 0, 0.298, 0.548, 0.798, 1
+            // Determine active stack based on exact mathematical midpoints between snap points:
+            // Snap points: [0, 0.298, 0.548, 0.798, 1]
+            // Midpoints: 0.149, 0.423, 0.673, 0.899
             let current = 0;
             if (p >= 0.899) current = 4;
-            else if (p >= 0.648) current = 3;
+            else if (p >= 0.673) current = 3;
             else if (p >= 0.423) current = 2;
             else if (p >= 0.149) current = 1;
             setActiveSkill(current);
@@ -191,8 +184,9 @@ const Skills = () => {
 
       tlRef.current = tl;
 
-      // Construct timeline: each card has a dedicated HOLD period ("stocked")
-      // followed by a deliberate, slower slide transition so users have ample time to read
+      // Construct timeline using explicit fromTo: guarantees flawless bi-directional scrubbing
+      // When scrolling forward, cards slide up from yPercent: 100 -> 0 and previous fades
+      // When scrolling backward (e.g. from Education up into Skills), cards slide cleanly back down
       cards.forEach((card, i) => {
         if (i === 0) return;
 
@@ -200,10 +194,17 @@ const Skills = () => {
         const startTime = HOLD_DURATION + (i - 1) * (SLIDE_DURATION + HOLD_DURATION);
 
         // Slide the new card cleanly and slowly up over the previous card
-        tl.to(
+        tl.fromTo(
           card,
           {
+            yPercent: 100,
+            opacity: 1,
+            scale: 1,
+          },
+          {
             yPercent: 0,
+            opacity: 1,
+            scale: 1,
             duration: SLIDE_DURATION,
             ease: 'power2.inOut',
           },
@@ -211,8 +212,12 @@ const Skills = () => {
         );
 
         // Fade and scale the previous card behind it
-        tl.to(
+        tl.fromTo(
           cards[i - 1],
+          {
+            scale: 1,
+            opacity: 1,
+          },
           {
             scale: 0.96,
             opacity: 0,
@@ -223,8 +228,8 @@ const Skills = () => {
         );
       });
 
-      // Scenario 2: Direct navigation to Experience, Education & Credentials from shortcut
-      // Initialize timeline at 100% (specifically Cloud & Infrastructure active)
+      // Scenario 2: Direct navigation to Experience, Education & Credentials from shortcut or deep link
+      // Seek timeline cleanly to 100% so Cloud & Infrastructure is active, with full reverse scrub capability
       if (isDirectCredentials) {
         tl.progress(1);
         setActiveSkill(slidingCards);
@@ -246,7 +251,7 @@ const Skills = () => {
   useEffect(() => {
     const handleHashCheck = () => {
       const hash = window.location.hash;
-      if (hash === '#credentials' || hash === '#experience') {
+      if (hash === '#credentials' || hash === '#experience' || hash === '#education') {
         const triggers = ScrollTrigger.getAll();
         const skillTrigger = triggers.find(
           (t) => t.vars?.trigger === sectionRef.current
@@ -269,6 +274,7 @@ const Skills = () => {
   }, []);
 
   const handleJumpToSkill = (idx) => {
+    setActiveSkill(idx);
     const triggers = ScrollTrigger.getAll();
     const skillTrigger = triggers.find(
       (t) => t.vars?.trigger === sectionRef.current
@@ -375,6 +381,7 @@ const Skills = () => {
                     className="absolute inset-0 will-change-transform"
                     style={{
                       zIndex: (index + 1) * 10,
+                      pointerEvents: index === activeSkill ? 'auto' : 'none',
                     }}
                   >
                     {/* 100% Solid Opaque Background Card — ZERO bleed-through */}

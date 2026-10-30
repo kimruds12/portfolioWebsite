@@ -496,57 +496,82 @@ html.theme-light .lets-connect-tooltip {
   box-shadow: 4px 4px 14px rgba(166, 180, 200, 0.35);
 }
 
-/* ── Discovery & Connect CTA Button (Images 4 & 5) ── */
-/* Dark Mode Default (Image 4): crisp white background, dark slate text, subtle white glow */
+/* ── Chunky 3D Push Button for Lets Connect ── */
 .btn-discovery-cta {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.85) !important;
-  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.22) !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  isolation: isolate;
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: #cbd5e1;
+  box-shadow: 0 14px 18px rgba(15, 23, 42, 0.16);
+  transition: box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
 }
 
-.btn-discovery-cta:hover {
-  background: #f8fafc !important;
-  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
-  transform: translateY(-2px);
+.btn-discovery-cta::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 12%;
+  right: 12%;
+  bottom: -14px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.18);
+  filter: blur(7px);
+  transform: scaleX(1);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
 }
 
-.btn-discovery-cta:active {
-  transform: translateY(0) scale(0.98);
+.btn-discovery-cta-face {
+  display: inline-flex;
+  min-height: 52px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  border-radius: 14px;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 8px 0 #cbd5e1;
+  transform: translateY(0);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms ease;
 }
 
-.btn-discovery-cta i,
-.btn-discovery-cta span {
-  color: #0f172a !important;
+.btn-discovery-cta:hover .btn-discovery-cta-face {
+  background: #f8fafc;
 }
 
-/* Light Mode (Image 5): dark slate gradient background, crisp white text, soft elevation shadow */
-.theme-light .btn-discovery-cta,
-html.theme-light .btn-discovery-cta {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: 1px solid rgba(15, 23, 42, 0.16) !important;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+.btn-discovery-cta:active .btn-discovery-cta-face {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 #cbd5e1;
 }
 
-.theme-light .btn-discovery-cta:hover,
-html.theme-light .btn-discovery-cta:hover {
-  background: #f8fafc !important;
-  border-color: rgba(15, 23, 42, 0.28) !important;
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12) !important;
-  transform: translateY(-2px);
+.btn-discovery-cta:active::after {
+  transform: scaleX(0.68);
+  opacity: 0.55;
 }
 
-.theme-light .btn-discovery-cta:active,
-html.theme-light .btn-discovery-cta:active {
-  transform: translateY(0) scale(0.98);
+.btn-discovery-cta:focus-visible {
+  outline: 2px solid #0f172a;
+  outline-offset: 5px;
 }
 
-.theme-light .btn-discovery-cta i,
-.theme-light .btn-discovery-cta span,
-html.theme-light .btn-discovery-cta i,
-html.theme-light .btn-discovery-cta span {
+@media (prefers-reduced-motion: reduce) {
+  .btn-discovery-cta,
+  .btn-discovery-cta::after,
+  .btn-discovery-cta-face {
+    transition-duration: 0ms;
+  }
+}
+
+.btn-discovery-cta-face,
+.btn-discovery-cta-face span,
+.btn-discovery-cta-face i {
   color: #0f172a !important;
 }
 
@@ -948,6 +973,26 @@ html.theme-light .navbar-resume-btn:active {
 .credential-card-preview {
   background-color: #0d121c !important;
   border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+.credential-tag-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.credential-tag-button:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 4px;
 }
 
 .credential-tag-text {

@@ -135,13 +135,13 @@ const ProjectDeliveryFramework = () => {
           <button
             type="button"
             onClick={handleConnectClick}
-            className="group shrink-0 inline-flex min-h-[48px] w-full sm:w-auto items-center justify-center gap-3 rounded-xl border px-8 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight btn-discovery-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+            className="btn-discovery-cta"
+            aria-label="Lets Connect"
           >
-            <span>Lets Connect</span>
-            <i
-              className="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
+            <span className="btn-discovery-cta-face">
+              <span>Lets Connect</span>
+              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+            </span>
           </button>
         </motion.div>
 

@@ -147,7 +147,16 @@ const ExperienceTabs = () => {
   const is11ftc = queryRecord === '11ftc';
   const ftcIndex = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
 
-  const [activeTab, setActiveTab] = useState('experience');
+  const hash = location.hash || (typeof window !== 'undefined' ? window.location.hash : '');
+  const urlTab =
+    hash === '#education' || (typeof window !== 'undefined' && window.location.href.includes('#education'))
+      ? 'education'
+      : hash === '#credentials' || (typeof window !== 'undefined' && window.location.href.includes('#credentials'))
+      ? 'credentials'
+      : null;
+
+  const [tabOverride, setTabOverride] = useState(null);
+  const activeTab = tabOverride ?? urlTab ?? 'experience';
   const [selectedIndex, setSelectedIndex] = useState(is11ftc ? (ftcIndex !== -1 ? ftcIndex : 1) : 0);
 
   const getActiveRecords = () => {
@@ -165,7 +174,7 @@ const ExperienceTabs = () => {
   const records = getActiveRecords();
 
   const handleTabChange = (tabId) => {
-    setActiveTab(tabId);
+    setTabOverride(tabId);
     setSelectedIndex(0);
   };
 
@@ -176,6 +185,7 @@ const ExperienceTabs = () => {
       aria-label="Experience, Education and Credentials records"
     >
       <div id="credentials" className="absolute top-0 pointer-events-none" aria-hidden="true" />
+      <div id="education" className="absolute top-0 pointer-events-none" aria-hidden="true" />
       <div className="mx-auto w-full max-w-6xl relative z-10">
 
         {/* Section Heading */}
