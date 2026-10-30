@@ -464,7 +464,7 @@ const Home = () => {
 
             <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full">
               <DownloadCVButton
-                label="Download CV"
+                label="Resume"
                 className="min-h-[48px] rounded-xl px-6 sm:px-7 py-3.5 text-xs sm:text-sm shadow-md"
               />
 

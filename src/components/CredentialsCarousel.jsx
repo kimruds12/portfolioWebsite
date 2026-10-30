@@ -441,9 +441,9 @@ const CredentialsCarousel = () => {
             <i className="fa-solid fa-chevron-right text-xs sm:text-sm" />
           </button>
 
-          {/* Carousel Stage - margin-inline: 12px, padding-inline: 16px, overflow: clip */}
+          {/* Carousel Stage - clean margin aligned with subtext, overflow: clip, back cards visible and clickable */}
           <div
-            className="relative w-full max-w-[1180px] h-[435px] sm:h-[470px] md:h-[490px] flex items-center justify-center overflow-clip mx-3 sm:mx-auto px-4 sm:px-6"
+            className="relative w-full max-w-[calc(100vw-32px)] sm:max-w-[1180px] h-[435px] sm:h-[470px] md:h-[490px] flex items-center justify-center overflow-clip mx-auto rounded-3xl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -476,15 +476,15 @@ const CredentialsCarousel = () => {
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: isMobile ? '-54%' : `-${nearOffset}`,
-                  scale: isMobile ? 0.72 : isTablet ? 0.88 : 0.91,
+                  x: isMobile ? '-48%' : `-${nearOffset}`,
+                  scale: isMobile ? 0.84 : isTablet ? 0.88 : 0.91,
                   rotate: shouldReduceMotion ? 0 : isMobile ? -5 : isTablet ? -2.2 : -1.8,
-                  opacity: isMobile ? 0.32 : isTablet ? 0.75 : 0.80,
-                  zIndex: 22,
+                  opacity: isMobile ? 0.48 : isTablet ? 0.75 : 0.80,
+                  zIndex: 20,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="flex absolute w-[min(46vw,190px)] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-48px)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+                className="flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(prev1Record, false)}
               </motion.div>
@@ -501,7 +501,7 @@ const CredentialsCarousel = () => {
                   zIndex: 35,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute w-[min(100%,360px)] max-w-[calc(100vw-48px)] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
+                className="absolute w-[76vw] max-w-[300px] xs:max-w-[320px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
               >
                 {renderCardContent(activeRecord, true)}
               </motion.div>
@@ -512,15 +512,15 @@ const CredentialsCarousel = () => {
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: isMobile ? '54%' : nearOffset,
-                  scale: isMobile ? 0.72 : isTablet ? 0.88 : 0.91,
+                  x: isMobile ? '48%' : nearOffset,
+                  scale: isMobile ? 0.84 : isTablet ? 0.88 : 0.91,
                   rotate: shouldReduceMotion ? 0 : isMobile ? 5 : isTablet ? 2.2 : 1.8,
-                  opacity: isMobile ? 0.32 : isTablet ? 0.75 : 0.80,
-                  zIndex: 22,
+                  opacity: isMobile ? 0.48 : isTablet ? 0.75 : 0.80,
+                  zIndex: 20,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="flex absolute w-[min(46vw,190px)] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-48px)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+                className="flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(next1Record, false)}
               </motion.div>

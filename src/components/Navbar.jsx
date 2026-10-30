@@ -282,7 +282,7 @@ const Navbar = () => {
             </div>
 
             {/* Resume Button */}
-            <DownloadCVButton className="hidden lg:inline-flex" />
+            <DownloadCVButton className="hidden lg:inline-flex" label="Resume" />
 
             {/* Mobile Menu Button */}
             <button
@@ -305,7 +305,7 @@ const Navbar = () => {
       </header>
 
       {/* ── Floating Let's Connect Circle Button ── */}
-      {/* Only on Home page, disappears when visitor enters the contact section */}
+      {/* Visible across all devices (laptop, tablet, iPad, mobile), disappears when in contact section */}
       <AnimatePresence>
         {isHomePage && !isInContactSection && (
           <motion.div
@@ -314,7 +314,7 @@ const Navbar = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden xl:block fixed right-6 top-1/2 -translate-y-1/2 z-40"
+            className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-40"
           >
             <a
               href="#connect"
@@ -323,17 +323,21 @@ const Navbar = () => {
                 const target = document.getElementById('connect') || document.getElementById('contact');
                 if (target) {
                   const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 88);
-                  window.scrollTo({ top, behavior: 'smooth' });
+                  if (window.lenis) {
+                    window.lenis.scrollTo(top, { duration: 1.2 });
+                  } else {
+                    window.scrollTo({ top, behavior: 'smooth' });
+                  }
                 }
               }}
-              className="lets-connect-btn group relative flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+              className="lets-connect-btn group relative flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 active:scale-95 shadow-xl"
               title="Let's Connect"
               aria-label="Let's Connect"
             >
-              <SignalRingsLogo className="h-9 w-9 transition-transform duration-300 group-hover:scale-105" />
+              <SignalRingsLogo className="h-7 w-7 sm:h-9 sm:w-9 transition-transform duration-300 group-hover:scale-105" />
 
-              {/* Tooltip on hover */}
-              <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-semibold opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0 lets-connect-tooltip">
+              {/* Tooltip on desktop/laptop hover */}
+              <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-semibold opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0 lets-connect-tooltip hidden sm:inline-block">
                 Let's Connect
               </span>
             </a>
@@ -418,7 +422,7 @@ const Navbar = () => {
                   <span className="text-sm font-medium text-[var(--text-muted)]">Theme mode</span>
                   <ThemeToggle />
                 </div>
-                <DownloadCVButton className="w-full min-h-[48px]" label="DOWNLOAD RESUME" />
+                <DownloadCVButton className="w-full min-h-[48px]" label="Resume" />
               </div>
             </motion.div>
           </>

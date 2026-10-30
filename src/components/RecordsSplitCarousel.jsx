@@ -153,12 +153,12 @@ const RecordsSplitCarousel = ({
         /* ── Split Layout for Certificates & Honors (Pure Image Carousel on Left) ── */
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-12 lg:gap-16 xl:gap-20 items-center">
 
-          {/* ── LEFT COLUMN: Three-certificate layered stage ── */}
+          {/* ── LEFT COLUMN: Three-certificate layered stage matching Image 3 with clean small margin aligned with title ── */}
           <div
-            className="min-w-0 flex items-center justify-center min-h-[260px] xs:min-h-[300px] sm:min-h-[450px] md:min-h-[500px] relative mx-3 sm:mx-0 px-4 sm:px-4 lg:pr-6 overflow-clip"
+            className="min-w-0 flex items-center justify-center min-h-[260px] xs:min-h-[300px] sm:min-h-[450px] md:min-h-[500px] relative mx-auto w-full max-w-[calc(100vw-32px)] sm:max-w-[620px] overflow-clip rounded-3xl"
             style={{ isolation: 'isolate' }}
           >
-            <div className="relative w-full max-w-[620px] h-[240px] xs:h-[280px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
+            <div className="relative w-full h-[240px] xs:h-[280px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
 
               {/* 1. PREVIOUS CERTIFICATE IMAGE (-1) */}
               <motion.div
@@ -166,15 +166,15 @@ const RecordsSplitCarousel = ({
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: isMobile ? '-54%' : '-50%',
-                  scale: isMobile ? 0.72 : 0.88,
+                  x: isMobile ? '-48%' : '-50%',
+                  scale: isMobile ? 0.84 : 0.88,
                   rotate: shouldReduceMotion ? 0 : isMobile ? -5 : -6,
-                  opacity: isMobile ? 0.32 : 0.78,
+                  opacity: isMobile ? 0.48 : 0.78,
                   zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="block absolute w-[min(46vw,190px)] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all"
+                className="block absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
@@ -185,15 +185,15 @@ const RecordsSplitCarousel = ({
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: isMobile ? '54%' : '50%',
-                  scale: isMobile ? 0.72 : 0.88,
+                  x: isMobile ? '48%' : '50%',
+                  scale: isMobile ? 0.84 : 0.88,
                   rotate: shouldReduceMotion ? 0 : isMobile ? 5 : 6,
-                  opacity: isMobile ? 0.32 : 0.78,
+                  opacity: isMobile ? 0.48 : 0.78,
                   zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="block absolute w-[min(46vw,190px)] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all"
+                className="block absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
@@ -210,7 +210,7 @@ const RecordsSplitCarousel = ({
                   zIndex: 25,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute w-[min(100%,360px)] max-w-[calc(100vw-48px)] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-2xl"
+                className="absolute w-[76vw] max-w-[300px] xs:max-w-[320px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
               </motion.div>

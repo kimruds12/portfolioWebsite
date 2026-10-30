@@ -135,13 +135,14 @@ const ProjectDeliveryFramework = () => {
           <button
             type="button"
             onClick={handleConnectClick}
-            className="btn-discovery-cta"
-            aria-label="Lets Connect"
+            className="chunky-3d-btn group shrink-0"
+            aria-label="Let's Connect"
           >
-            <span className="btn-discovery-cta-face">
-              <span>Lets Connect</span>
-              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-            </span>
+            <span>Let's Connect</span>
+            <i
+              className="fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </button>
         </motion.div>
 

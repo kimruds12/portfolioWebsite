@@ -78,18 +78,16 @@ const skillCategories = [
   },
 ];
 
-const HOLD_DURATION = 1.0;
-const SLIDE_DURATION = 1.6;
-// Timeline structure: hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6) → hold(1.0) → slide(1.6)
-// Total = 1.0 + 4*(1.6+1.0) - 1.0 = 10.4  (no trailing hold on last card)
-// Snap to the midpoint of each card's "visible/hold" window:
-// Card 0: visible 0..1.0         → snap at 0
-// Card 1: visible 2.6..3.6       → snap at 3.1/10.4
-// Card 2: visible 5.2..6.2       → snap at 5.7/10.4
-// Card 3: visible 7.8..8.8       → snap at 8.3/10.4
-// Card 4: visible 10.4           → snap at 1
-const TOTAL_DURATION = 10.4;
-const snapPoints = [0, 3.1 / TOTAL_DURATION, 5.7 / TOTAL_DURATION, 8.3 / TOTAL_DURATION, 1];
+const HOLD_DURATION = 2.2;
+const SLIDE_DURATION = 1.5;
+// Extended timeline structure with ample hold duration so Stacks 02 and 04 are clearly visible and stable:
+// Card 0: hold 0..2.2           → snap at 0
+// Card 1: slide 2.2..3.7, hold 3.7..5.9  → snap at 4.8 / 17.0 = 0.282
+// Card 2: slide 5.9..7.4, hold 7.4..9.6  → snap at 8.5 / 17.0 = 0.500
+// Card 3: slide 9.6..11.1, hold 11.1..13.3 → snap at 12.2 / 17.0 = 0.718
+// Card 4: slide 13.3..14.8, hold 14.8..17.0 → snap at 1.0
+const TOTAL_DURATION = 17.0;
+const snapPoints = [0, 4.8 / TOTAL_DURATION, 8.5 / TOTAL_DURATION, 12.2 / TOTAL_DURATION, 1];
 
 const checkIsDirectExperience = () => {
   if (typeof window === 'undefined') return false;
@@ -147,7 +145,8 @@ const Skills = () => {
         if (i === 0) {
           gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
         } else {
-          gsap.set(card, { yPercent: 100, opacity: 1, scale: 1 });
+          // opacity: 0 ensures waiting cards below do not cast any bottom shadow bleed
+          gsap.set(card, { yPercent: 100, opacity: 0, scale: 1 });
         }
       });
 
@@ -156,27 +155,26 @@ const Skills = () => {
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: () => `+=${slidingCards * 170}vh`,
+          end: () => `+=${slidingCards * 220}vh`,
           pin: pinWrapper,
-          scrub: 1.2,
+          scrub: 0.8,
           snap: {
             snapTo: snapPoints,
-            duration: { min: 0.35, max: 0.75 },
-            delay: 0.12,
+            duration: { min: 0.25, max: 0.55 },
+            delay: 0.05,
             ease: 'power2.out',
           },
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress;
-            // Determine active stack based on exact mathematical midpoints between snap points:
-            // Snap points: [0, 0.298, 0.548, 0.798, 1]
-            // Midpoints: 0.149, 0.423, 0.673, 0.899
+            // Midpoints between snap points [0, 0.282, 0.500, 0.718, 1.0]:
+            // 0.141, 0.391, 0.609, 0.859
             let current = 0;
-            if (p >= 0.899) current = 4;
-            else if (p >= 0.673) current = 3;
-            else if (p >= 0.423) current = 2;
-            else if (p >= 0.149) current = 1;
+            if (p >= 0.859) current = 4;
+            else if (p >= 0.609) current = 3;
+            else if (p >= 0.391) current = 2;
+            else if (p >= 0.141) current = 1;
             setActiveSkill(current);
           },
         },
@@ -193,12 +191,12 @@ const Skills = () => {
         // Start time incorporates previous card's hold and transition
         const startTime = HOLD_DURATION + (i - 1) * (SLIDE_DURATION + HOLD_DURATION);
 
-        // Slide the new card cleanly and slowly up over the previous card
+        // Slide the new card smoothly up, fading in cleanly so no shadow bleeds from below
         tl.fromTo(
           card,
           {
             yPercent: 100,
-            opacity: 1,
+            opacity: 0,
             scale: 1,
           },
           {
@@ -206,7 +204,7 @@ const Skills = () => {
             opacity: 1,
             scale: 1,
             duration: SLIDE_DURATION,
-            ease: 'power2.inOut',
+            ease: 'power2.out',
           },
           startTime
         );
@@ -373,7 +371,7 @@ const Skills = () => {
               </div>
 
               {/* Card Container: fixed height, overflow hidden so cards slide cleanly inside viewport */}
-              <div className="relative h-[340px] sm:h-[365px] md:h-[375px] overflow-hidden rounded-3xl">
+              <div className="relative h-[360px] sm:h-[385px] md:h-[400px] overflow-hidden rounded-3xl">
                 {skillCategories.map((category, index) => (
                   <div
                     key={category.title}
@@ -390,10 +388,7 @@ const Skills = () => {
                       style={{
                         backgroundColor: 'var(--surface-card-solid, #0d121c)',
                         border: '1px solid var(--border-color)',
-                        boxShadow:
-                          index > 0
-                            ? '0 -16px 36px -4px rgba(0, 0, 0, 0.65), 0 24px 35px -5px rgba(0, 0, 0, 0.5), var(--shadow-neu-card)'
-                            : 'var(--shadow-neu-card)',
+                        boxShadow: 'var(--shadow-neu-card)',
                       }}
                     >
                       {/* Top: Step number & Header */}

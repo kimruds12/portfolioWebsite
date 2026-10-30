@@ -432,6 +432,9 @@ textarea {
 
 /* Dark mode (default) — white glassmorphism */
 .lets-connect-btn {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
@@ -1584,6 +1587,12 @@ html.theme-light .mobile-tap-dot {
     transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform, box-shadow;
+}
+
+.chunky-3d-btn,
+.chunky-3d-btn span,
+.chunky-3d-btn i {
+  color: #0f172a !important;
 }
 
 .chunky-3d-btn:hover {

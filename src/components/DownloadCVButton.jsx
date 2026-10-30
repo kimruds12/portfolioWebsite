@@ -13,7 +13,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
  */
 const DownloadCVButton = ({
   className = '',
-  label = 'DOWNLOAD CV',
+  label = 'Resume',
   downloadUrl = '/Assets/2026_Resume_Guston.pdf',
   fileName = '2026_Resume_Guston.pdf',
 }) => {
@@ -141,14 +141,13 @@ const DownloadCVButton = ({
         status === 'downloading'
           ? `Downloading resume, ${progress} percent`
           : status === 'completed'
-          ? 'Resume downloaded'
-          : 'Download CV'
+            ? 'Resume downloaded'
+            : 'Resume'
       }
-      className={`group relative inline-flex min-h-[38px] min-w-[172px] items-center justify-center overflow-hidden rounded-full font-['Sora',_sans-serif] text-xs font-bold uppercase tracking-wider backdrop-blur-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-        status === 'idle'
+      className={`group relative inline-flex min-h-[38px] items-center justify-center overflow-hidden rounded-full font-['Sora',_sans-serif] text-xs font-bold tracking-wide backdrop-blur-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${status === 'idle'
           ? 'navbar-resume-btn cursor-pointer hover:brightness-110 active:scale-95'
           : 'cursor-default'
-      } ${className}`}
+        } ${className}`}
       style={{
         backgroundColor: 'var(--resume-btn-bg)',
         color: 'var(--resume-btn-text)',
@@ -158,7 +157,7 @@ const DownloadCVButton = ({
       }}
     >
       {/* ── Base Layer (Unfilled region) ── */}
-      <div className="relative z-0 flex h-full w-full items-center justify-center gap-2 px-5 py-2 whitespace-nowrap">
+      <div className="relative z-0 flex h-full w-full items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 whitespace-nowrap">
         {renderLabel()}
       </div>
 
@@ -173,7 +172,7 @@ const DownloadCVButton = ({
       >
         {/* ── Pinned Inverted Text (Clips at the exact fill edge to flip color) ── */}
         <div
-          className="flex h-full items-center justify-center gap-2 px-5 py-2 whitespace-nowrap"
+          className="flex h-full items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 whitespace-nowrap"
           style={{
             width: buttonWidth ? `${buttonWidth}px` : '100%',
             color: 'var(--btn-strong-text)',
