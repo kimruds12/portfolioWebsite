@@ -344,7 +344,7 @@ const Skills = () => {
               </h2>
 
               <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">
-                A collection of technologies and tools that support my development work. Scroll through the skill categories to explore my technical proficiencies and experience.
+                A collection of technologies and tools that support my development work.
               </p>
 
               {/* Quick Indicators for Scroll list */}

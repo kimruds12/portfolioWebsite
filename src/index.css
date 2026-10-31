@@ -1317,14 +1317,6 @@ html.theme-light .lets-connect-glint-band {
   will-change: mask-image, -webkit-mask-image, opacity;
 }
 
-/* Custom Cursor Desktop Replacement */
-@media (hover: hover) and (pointer: fine) {
-  *, *::before, *::after {
-    cursor: none !important;
-  }
-}
-
-
 /* ── Folder Button Traveling Arc 2px Outline (3s loop, soft, no neon glow) ── */
 .folder-arc-btn {
   position: relative;

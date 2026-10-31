@@ -465,7 +465,7 @@ const CredentialsCarousel = () => {
             <span className="glint-headline-band" aria-hidden="true">Achievements &amp; Credentials</span>
           </h2>
           <p className="mt-2 max-w-lg mx-auto text-xs sm:text-sm text-[var(--text-muted)]">
-            A collection of certifications, achievements, and technical accomplishments that reflect continuous learning and skill development. Click the side cards, use the arrows, or swipe to explore the collection.
+            A collection of certifications, achievements, and technical accomplishments that reflect continuous learning and skill development.
           </p>
         </motion.div>
 
@@ -608,18 +608,16 @@ const CredentialsCarousel = () => {
             onTouchStart={handleCredentialsTouchStart}
             onTouchEnd={handleCredentialsTouchEnd}
             onTouchCancel={handleCredentialsTouchCancel}
-            className={`group inline-flex min-h-[46px] items-center gap-3 rounded-full border px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
-              isCredentialsBtnActive
+            className={`group inline-flex min-h-[46px] items-center gap-3 rounded-full border px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${isCredentialsBtnActive
                 ? 'border-[var(--text-muted)] text-[var(--text-main)] bg-[var(--surface-hover)] -translate-y-0.5'
                 : 'border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-muted)]'
-            }`}
+              }`}
             style={{ boxShadow: 'var(--shadow-neu-pill)' }}
           >
             <span>View Full Credentials</span>
             <i
-              className={`fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1 ${
-                isCredentialsBtnActive ? 'translate-x-1' : ''
-              }`}
+              className={`fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1 ${isCredentialsBtnActive ? 'translate-x-1' : ''
+                }`}
             />
           </button>
         </div>

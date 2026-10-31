@@ -26,8 +26,8 @@ const Footer = () => {
     <footer className="border-t border-[var(--border-color)] bg-[var(--bg-page)] px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 items-center gap-6 sm:gap-8">
 
-        {/* Left: Identity */}
-        <div className="flex items-center gap-3 justify-center md:justify-start">
+        {/* Left: Identity (Pyramid vertical stack strictly on mobile, horizontal row on desktop/tablet) */}
+        <div className="flex flex-col md:flex-row items-center gap-2 md:gap-3 justify-center md:justify-start">
           <div className="flex h-9 w-9 items-center justify-center rounded-full overflow-hidden border border-[var(--border-color)] bg-[var(--surface-soft)] shrink-0">
             <img
               src="/Assets/KDLogo.jpg"
@@ -38,11 +38,11 @@ const Footer = () => {
               }}
             />
           </div>
-          <div className="flex flex-col text-left">
+          <div className="flex flex-col text-center md:text-left items-center md:items-start">
             <span className="font-['Sora',_sans-serif] text-sm font-bold text-[var(--text-main)] tracking-tight">
               Kim Ruds Guston
             </span>
-            <span className="font-mono text-[11px] text-[var(--text-muted)]">
+            <span className="font-mono text-[11px] text-[var(--text-muted)] mt-0.5">
               Front-End Developer &bull; KimDev
             </span>
           </div>
