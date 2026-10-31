@@ -95,8 +95,15 @@ const ScrollToTop = () => {
   useEffect(() => {
     if (hash) {
       const id = hash.replace('#', '');
+
+      // On /about page, anchors below the pinned Skills deck (#experience, #credentials, #education)
+      // are coordinated with GSAP ScrollTrigger in Skills.jsx after pin layout calculation to prevent desync.
+      if (pathname === '/about' && (id === 'experience' || id === 'credentials' || id === 'education')) {
+        return;
+      }
+
       let attempts = 0;
-      const maxAttempts = 10;
+      const maxAttempts = 20;
 
       const tryScroll = () => {
         const el = document.getElementById(id);
@@ -116,13 +123,6 @@ const ScrollToTop = () => {
 
       const timer = setTimeout(tryScroll, 100);
       return () => clearTimeout(timer);
-    }
-
-    // Only scroll to top if there is NO anchor hash in the URL
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [pathname, hash]);
 

@@ -1,6 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+
+const ROTATING_WORDS = ['CONNECT', 'CREATE', 'BUILD', 'TALK', 'COLLABORATE'];
 import CredentialsCarousel from './CredentialsCarousel';
 import ProjectCard from './ProjectCard';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
@@ -203,6 +205,16 @@ const Home = () => {
   const handleStatementPointerMove = (e) => {
     const el = statementRef.current;
     if (!el) return;
+    const textEl = el.querySelector('.poster-wall-title');
+    if (!textEl) return;
+    const textRect = textEl.getBoundingClientRect();
+
+    // Check if pointer is vertically within the text line height (with tight 4px margin)
+    if (e.clientY < textRect.top - 4 || e.clientY > textRect.bottom + 4) {
+      el.style.setProperty('--stmt-opacity', '0');
+      return;
+    }
+
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -217,6 +229,16 @@ const Home = () => {
     el.style.setProperty('--stmt-opacity', '0');
   };
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
+  const [rotatingWordIndex, setRotatingWordIndex] = useState(0);
+
+  // 3D flip rotating word every 2.5 seconds (CONNECT -> CREATE -> BUILD -> TALK -> COLLABORATE)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRotatingWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
   const projectGridRef = useRef(null);
@@ -338,11 +360,7 @@ const Home = () => {
               CREATE WITHOUT LIMITS
             </h1>
 
-            {/* Soft 82px circle of light that follows pointer */}
-            <div
-              className="statement-light-circle pointer-events-none absolute rounded-full will-change-transform"
-              aria-hidden="true"
-            />
+            {/* Soft circle of light is applied directly to text glyphs on touch */}
 
             {/* Revealed text in accent color */}
             <h1
@@ -382,8 +400,8 @@ const Home = () => {
             className="text-center mb-14"
           >
             <h2 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(2rem,4.5vw,3.2rem)] font-bold tracking-tight select-none">
-              <span className="glint-headline-base">Recent Projects</span>
-              <span className="glint-headline-band" aria-hidden="true">Recent Projects</span>
+              <span className="glint-headline-base">RECENT PROJECTS</span>
+              <span className="glint-headline-band" aria-hidden="true">RECENT PROJECTS</span>
             </h2>
             <p className="mt-3 max-w-xl mx-auto text-base text-[var(--text-muted)]">
               A collection of my recent web and mobile application development projects.
@@ -449,29 +467,66 @@ const Home = () => {
               Get in Touch
             </span>
 
-            <h2 className="lets-connect-headline mt-4 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.6rem)] font-bold tracking-tight break-words relative inline-block select-none">
-              <span className="lets-connect-headline-base">
-                Let's Connect
+            <h2 className="lets-connect-headline mt-4 font-['Sora',_sans-serif] text-[clamp(1.4rem,4.2vw,3.5rem)] min-[380px]:text-[clamp(1.55rem,4.5vw,3.6rem)] font-extrabold tracking-tight select-none flex flex-row items-center justify-center lg:justify-start flex-nowrap whitespace-nowrap">
+              <span className="lets-connect-headline-base shrink-0 mr-2 sm:mr-3">
+                LET'S
               </span>
-              <span className="lets-connect-glint-band" aria-hidden="true">
-                Let's Connect
+              <span
+                className="relative inline-flex items-center overflow-visible"
+                style={{
+                  perspective: '1000px',
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={ROTATING_WORDS[rotatingWordIndex]}
+                    initial={{
+                      rotateX: shouldReduceMotion ? 0 : 90,
+                      opacity: 0,
+                      y: shouldReduceMotion ? 0 : 12,
+                    }}
+                    animate={{
+                      rotateX: 0,
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      rotateX: shouldReduceMotion ? 0 : -90,
+                      opacity: 0,
+                      y: shouldReduceMotion ? 0 : -12,
+                    }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0.2 : 0.45,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="inline-block font-['Sora',_sans-serif] font-black tracking-tight text-[#0284c7] will-change-transform"
+                    style={{
+                      transformOrigin: '50% 50% -16px',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                    }}
+                  >
+                    {ROTATING_WORDS[rotatingWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
               </span>
             </h2>
 
             <p className="mt-4 max-w-lg text-base leading-relaxed text-[var(--text-muted)]">
-              I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric oeprations. Feel free to reach out.
+              I am always open to collaborating on new projects, sharing technical insights, or discussing modern cybersecurity and developer-centric operations. Feel free to reach out.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full">
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 sm:gap-4 w-full">
               <DownloadCVButton
-                label="Resume"
-                className="min-h-[48px] rounded-xl px-6 sm:px-7 py-3.5 text-xs sm:text-sm shadow-md"
+                label="Download Resume"
+                className="w-full sm:w-auto min-h-[50px] sm:min-h-[48px] rounded-xl px-7 sm:px-8 py-3.5 text-sm sm:text-sm shadow-md font-bold text-center justify-center"
               />
 
               <button
                 type="button"
                 onClick={() => navigate('/about')}
-                className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-6 sm:px-7 py-3.5 font-['Sora',_sans-serif] text-xs sm:text-sm font-bold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
+                className="w-full sm:w-auto group inline-flex min-h-[44px] sm:min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-5 sm:px-6 py-2.5 sm:py-3 font-['Sora',_sans-serif] text-xs sm:text-sm font-semibold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
                 style={{ boxShadow: 'var(--shadow-neu-pill)' }}
               >
                 <i className="fa-solid fa-user-astronaut text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />

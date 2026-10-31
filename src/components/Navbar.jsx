@@ -216,7 +216,11 @@ const Navbar = () => {
   const handleIdentityClick = (e) => {
     e.preventDefault();
     if (location.pathname === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.0 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else {
       navigate('/');
     }
@@ -228,7 +232,11 @@ const Navbar = () => {
     setIsMenuOpen(false);
 
     if (location.pathname === path) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.0 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else {
       navigate(path);
     }
@@ -400,7 +408,7 @@ const Navbar = () => {
             }`}
             style={
               isMobileDevice
-                ? { top: isScrolled ? '60px' : '66px' }
+                ? { top: isScrolled ? '65px' : '75px' }
                 : undefined
             }
           >

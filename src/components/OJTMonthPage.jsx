@@ -11,11 +11,7 @@ const OJTMonthPage = () => {
   const month = getOjtMonthBySlug(monthSlug);
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/ojt-experience');
-    }
+    navigate('/ojt-experience');
   };
 
   if (!month) {

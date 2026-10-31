@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import RecordsSplitCarousel from './RecordsSplitCarousel';
@@ -143,21 +143,63 @@ const TABS = [
 
 const ExperienceTabs = () => {
   const location = useLocation();
-  const queryRecord = new URLSearchParams(location.search).get('record');
-  const is11ftc = queryRecord === '11ftc';
-  const ftcIndex = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
 
-  const hash = location.hash || (typeof window !== 'undefined' ? window.location.hash : '');
+  const queryParams = new URLSearchParams(location.search);
+  const qTab = queryParams.get('tab');
+  const qRecord = queryParams.get('record');
+  const h = location.hash || (typeof window !== 'undefined' ? window.location.hash : '');
+
   const urlTab =
-    hash === '#education' || (typeof window !== 'undefined' && window.location.href.includes('#education'))
-      ? 'education'
-      : hash === '#credentials' || (typeof window !== 'undefined' && window.location.href.includes('#credentials'))
+    qTab === 'experience' || h === '#experience'
+      ? 'experience'
+      : qTab === 'credentials' || h === '#credentials'
       ? 'credentials'
+      : qTab === 'education' || h === '#education'
+      ? 'education'
       : null;
 
   const [tabOverride, setTabOverride] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(() => {
+    if (qRecord === '11ftc') {
+      const idx = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
+      return idx !== -1 ? idx : 0;
+    }
+    return 0;
+  });
+
+  // Adjust state during render when location changes (official React pattern)
+  const [prevLocationKey, setPrevLocationKey] = useState(location.search + location.hash);
+  if (prevLocationKey !== location.search + location.hash) {
+    setPrevLocationKey(location.search + location.hash);
+    setTabOverride(null);
+    if (qRecord === '11ftc') {
+      const idx = workExperienceRecords.findIndex((r) => r.id === 'work-11ftc');
+      setSelectedIndex(idx !== -1 ? idx : 0);
+    }
+  }
+
   const activeTab = tabOverride ?? urlTab ?? 'experience';
-  const [selectedIndex, setSelectedIndex] = useState(is11ftc ? (ftcIndex !== -1 ? ftcIndex : 1) : 0);
+
+  // Failsafe scroll coordinator if entering directly to #experience
+  useEffect(() => {
+    if (location.hash === '#experience' || location.hash === '#credentials' || location.hash === '#education') {
+      const fallbackTimer = setTimeout(() => {
+        const el = document.getElementById('experience');
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (Math.abs(rect.top - 88) > 200) {
+            const top = Math.max(0, rect.top + window.scrollY - 88);
+            if (window.lenis) {
+              window.lenis.scrollTo(top, { duration: 0.5 });
+            } else {
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          }
+        }
+      }, 450);
+      return () => clearTimeout(fallbackTimer);
+    }
+  }, [location.hash]);
 
   const getActiveRecords = () => {
     switch (activeTab) {
@@ -197,8 +239,8 @@ const ExperienceTabs = () => {
           className="text-center mb-10"
         >
           <h2 className="glint-headline font-['Sora',_sans-serif] text-[clamp(1.75rem,4.5vw,3.4rem)] font-extrabold tracking-tight select-none break-words">
-            <span className="glint-headline-base">Experience, Education &amp; Credentials</span>
-            <span className="glint-headline-band" aria-hidden="true">Experience, Education &amp; Credentials</span>
+            <span className="glint-headline-base">EXPERIENCE, EDUCATION &amp; CREDENTIALS</span>
+            <span className="glint-headline-band" aria-hidden="true">EXPERIENCE, EDUCATION &amp; CREDENTIALS</span>
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-xs sm:text-sm leading-relaxed text-[var(--text-muted)]">
             A record of work experience, Information Technology education, and industry certifications, highlighting technical skills, achievements, and academic excellence.

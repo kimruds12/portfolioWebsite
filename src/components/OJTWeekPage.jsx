@@ -13,11 +13,7 @@ const OJTWeekPage = () => {
   const week = data?.week;
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate(`/ojt-experience/${monthSlug || 'june'}`);
-    }
+    navigate(`/ojt-experience/${monthSlug || 'june'}`);
   };
 
   if (!month || !week) {

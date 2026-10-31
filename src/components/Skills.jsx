@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -89,28 +90,30 @@ const SLIDE_DURATION = 1.5;
 const TOTAL_DURATION = 17.0;
 const snapPoints = [0, 4.8 / TOTAL_DURATION, 8.5 / TOTAL_DURATION, 12.2 / TOTAL_DURATION, 1];
 
-const checkIsDirectExperience = () => {
+const checkIsDirectExperience = (search = '', hash = '') => {
   if (typeof window === 'undefined') return false;
-  const hash = window.location.hash;
-  const search = window.location.search;
+  const currentHash = hash || window.location.hash || '';
+  const currentSearch = search || window.location.search || '';
   return (
-    hash === '#credentials' ||
-    hash === '#experience' ||
-    hash === '#education' ||
+    currentHash === '#credentials' ||
+    currentHash === '#experience' ||
+    currentHash === '#education' ||
     window.location.href.includes('#credentials') ||
     window.location.href.includes('#experience') ||
     window.location.href.includes('#education') ||
-    search.includes('record=')
+    currentSearch.includes('record=') ||
+    currentSearch.includes('tab=')
   );
 };
 
 const Skills = () => {
+  const location = useLocation();
   const sectionRef = useRef(null);
   const pinWrapperRef = useRef(null);
   const cardRefs = useRef([]);
   const tlRef = useRef(null);
   const [activeSkill, setActiveSkill] = useState(() =>
-    checkIsDirectExperience() ? skillCategories.length - 1 : 0
+    checkIsDirectExperience(location.search, location.hash) ? skillCategories.length - 1 : 0
   );
   const [shuffledCategories, setShuffledCategories] = useState(skillCategories);
 
@@ -137,7 +140,7 @@ const Skills = () => {
       const totalCards = cards.length;
       const slidingCards = totalCards - 1; // 4 sliding steps
 
-      const isDirectCredentials = checkIsDirectExperience();
+      const isDirectCredentials = checkIsDirectExperience(location.search, location.hash);
 
       // Always initialize cards in clean, consistent starting geometry:
       // Card 0 at yPercent 0 (visible base), Cards 1..N at yPercent 100 (below view)
@@ -237,39 +240,55 @@ const Skills = () => {
     // Refresh after DOM layout settles to guarantee accurate pin coordinates
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 250);
+      if (checkIsDirectExperience(location.search, location.hash)) {
+        const triggers = ScrollTrigger.getAll();
+        const skillTrigger = triggers.find(
+          (t) => t.vars?.trigger === sectionRef.current
+        );
+        if (skillTrigger && skillTrigger.end > 0) {
+          tlRef.current?.progress(1);
+          setActiveSkill(skillCategories.length - 1);
+          const targetScroll = skillTrigger.end + 20;
+          if (window.lenis) {
+            window.lenis.scrollTo(targetScroll, { immediate: true });
+          } else {
+            window.scrollTo(0, targetScroll);
+          }
+        }
+      }
+    }, 280);
 
     return () => {
       clearTimeout(refreshTimer);
       ctx.revert();
     };
-  }, []);
+  }, [location.hash, location.search]);
 
-  // Handle in-page hashchange navigation to #credentials or #experience
+  // Handle in-page hash navigation to #credentials, #experience, or #education
   useEffect(() => {
-    const handleHashCheck = () => {
-      const hash = window.location.hash;
-      if (hash === '#credentials' || hash === '#experience' || hash === '#education') {
+    const hash = location.hash;
+    if (hash === '#credentials' || hash === '#experience' || hash === '#education') {
+      const runScroll = () => {
         const triggers = ScrollTrigger.getAll();
         const skillTrigger = triggers.find(
           (t) => t.vars?.trigger === sectionRef.current
         );
-        if (skillTrigger) {
+        if (skillTrigger && skillTrigger.end > 0) {
           tlRef.current?.progress(1);
           setActiveSkill(skillCategories.length - 1);
-          const targetScroll = skillTrigger.end + 30;
+          const targetScroll = skillTrigger.end + 20;
           if (window.lenis) {
             window.lenis.scrollTo(targetScroll, { duration: 0.8 });
           } else {
             window.scrollTo({ top: targetScroll, behavior: 'smooth' });
           }
         }
-      }
-    };
+      };
 
-    window.addEventListener('hashchange', handleHashCheck);
-    return () => window.removeEventListener('hashchange', handleHashCheck);
-  }, []);
+      const timer = setTimeout(runScroll, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash]);
 
   const handleJumpToSkill = (idx) => {
     setActiveSkill(idx);
@@ -320,8 +339,8 @@ const Skills = () => {
               </span>
 
               <h2 className="glint-headline mt-4 font-['Sora',_sans-serif] text-[clamp(1.75rem,5vw,3.5rem)] font-bold leading-tight tracking-tight select-none break-words">
-                <span className="glint-headline-base">Skills & Technologies</span>
-                <span className="glint-headline-band" aria-hidden="true">Skills & Technologies</span>
+                <span className="glint-headline-base">SKILLS & TECHNOLOGIES</span>
+                <span className="glint-headline-band" aria-hidden="true">SKILLS & TECHNOLOGIES</span>
               </h2>
 
               <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-[var(--text-muted)] max-w-xl">

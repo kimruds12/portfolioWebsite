@@ -92,11 +92,7 @@ const OJTExperiencePage = () => {
   };
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/about?record=11ftc#credentials');
-    }
+    navigate('/about?tab=experience&record=11ftc#experience');
   };
 
   const ordinalTitles = [

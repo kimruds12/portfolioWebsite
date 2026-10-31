@@ -62,8 +62,8 @@ const ProjectDeliveryFramework = () => {
             Project Delivery Framework
           </span>
           <h2 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.75rem,4.8vw,3.6rem)] font-bold tracking-tight select-none break-words">
-            <span className="glint-headline-base">4-Sprint Lifecycle</span>
-            <span className="glint-headline-band" aria-hidden="true">4-Sprint Lifecycle</span>
+            <span className="glint-headline-base">4-SPRINT LIFECYCLE</span>
+            <span className="glint-headline-band" aria-hidden="true">4-SPRINT LIFECYCLE</span>
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
             Our development methodology prioritizes transparent stakeholder communication, predictable milestone tracking, and iterative feedback loops to eliminate black-box development.

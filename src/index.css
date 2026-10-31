@@ -1301,35 +1301,19 @@ html.theme-light .lets-connect-glint-band {
 }
 
 .statement-light-circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate3d(calc(var(--stmt-x, -200px) - 41px), calc(var(--stmt-y, -200px) - 41px), 0);
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.7) 0%, rgba(56, 189, 248, 0.28) 48%, transparent 75%);
-  filter: blur(8px);
-  opacity: var(--stmt-opacity, 0);
-  transition: opacity 0.25s ease-out;
-  will-change: transform, opacity;
-}
-
-.theme-light .statement-light-circle,
-html.theme-light .statement-light-circle {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.7) 0%, rgba(56, 189, 248, 0.28) 48%, transparent 75%);
+  display: none !important;
 }
 
 .statement-revealed-text {
   position: absolute;
   inset: 0;
   color: #38bdf8 !important;
+  text-shadow: 0 0 16px rgba(56, 189, 248, 0.8), 0 0 32px rgba(56, 189, 248, 0.45);
   pointer-events: none;
   opacity: var(--stmt-opacity, 0);
   transition: opacity 0.25s ease-out;
-  -webkit-mask-image: radial-gradient(circle 41px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 32%, transparent 100%);
-  mask-image: radial-gradient(circle 41px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 32%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle 44px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 35%, transparent 100%);
+  mask-image: radial-gradient(circle 44px at var(--stmt-x, -200px) var(--stmt-y, -200px), black 35%, transparent 100%);
   will-change: mask-image, -webkit-mask-image, opacity;
 }
 
