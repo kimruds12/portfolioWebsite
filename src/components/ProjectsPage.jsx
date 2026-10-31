@@ -262,19 +262,19 @@ const ProjectsPage = () => {
 
         {/* ── Section Header (Block 1) ── */}
         <PageBlock className="projects-header-block">
-          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-            <h1 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight select-none break-words text-center">
-              <span className="glint-headline-base">PROJECTS</span>
-              <span className="glint-headline-band" aria-hidden="true">PROJECTS</span>
-            </h1>
-            <p className="mt-3 max-w-2xl mx-auto text-sm sm:text-base text-[var(--text-muted)] text-center leading-relaxed">
-              Here are some of my works, including web and mobile apps, games, and network configurations.
-            </p>
-          </div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div className="flex flex-col items-center text-center md:items-start md:text-left">
+              <h1 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight select-none break-words text-center md:text-left">
+                <span className="glint-headline-base">PROJECTS</span>
+                <span className="glint-headline-band" aria-hidden="true">PROJECTS</span>
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm sm:text-base text-[var(--text-muted)] text-center md:text-left leading-relaxed">
+                Here are some of my works, including web and mobile apps, games, and network configurations.
+              </p>
+            </div>
 
-          {/* Search bar: full width on mobile, aligned to the right on desktop */}
-          <div className="flex justify-start md:justify-end w-full">
-            <div className="relative w-full md:max-w-xs">
+            {/* Search bar: full width on mobile, aligned to the right on desktop */}
+            <div className="relative w-full md:max-w-xs self-start md:self-end">
               <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]" />
               <input
                 type="text"
