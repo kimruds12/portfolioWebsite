@@ -10,18 +10,7 @@ const RecordsSplitCarousel = ({
   onSelectIndex,
 }) => {
   const [enlargedCertificate, setEnlargedCertificate] = useState(null);
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1200
-  );
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 640;
   const shouldReduceMotion = useReducedMotion();
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
@@ -113,8 +102,8 @@ const RecordsSplitCarousel = ({
         openCertificate(record, e.currentTarget);
       }}
       className={`group relative h-full w-full rounded-[22px] sm:rounded-[26px] overflow-hidden bg-[var(--surface)] border transition-all ${isCenter
-          ? 'border-white/30 p-2 sm:p-2.5 shadow-2xl cursor-zoom-in ring-1 ring-white/10'
-          : 'border-[var(--border-color)] p-2 shadow-lg cursor-pointer hover:border-white/30'
+        ? 'border-white/30 p-2 sm:p-2.5 shadow-2xl cursor-zoom-in ring-1 ring-white/10'
+        : 'border-[var(--border-color)] p-2 shadow-lg cursor-pointer hover:border-white/30'
         }`}
       title={isCenter ? 'Click to enlarge certificate' : 'Click to view certificate'}
     >
@@ -153,12 +142,9 @@ const RecordsSplitCarousel = ({
         /* ── Split Layout for Certificates & Honors (Pure Image Carousel on Left) ── */
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-12 lg:gap-16 xl:gap-20 items-center">
 
-          {/* ── LEFT COLUMN: Three-certificate layered stage matching Image 3 with clean small margin aligned with title ── */}
-          <div
-            className="min-w-0 flex items-center justify-center min-h-[260px] xs:min-h-[300px] sm:min-h-[450px] md:min-h-[500px] relative mx-auto w-full max-w-[calc(100vw-32px)] sm:max-w-[620px] overflow-clip rounded-3xl"
-            style={{ isolation: 'isolate' }}
-          >
-            <div className="relative w-full h-[240px] xs:h-[280px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
+          {/* ── LEFT COLUMN: Three-certificate layered stage ── */}
+          <div className="min-w-0 flex items-center justify-center min-h-[280px] xs:min-h-[340px] sm:min-h-[450px] md:min-h-[500px] relative px-2 sm:px-4 lg:pr-6 overflow-hidden sm:overflow-visible">
+            <div className="relative w-full max-w-[620px] h-[250px] xs:h-[310px] sm:h-[410px] md:h-[450px] flex items-center justify-center select-none">
 
               {/* 1. PREVIOUS CERTIFICATE IMAGE (-1) */}
               <motion.div
@@ -166,15 +152,15 @@ const RecordsSplitCarousel = ({
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: isMobile ? '-48%' : '-50%',
-                  scale: isMobile ? 0.84 : 0.88,
-                  rotate: shouldReduceMotion ? 0 : isMobile ? -5 : -6,
-                  opacity: isMobile ? 0.48 : 0.78,
+                  x: '-50%',
+                  scale: 0.88,
+                  rotate: shouldReduceMotion ? 0 : -6,
+                  opacity: 0.78,
                   zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="block absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
+                className="hidden md:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
               >
                 {renderCertificateImageSlide(records[prevIndex], false)}
               </motion.div>
@@ -185,15 +171,15 @@ const RecordsSplitCarousel = ({
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: isMobile ? '48%' : '50%',
-                  scale: isMobile ? 0.84 : 0.88,
-                  rotate: shouldReduceMotion ? 0 : isMobile ? 5 : 6,
-                  opacity: isMobile ? 0.48 : 0.78,
+                  x: '50%',
+                  scale: 0.88,
+                  rotate: shouldReduceMotion ? 0 : 6,
+                  opacity: 0.78,
                   zIndex: 10,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="block absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[20px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
+                className="hidden md:block absolute w-[220px] sm:w-[290px] md:w-[330px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden select-none cursor-pointer hover:opacity-100 transition-all pointer-events-auto"
               >
                 {renderCertificateImageSlide(records[nextIndex], false)}
               </motion.div>
@@ -210,7 +196,7 @@ const RecordsSplitCarousel = ({
                   zIndex: 25,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute w-[76vw] max-w-[300px] xs:max-w-[320px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-2xl"
+                className="absolute w-[84vw] max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-[16/11] rounded-[22px] sm:rounded-[26px] overflow-hidden shadow-2xl"
               >
                 {renderCertificateImageSlide(currentRecord, true)}
               </motion.div>

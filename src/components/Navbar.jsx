@@ -35,6 +35,14 @@ const Navbar = () => {
   const [isOnHomeWall, setIsOnHomeWall] = useState(true);
   const [isInContactSection, setIsInContactSection] = useState(false);
   const [rotationState, setRotationState] = useState('name'); // 'name' | 'logo'
+  const [showConnectTooltip, setShowConnectTooltip] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+
+  const longPressTimerRef = useRef(null);
+  const isLongPressRef = useRef(false);
+  const touchStartPosRef = useRef({ x: 0, y: 0 });
 
   const rotationTimerRef = useRef(null);
   const navigate = useNavigate();
@@ -51,11 +59,14 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  // Window resize to close mobile menu
+  // Window resize to close mobile menu and track mobile breakpoint (< 768px, hamburger menu threshold)
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) setIsMenuOpen(false);
+      const isMobile = window.innerWidth < 768;
+      setIsMobileDevice(isMobile);
+      if (!isMobile) setIsMenuOpen(false);
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -90,6 +101,73 @@ const Navbar = () => {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
+
+  useEffect(() => {
+    return () => {
+      if (longPressTimerRef.current) {
+        clearTimeout(longPressTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleConnectTouchStart = (e) => {
+    isLongPressRef.current = false;
+    touchStartPosRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+    longPressTimerRef.current = setTimeout(() => {
+      isLongPressRef.current = true;
+      setShowConnectTooltip(true);
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        try {
+          navigator.vibrate(30);
+        } catch {
+          // ignore vibration errors
+        }
+      }
+      setTimeout(() => setShowConnectTooltip(false), 2500);
+    }, 400);
+  };
+
+  const handleConnectTouchMove = (e) => {
+    const moveX = Math.abs(e.touches[0].clientX - touchStartPosRef.current.x);
+    const moveY = Math.abs(e.touches[0].clientY - touchStartPosRef.current.y);
+    if (moveX > 8 || moveY > 8) {
+      if (longPressTimerRef.current) {
+        clearTimeout(longPressTimerRef.current);
+        longPressTimerRef.current = null;
+      }
+    }
+  };
+
+  const handleConnectTouchEnd = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    if (isLongPressRef.current) {
+      setTimeout(() => setShowConnectTooltip(false), 1800);
+    }
+  };
+
+  const handleConnectClick = (e) => {
+    if (isLongPressRef.current) {
+      e.preventDefault();
+      isLongPressRef.current = false;
+      return;
+    }
+    e.preventDefault();
+    const target = document.getElementById('connect') || document.getElementById('contact');
+    if (target) {
+      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 88);
+      if (window.lenis) {
+        window.lenis.scrollTo(top, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+  };
 
   // ── Home Identity Rotation Timer ──
   const clearRotationTimer = useCallback(() => {
@@ -305,39 +383,57 @@ const Navbar = () => {
       </header>
 
       {/* ── Floating Let's Connect Circle Button ── */}
-      {/* Visible across all devices (laptop, tablet, iPad, mobile), disappears when in contact section */}
+      {/* Mobile (< 768px with hamburger menu): positioned ~10px below hamburger menu */}
+      {/* Desktop/Laptop/Tablet/iPad (>= 768px without hamburger menu): original form centered on right (top-1/2 -translate-y-1/2) */}
       <AnimatePresence>
-        {isHomePage && !isInContactSection && (
+        {isHomePage && !isInContactSection && !isMenuOpen && (
           <motion.div
             key="floating-connect-btn"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-40"
+            className={`floating-connect-wrapper fixed z-40 ${
+              isMobileDevice
+                ? 'right-3 min-[360px]:right-4 transition-[top] duration-300'
+                : 'right-3 sm:right-6 top-1/2 -translate-y-1/2'
+            }`}
+            style={
+              isMobileDevice
+                ? { top: isScrolled ? '60px' : '66px' }
+                : undefined
+            }
           >
             <a
               href="#connect"
-              onClick={(e) => {
-                e.preventDefault();
-                const target = document.getElementById('connect') || document.getElementById('contact');
-                if (target) {
-                  const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 88);
-                  if (window.lenis) {
-                    window.lenis.scrollTo(top, { duration: 1.2 });
-                  } else {
-                    window.scrollTo({ top, behavior: 'smooth' });
-                  }
-                }
-              }}
-              className="lets-connect-btn group relative flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 active:scale-95 shadow-xl"
+              onClick={handleConnectClick}
+              onTouchStart={handleConnectTouchStart}
+              onTouchMove={handleConnectTouchMove}
+              onTouchEnd={handleConnectTouchEnd}
+              onTouchCancel={handleConnectTouchEnd}
+              onContextMenu={(e) => e.preventDefault()}
+              className={`lets-connect-btn group relative flex items-center justify-center rounded-full transition-all duration-300 shadow-xl ${
+                isMobileDevice
+                  ? 'h-11 w-11 min-w-[44px] min-h-[44px] hover:scale-105 active:scale-95'
+                  : 'h-12 w-12 sm:h-14 sm:w-14 hover:scale-110 active:scale-95'
+              }`}
               title="Let's Connect"
               aria-label="Let's Connect"
             >
-              <SignalRingsLogo className="h-7 w-7 sm:h-9 sm:w-9 transition-transform duration-300 group-hover:scale-105" />
+              <SignalRingsLogo
+                className={`transition-transform duration-300 group-hover:scale-105 ${
+                  isMobileDevice ? 'h-6 w-6 sm:h-7 sm:w-7' : 'h-7 w-7 sm:h-9 sm:w-9'
+                }`}
+              />
 
-              {/* Tooltip on desktop/laptop hover */}
-              <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-semibold opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0 lets-connect-tooltip hidden sm:inline-block">
+              {/* Tooltip on desktop hover or mobile long-press */}
+              <span
+                className={`pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-3 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-semibold lets-connect-tooltip transition-all duration-200 select-none ${
+                  showConnectTooltip
+                    ? 'opacity-100 translate-x-0'
+                    : 'opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0'
+                }`}
+              >
                 Let's Connect
               </span>
             </a>

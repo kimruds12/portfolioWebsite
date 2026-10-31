@@ -173,7 +173,6 @@ const CredentialsCarousel = () => {
   // Responsive offsets calibrated to guarantee clean 30-40px clearance from navigation arrows
   const isDesktop = windowWidth >= 1150;
   const isTablet = windowWidth >= 640 && windowWidth < 1150;
-  const isMobile = windowWidth < 640;
 
   const farOffset = isDesktop ? '112%' : isTablet ? '96%' : '80%';
   const nearOffset = isDesktop ? '58%' : isTablet ? '50%' : '40%';
@@ -465,7 +464,7 @@ const CredentialsCarousel = () => {
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
+                className="hidden md:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(prev2Record, false)}
               </motion.div>
@@ -476,15 +475,15 @@ const CredentialsCarousel = () => {
                 onClick={handlePrev}
                 initial={false}
                 animate={{
-                  x: isMobile ? '-48%' : `-${nearOffset}`,
-                  scale: isMobile ? 0.84 : isTablet ? 0.88 : 0.91,
-                  rotate: shouldReduceMotion ? 0 : isMobile ? -5 : isTablet ? -2.2 : -1.8,
-                  opacity: isMobile ? 0.48 : isTablet ? 0.75 : 0.80,
+                  x: `-${nearOffset}`,
+                  scale: isTablet ? 0.88 : 0.91,
+                  rotate: shouldReduceMotion ? 0 : isTablet ? -2.2 : -1.8,
+                  opacity: isTablet ? 0.75 : 0.80,
                   zIndex: 20,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+                className="hidden md:flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(prev1Record, false)}
               </motion.div>
@@ -512,15 +511,15 @@ const CredentialsCarousel = () => {
                 onClick={handleNext}
                 initial={false}
                 animate={{
-                  x: isMobile ? '48%' : nearOffset,
-                  scale: isMobile ? 0.84 : isTablet ? 0.88 : 0.91,
-                  rotate: shouldReduceMotion ? 0 : isMobile ? 5 : isTablet ? 2.2 : 1.8,
-                  opacity: isMobile ? 0.48 : isTablet ? 0.75 : 0.80,
+                  x: nearOffset,
+                  scale: isTablet ? 0.88 : 0.91,
+                  rotate: shouldReduceMotion ? 0 : isTablet ? 2.2 : 1.8,
+                  opacity: isTablet ? 0.75 : 0.80,
                   zIndex: 20,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
+                className="hidden md:flex absolute w-[64vw] max-w-[260px] xs:max-w-[280px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-3 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-95 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(next1Record, false)}
               </motion.div>
@@ -539,7 +538,7 @@ const CredentialsCarousel = () => {
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
                 aria-hidden="true"
-                className="hidden sm:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
+                className="hidden md:flex absolute w-[240px] xs:w-[270px] sm:w-[305px] md:w-[325px] lg:w-[340px] max-w-[calc(100vw-5rem)] h-[385px] sm:h-[415px] md:h-[435px] cursor-pointer rounded-[24px] sm:rounded-[28px] credential-card-side p-4 sm:p-5 shadow-xl overflow-hidden pointer-events-auto hover:opacity-80 transition-opacity flex-col justify-between"
               >
                 {renderCardContent(next2Record, false)}
               </motion.div>

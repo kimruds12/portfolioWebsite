@@ -435,6 +435,9 @@ textarea {
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
@@ -497,6 +500,15 @@ html.theme-light .lets-connect-tooltip {
   color: #ffffff;
   backdrop-filter: none;
   box-shadow: 4px 4px 14px rgba(166, 180, 200, 0.35);
+}
+
+/* ── Floating Connect Wrapper: Desktop, Laptop, Tablet, iPad original vertical center form ── */
+@media (min-width: 768px) {
+  .floating-connect-wrapper {
+    top: 50% !important;
+    --tw-translate-y: -50% !important;
+    translate: var(--tw-translate-x, 0) -50% !important;
+  }
 }
 
 /* ── Chunky 3D Push Button for Lets Connect ── */
