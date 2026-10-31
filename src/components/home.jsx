@@ -239,6 +239,64 @@ const Home = () => {
     }, 2500);
     return () => clearInterval(timer);
   }, []);
+
+  // Touch and long-press interactive state for View All Projects button
+  const [isProjectsBtnActive, setIsProjectsBtnActive] = useState(false);
+  const projectsTouchTimerRef = useRef(null);
+
+  const handleProjectsTouchStart = () => {
+    if (projectsTouchTimerRef.current) clearTimeout(projectsTouchTimerRef.current);
+    setIsProjectsBtnActive(true);
+  };
+
+  const handleProjectsTouchEnd = () => {
+    if (projectsTouchTimerRef.current) clearTimeout(projectsTouchTimerRef.current);
+    projectsTouchTimerRef.current = setTimeout(() => {
+      setIsProjectsBtnActive(false);
+    }, 300);
+  };
+
+  const handleProjectsTouchCancel = () => {
+    if (projectsTouchTimerRef.current) clearTimeout(projectsTouchTimerRef.current);
+    setIsProjectsBtnActive(false);
+  };
+
+  const handleProjectsClick = () => {
+    setIsProjectsBtnActive(true);
+    setTimeout(() => {
+      setIsProjectsBtnActive(false);
+      navigate('/projects');
+    }, 180);
+  };
+
+  // Touch and long-press interactive state for Meet the Developer button
+  const [isMeetDevBtnActive, setIsMeetDevBtnActive] = useState(false);
+  const meetDevTouchTimerRef = useRef(null);
+
+  const handleMeetDevTouchStart = () => {
+    if (meetDevTouchTimerRef.current) clearTimeout(meetDevTouchTimerRef.current);
+    setIsMeetDevBtnActive(true);
+  };
+
+  const handleMeetDevTouchEnd = () => {
+    if (meetDevTouchTimerRef.current) clearTimeout(meetDevTouchTimerRef.current);
+    meetDevTouchTimerRef.current = setTimeout(() => {
+      setIsMeetDevBtnActive(false);
+    }, 300);
+  };
+
+  const handleMeetDevTouchCancel = () => {
+    if (meetDevTouchTimerRef.current) clearTimeout(meetDevTouchTimerRef.current);
+    setIsMeetDevBtnActive(false);
+  };
+
+  const handleMeetDevClick = () => {
+    setIsMeetDevBtnActive(true);
+    setTimeout(() => {
+      setIsMeetDevBtnActive(false);
+      navigate('/about');
+    }, 180);
+  };
   const [selectedProject, setSelectedProject] = useState(null);
   const activeTriggerRef = useRef(null);
   const projectGridRef = useRef(null);
@@ -430,12 +488,23 @@ const Home = () => {
           >
             <button
               type="button"
-              onClick={() => navigate('/projects')}
-              className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-8 py-4 text-sm font-semibold text-[var(--text-muted)] backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5"
+              onClick={handleProjectsClick}
+              onTouchStart={handleProjectsTouchStart}
+              onTouchEnd={handleProjectsTouchEnd}
+              onTouchCancel={handleProjectsTouchCancel}
+              className={`group inline-flex items-center gap-3 rounded-full border px-8 py-4 text-sm font-semibold backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 ${
+                isProjectsBtnActive
+                  ? 'border-[var(--text-muted)] text-[var(--text-main)] bg-[var(--surface-hover)] -translate-y-0.5'
+                  : 'border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-muted)]'
+              }`}
               style={{ boxShadow: 'var(--shadow-neu-pill)' }}
             >
               <span>View all Projects</span>
-              <i className="fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1" />
+              <i
+                className={`fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1 ${
+                  isProjectsBtnActive ? 'translate-x-1' : ''
+                }`}
+              />
             </button>
           </motion.div>
         </div>
@@ -449,11 +518,13 @@ const Home = () => {
       {/* ── CONTACT / LET'S CONNECT SECTION ── */}
       <PageBlock
         as="section"
-        id="connect"
-        className="scroll-mt-28 px-4 py-20 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center relative"
+        className="px-4 pt-8 pb-16 sm:py-20 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center relative"
       >
         <div id="contact" className="absolute top-0 pointer-events-none" aria-hidden="true" />
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-2 relative">
+
+          {/* Dedicated anchor target for #connect positioned 80px above GET IN TOUCH */}
+          <div id="connect" className="absolute -top-20 pointer-events-none" aria-hidden="true" />
 
           {/* Left Side */}
           <motion.div
@@ -525,13 +596,28 @@ const Home = () => {
 
               <button
                 type="button"
-                onClick={() => navigate('/about')}
-                className="w-full max-w-[230px] sm:w-auto group inline-flex min-h-[42px] sm:min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-5 sm:px-6 py-2.5 sm:py-3 font-['Sora',_sans-serif] text-xs sm:text-sm font-semibold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
+                onClick={handleMeetDevClick}
+                onTouchStart={handleMeetDevTouchStart}
+                onTouchEnd={handleMeetDevTouchEnd}
+                onTouchCancel={handleMeetDevTouchCancel}
+                className={`w-full max-w-[230px] sm:w-auto group inline-flex min-h-[42px] sm:min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] px-5 sm:px-6 py-2.5 sm:py-3 font-['Sora',_sans-serif] text-xs sm:text-sm font-semibold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer ${
+                  isMeetDevBtnActive
+                    ? 'bg-[var(--surface-hover)] -translate-y-0.5 shadow-lg border-[var(--text-muted)]'
+                    : 'bg-[var(--surface)]'
+                }`}
                 style={{ boxShadow: 'var(--shadow-neu-pill)' }}
               >
-                <i className="fa-solid fa-user-astronaut text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />
+                <i
+                  className={`fa-solid fa-user-astronaut text-xs transition-colors group-hover:text-[var(--text-main)] ${
+                    isMeetDevBtnActive ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)]'
+                  }`}
+                />
                 <span>Meet the Developer</span>
-                <i className="fa-solid fa-arrow-right text-[11px] transition-transform duration-200 group-hover:translate-x-1" />
+                <i
+                  className={`fa-solid fa-arrow-right text-[11px] transition-transform duration-200 group-hover:translate-x-1 ${
+                    isMeetDevBtnActive ? 'translate-x-1' : ''
+                  }`}
+                />
               </button>
             </div>
           </motion.div>

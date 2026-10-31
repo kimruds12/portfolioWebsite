@@ -40,7 +40,20 @@ const ProjectDeliveryFramework = () => {
   const navigate = useNavigate();
 
   const handleConnectClick = () => {
-    navigate('/#connect');
+    if (window.location.pathname === '/') {
+      const el = document.getElementById('connect');
+      if (el) {
+        const navbarOffset = 16;
+        if (window.lenis) {
+          window.lenis.scrollTo(el, { offset: -navbarOffset, duration: 0.9 });
+        } else {
+          const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navbarOffset);
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+    } else {
+      navigate('/#connect');
+    }
   };
 
   return (

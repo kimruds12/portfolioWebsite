@@ -78,7 +78,7 @@ const certificatesRecords = [
     image: '/Assets/latestwebdesigncert.png',
     imageAlt: 'ITLympics 2025 Web Design Champion Certificate',
     description:
-      'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints. Recognized for clean code architecture, modern aesthetic execution, and performance.',
+      'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
     tags: ['Web Design', 'UI Wireframing', 'Responsive UI', 'Architecture'],
   },
   {
@@ -153,10 +153,10 @@ const ExperienceTabs = () => {
     qTab === 'experience' || h === '#experience'
       ? 'experience'
       : qTab === 'credentials' || h === '#credentials'
-      ? 'credentials'
-      : qTab === 'education' || h === '#education'
-      ? 'education'
-      : null;
+        ? 'credentials'
+        : qTab === 'education' || h === '#education'
+          ? 'education'
+          : null;
 
   const [tabOverride, setTabOverride] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(() => {
@@ -265,11 +265,10 @@ const ExperienceTabs = () => {
                   aria-controls={`panel-${tab.id}`}
                   type="button"
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative flex min-h-[42px] items-center justify-center gap-2 rounded-xl px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] w-full min-[480px]:w-auto select-none cursor-pointer ${
-                    isActive
-                      ? 'text-neutral-950 font-bold'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
-                  }`}
+                  className={`relative flex min-h-[42px] items-center justify-center gap-2 rounded-xl px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] w-full min-[480px]:w-auto select-none cursor-pointer ${isActive
+                    ? 'text-neutral-950 font-bold'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                    }`}
                 >
                   {/* Sliding White Thumb */}
                   {isActive && (
@@ -281,9 +280,8 @@ const ExperienceTabs = () => {
                   )}
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <i
-                      className={`${tab.icon} text-xs transition-colors duration-200 ${
-                        isActive ? 'text-neutral-950' : 'opacity-70'
-                      }`}
+                      className={`${tab.icon} text-xs transition-colors duration-200 ${isActive ? 'text-neutral-950' : 'opacity-70'
+                        }`}
                     />
                     <span>{tab.label}</span>
                   </span>

@@ -86,6 +86,35 @@ const CredentialsCarousel = () => {
 
   const total = credentialsRecords.length; // 5 cards
 
+  // Touch and long-press interactive state for View Full Credentials button
+  const [isCredentialsBtnActive, setIsCredentialsBtnActive] = useState(false);
+  const credentialsTouchTimerRef = useRef(null);
+
+  const handleCredentialsTouchStart = () => {
+    if (credentialsTouchTimerRef.current) clearTimeout(credentialsTouchTimerRef.current);
+    setIsCredentialsBtnActive(true);
+  };
+
+  const handleCredentialsTouchEnd = () => {
+    if (credentialsTouchTimerRef.current) clearTimeout(credentialsTouchTimerRef.current);
+    credentialsTouchTimerRef.current = setTimeout(() => {
+      setIsCredentialsBtnActive(false);
+    }, 300);
+  };
+
+  const handleCredentialsTouchCancel = () => {
+    if (credentialsTouchTimerRef.current) clearTimeout(credentialsTouchTimerRef.current);
+    setIsCredentialsBtnActive(false);
+  };
+
+  const handleCredentialsClick = () => {
+    setIsCredentialsBtnActive(true);
+    setTimeout(() => {
+      setIsCredentialsBtnActive(false);
+      navigate('/about#credentials');
+    }, 180);
+  };
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -189,17 +218,43 @@ const CredentialsCarousel = () => {
     onOpenCertificate,
   }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const tagTouchTimerRef = useRef(null);
+
+    const handleTagTouchStart = () => {
+      if (!isCenterCard) return;
+      if (tagTouchTimerRef.current) clearTimeout(tagTouchTimerRef.current);
+      setIsHovered(true);
+    };
+
+    const handleTagTouchEnd = () => {
+      if (!isCenterCard) return;
+      if (tagTouchTimerRef.current) clearTimeout(tagTouchTimerRef.current);
+      tagTouchTimerRef.current = setTimeout(() => {
+        setIsHovered(false);
+      }, 300);
+    };
+
+    const handleTagTouchCancel = () => {
+      if (tagTouchTimerRef.current) clearTimeout(tagTouchTimerRef.current);
+      setIsHovered(false);
+    };
 
     const handleOpenCertificate = (event) => {
       if (!isCenterCard) return;
       event.stopPropagation();
-      onOpenCertificate?.(itemRecord, event.currentTarget);
+      setIsHovered(true);
+      setTimeout(() => {
+        onOpenCertificate?.(itemRecord, event.currentTarget);
+      }, 150);
     };
 
     return (
       <div
         onMouseEnter={() => isCenterCard && setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTagTouchStart}
+        onTouchEnd={handleTagTouchEnd}
+        onTouchCancel={handleTagTouchCancel}
         className={`group relative min-w-0 pb-2 select-none ${className}`}
       >
         {isCenterCard ? (
@@ -549,12 +604,23 @@ const CredentialsCarousel = () => {
         <div className="mt-8 sm:mt-10 flex justify-center">
           <button
             type="button"
-            onClick={() => navigate('/about#credentials')}
-            className="group inline-flex min-h-[46px] items-center gap-3 rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--text-muted)] backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)]"
+            onClick={handleCredentialsClick}
+            onTouchStart={handleCredentialsTouchStart}
+            onTouchEnd={handleCredentialsTouchEnd}
+            onTouchCancel={handleCredentialsTouchCancel}
+            className={`group inline-flex min-h-[46px] items-center gap-3 rounded-full border px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider backdrop-blur-xl shadow-md transition-all duration-300 hover:border-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] ${
+              isCredentialsBtnActive
+                ? 'border-[var(--text-muted)] text-[var(--text-main)] bg-[var(--surface-hover)] -translate-y-0.5'
+                : 'border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-muted)]'
+            }`}
             style={{ boxShadow: 'var(--shadow-neu-pill)' }}
           >
             <span>View Full Credentials</span>
-            <i className="fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1" />
+            <i
+              className={`fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-1 ${
+                isCredentialsBtnActive ? 'translate-x-1' : ''
+              }`}
+            />
           </button>
         </div>
 

@@ -103,25 +103,33 @@ const ScrollToTop = () => {
       }
 
       let attempts = 0;
-      const maxAttempts = 20;
+      const maxAttempts = 30;
 
       const tryScroll = () => {
         const el = document.getElementById(id);
         if (el) {
-          const navbarOffset = 90;
-          if (window.lenis) {
-            window.lenis.scrollTo(el, { offset: -navbarOffset, duration: 1.0 });
-          } else {
-            const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navbarOffset);
-            window.scrollTo({ top, behavior: 'smooth' });
-          }
+          const navbarOffset = id === 'connect' ? 16 : 90;
+          const performScroll = () => {
+            if (window.lenis) {
+              window.lenis.scrollTo(el, { offset: -navbarOffset, duration: 0.9 });
+            } else {
+              const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navbarOffset);
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          };
+
+          // Initial scroll trigger as soon as target element mounts in DOM
+          performScroll();
+
+          // Settle pass after page transition enter animation completes to lock in exact framing
+          setTimeout(performScroll, 500);
         } else if (attempts < maxAttempts) {
           attempts++;
-          setTimeout(tryScroll, 100);
+          setTimeout(tryScroll, 60);
         }
       };
 
-      const timer = setTimeout(tryScroll, 100);
+      const timer = setTimeout(tryScroll, 60);
       return () => clearTimeout(timer);
     }
   }, [pathname, hash]);

@@ -89,14 +89,13 @@ PageBlock.displayName = 'PageBlock';
  */
 export const PageTransitionLayout = ({ children, className = '' }) => {
   useEffect(() => {
-    // When the new page arrives after old page exit completes, reset scroll to top
-    // unless targeting an internal hash anchor
-    if (!window.location.hash) {
-      if (window.lenis) {
-        window.lenis.scrollTo(0, { immediate: true });
-      } else {
-        window.scrollTo(0, 0);
-      }
+    // When a new page arrives after old page exit completes, reset scroll to top immediately
+    // and resize Lenis dimensions so any scroll depth from the previous route does not contaminate the new page
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+      window.lenis.resize();
+    } else {
+      window.scrollTo(0, 0);
     }
   }, []);
 

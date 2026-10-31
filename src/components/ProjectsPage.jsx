@@ -299,7 +299,7 @@ const ProjectsPage = () => {
 
         {/* ── Category Filter Pills (Block 2) ── */}
         <PageBlock className="projects-filter-block mt-8">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="grid grid-cols-3 gap-1.5 min-[380px]:gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
           {categories.map((cat) => {
             const count = getCategoryCount(cat.key);
             const isActive = activeCategory === cat.key;
@@ -308,14 +308,14 @@ const ProjectsPage = () => {
                 key={cat.key}
                 type="button"
                 onClick={() => setActiveCategory(cat.key)}
-                className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition-all duration-200 min-h-[38px] ${isActive
+                className={`group inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full px-1.5 min-[380px]:px-2.5 sm:px-4 py-2 text-[11px] min-[380px]:text-xs font-semibold tracking-wide transition-all duration-200 min-h-[38px] w-full sm:w-auto ${isActive
                   ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
                   : 'glass-neu-pill text-[var(--text-muted)] hover:text-[var(--text-main)]'
                   }`}
               >
-                <span>{cat.label}</span>
+                <span className="truncate">{cat.label}</span>
                 <span
-                  className={`inline-flex h-4 min-w-[1.2rem] items-center justify-center rounded-full px-1 text-[10px] font-bold ${isActive
+                  className={`inline-flex h-4 min-w-[1.1rem] sm:min-w-[1.2rem] items-center justify-center rounded-full px-1 text-[9px] sm:text-[10px] font-bold shrink-0 ${isActive
                     ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
                     : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
                     }`}
