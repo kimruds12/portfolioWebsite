@@ -262,84 +262,84 @@ const ProjectsPage = () => {
 
         {/* ── Section Header (Block 1) ── */}
         <PageBlock className="projects-header-block">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <h1 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight select-none break-words">
+          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+            <h1 className="glint-headline mt-3 font-['Sora',_sans-serif] text-[clamp(1.85rem,5vw,3.8rem)] font-bold tracking-tight select-none break-words text-center">
               <span className="glint-headline-base">PROJECTS</span>
               <span className="glint-headline-band" aria-hidden="true">PROJECTS</span>
             </h1>
-            <p className="mt-3 max-w-2xl text-sm sm:text-base text-[var(--text-muted)]">
+            <p className="mt-3 max-w-2xl mx-auto text-sm sm:text-base text-[var(--text-muted)] text-center leading-relaxed">
               Here are some of my works, including web and mobile apps, games, and network configurations.
             </p>
           </div>
 
-          {/* Search bar */}
-          <div className="relative w-full md:max-w-xs self-start md:self-end">
-            <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by tech or keyword..."
-              className="neu-inset w-full rounded-full py-2.5 pl-9 pr-8 text-xs font-medium text-[var(--text-main)] placeholder-[var(--text-muted)] transition-colors focus:border-[var(--text-main)] focus:outline-none"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]"
-                aria-label="Clear search"
-              >
-                <i className="fa-solid fa-xmark" />
-              </button>
-            )}
-          </div>
+          {/* Search bar: full width on mobile, aligned to the right on desktop */}
+          <div className="flex justify-start md:justify-end w-full">
+            <div className="relative w-full md:max-w-xs">
+              <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by tech or keyword..."
+                className="neu-inset w-full rounded-full py-2.5 pl-9 pr-8 text-xs font-medium text-[var(--text-main)] placeholder-[var(--text-muted)] transition-colors focus:border-[var(--text-main)] focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                  aria-label="Clear search"
+                >
+                  <i className="fa-solid fa-xmark" />
+                </button>
+              )}
+            </div>
           </div>
         </PageBlock>
 
         {/* ── Category Filter Pills (Block 2) ── */}
         <PageBlock className="projects-filter-block mt-8">
           <div className="grid grid-cols-3 gap-1.5 min-[380px]:gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
-          {categories.map((cat) => {
-            const count = getCategoryCount(cat.key);
-            const isActive = activeCategory === cat.key;
-            return (
-              <button
-                key={cat.key}
-                type="button"
-                onClick={() => setActiveCategory(cat.key)}
-                className={`group inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full px-1.5 min-[380px]:px-2.5 sm:px-4 py-2 text-[11px] min-[380px]:text-xs font-semibold tracking-wide transition-all duration-200 min-h-[38px] w-full sm:w-auto ${isActive
-                  ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
-                  : 'glass-neu-pill text-[var(--text-muted)] hover:text-[var(--text-main)]'
-                  }`}
-              >
-                <span className="truncate">{cat.label}</span>
-                <span
-                  className={`inline-flex h-4 min-w-[1.1rem] sm:min-w-[1.2rem] items-center justify-center rounded-full px-1 text-[9px] sm:text-[10px] font-bold shrink-0 ${isActive
-                    ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
-                    : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
+            {categories.map((cat) => {
+              const count = getCategoryCount(cat.key);
+              const isActive = activeCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.key)}
+                  className={`group inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full px-1.5 min-[380px]:px-2.5 sm:px-4 py-2 text-[11px] min-[380px]:text-xs font-semibold tracking-wide transition-all duration-200 min-h-[38px] w-full sm:w-auto ${isActive
+                    ? 'bg-[var(--btn-strong-bg)] text-[var(--btn-strong-text)] shadow-md glass-neu-pill-active'
+                    : 'glass-neu-pill text-[var(--text-muted)] hover:text-[var(--text-main)]'
                     }`}
                 >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+                  <span className="truncate">{cat.label}</span>
+                  <span
+                    className={`inline-flex h-4 min-w-[1.1rem] sm:min-w-[1.2rem] items-center justify-center rounded-full px-1 text-[9px] sm:text-[10px] font-bold shrink-0 ${isActive
+                      ? 'bg-[var(--btn-strong-text)]/15 text-[var(--btn-strong-text)]'
+                      : 'bg-[var(--surface-soft)] text-[var(--text-muted)]'
+                      }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </PageBlock>
 
         {/* ── Project Cards Grid (Block 3) ── */}
         <PageBlock className="projects-grid-block mt-12">
           <div ref={gridRef} className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard
-              key={`${project.title}-${index}`}
-              project={project}
-              index={index}
-              onOpenDetails={handleOpenDetails}
-            />
-          ))}
-        </div>
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={`${project.title}-${index}`}
+                project={project}
+                index={index}
+                onOpenDetails={handleOpenDetails}
+              />
+            ))}
+          </div>
 
           {/* Empty state */}
           {filteredProjects.length === 0 && (
