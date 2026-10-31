@@ -408,7 +408,7 @@ const Navbar = () => {
             }`}
             style={
               isMobileDevice
-                ? { top: isScrolled ? '65px' : '75px' }
+                ? { top: isScrolled ? '95px' : '105px' }
                 : undefined
             }
           >

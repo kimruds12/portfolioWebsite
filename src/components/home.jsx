@@ -520,13 +520,13 @@ const Home = () => {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 sm:gap-4 w-full">
               <DownloadCVButton
                 label="Download Resume"
-                className="w-full sm:w-auto min-h-[50px] sm:min-h-[48px] rounded-xl px-7 sm:px-8 py-3.5 text-sm sm:text-sm shadow-md font-bold text-center justify-center"
+                className="w-full max-w-[300px] sm:w-auto min-h-[48px] rounded-xl px-6 sm:px-8 py-3 text-sm font-bold text-center justify-center shadow-md"
               />
 
               <button
                 type="button"
                 onClick={() => navigate('/about')}
-                className="w-full sm:w-auto group inline-flex min-h-[44px] sm:min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-5 sm:px-6 py-2.5 sm:py-3 font-['Sora',_sans-serif] text-xs sm:text-sm font-semibold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
+                className="w-full max-w-[230px] sm:w-auto group inline-flex min-h-[42px] sm:min-h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] px-5 sm:px-6 py-2.5 sm:py-3 font-['Sora',_sans-serif] text-xs sm:text-sm font-semibold tracking-tight text-[var(--text-main)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] cursor-pointer"
                 style={{ boxShadow: 'var(--shadow-neu-pill)' }}
               >
                 <i className="fa-solid fa-user-astronaut text-xs text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />

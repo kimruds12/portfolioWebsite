@@ -28,7 +28,7 @@ const AboutPage = () => {
               }}
               className="lg:col-span-5 flex justify-center order-first lg:order-last"
             >
-              <div className="w-full max-w-sm sm:max-w-md">
+              <div className="w-full max-w-[240px] sm:max-w-[320px] lg:max-w-md mx-auto">
                 <div className="photo-card-skew group relative w-full overflow-hidden rounded-3xl">
                   <img
                     src="/Assets/AboutMyImage.jpg"

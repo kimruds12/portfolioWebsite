@@ -305,17 +305,15 @@ const Credentials = () => {
                         }}
                       />
                       <div
-                        className={`absolute inset-0 bg-gradient-to-t from-[var(--bg-page)] via-[var(--bg-page)]/70 to-transparent transition-opacity duration-300 ${
-                          isCenter && isHovered ? 'opacity-20' : 'opacity-85'
-                        }`}
+                        className={`absolute inset-0 bg-gradient-to-t from-[var(--bg-page)] via-[var(--bg-page)]/70 to-transparent transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-20' : 'opacity-85'
+                          }`}
                       />
                     </div>
 
                     {/* Text Overlay */}
                     <div
-                      className={`absolute bottom-5 left-0 w-full px-6 sm:px-8 z-10 pointer-events-none transition-opacity duration-300 ${
-                        isCenter && isHovered ? 'opacity-0' : 'opacity-100'
-                      }`}
+                      className={`absolute bottom-5 left-0 w-full px-6 sm:px-8 z-10 pointer-events-none transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'
+                        }`}
                     >
                       <h4 className="font-['Sora',_sans-serif] text-base sm:text-xl lg:text-2xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
                         {item.title}
@@ -337,9 +335,8 @@ const Credentials = () => {
 
                     {/* Date Badge */}
                     <div
-                      className={`absolute right-4 top-4 z-20 rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-3 py-1 text-[11px] font-mono font-medium text-[var(--text-main)] backdrop-blur-md transition-opacity duration-300 ${
-                        isCenter && isHovered ? 'opacity-0' : 'opacity-100'
-                      }`}
+                      className={`absolute right-4 top-4 z-20 rounded-full border border-[var(--border-color)] bg-[var(--surface)] px-3 py-1 text-[11px] font-mono font-medium text-[var(--text-main)] backdrop-blur-md transition-opacity duration-300 ${isCenter && isHovered ? 'opacity-0' : 'opacity-100'
+                        }`}
                     >
                       {item.date}
                     </div>
@@ -357,11 +354,10 @@ const Credentials = () => {
               key={index}
               type="button"
               onClick={() => handleIndicatorClick(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                activeIndex === index
-                  ? 'w-10 bg-[var(--text-main)]'
-                  : 'w-3 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${activeIndex === index
+                ? 'w-10 bg-[var(--text-main)]'
+                : 'w-3 bg-[var(--border-color)] hover:bg-[var(--text-muted)]'
+                }`}
               aria-label={`Go to certificate ${index + 1}`}
             />
           ))}

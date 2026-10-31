@@ -27,7 +27,7 @@ const credentialsRecords = [
     image: '/Assets/latestwebdesigncert.png',
     imageAlt: 'ITLympics 2025 Web Design Champion Certificate',
     description:
-      'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints. Recognized for clean code architecture, modern aesthetic execution, and performance.',
+      'Awarded first place in web design for creating an innovative, highly responsive, and accessible interface under strict time constraints.',
     tags: ['Web Design', 'UI Wireframing', 'Responsive UI', 'Architecture'],
   },
   {
@@ -212,17 +212,15 @@ const CredentialsCarousel = () => {
             aria-label={`View ${itemRecord?.title || 'certificate'} certificate for ${label}`}
           >
             <span
-              className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${
-                isHovered ? 'credential-tag-text-hover' : ''
-              }`}
+              className={`truncate font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors duration-200 credential-tag-text ${isHovered ? 'credential-tag-text-hover' : ''
+                }`}
             >
               {label}
             </span>
 
             <i
-              className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${
-                isHovered ? 'credential-tag-arrow-hover translate-x-0.5' : ''
-              }`}
+              className={`fa-solid fa-arrow-right shrink-0 text-[10px] transition-all duration-200 credential-tag-arrow ${isHovered ? 'credential-tag-arrow-hover translate-x-0.5' : ''
+                }`}
               aria-hidden="true"
             />
           </button>
@@ -426,7 +424,7 @@ const CredentialsCarousel = () => {
             type="button"
             onClick={handlePrev}
             aria-label="Show previous credential"
-            className="absolute left-1.5 min-[380px]:left-2.5 sm:left-4 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] active:scale-95 min-w-[44px] min-h-[44px]"
+            className="absolute -left-1 min-[360px]:left-0 sm:left-4 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] active:scale-95 min-w-[44px] min-h-[44px]"
           >
             <i className="fa-solid fa-chevron-left text-xs sm:text-sm" />
           </button>
@@ -435,7 +433,7 @@ const CredentialsCarousel = () => {
             type="button"
             onClick={handleNext}
             aria-label="Show next credential"
-            className="absolute right-1.5 min-[380px]:right-2.5 sm:right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] active:scale-95 min-w-[44px] min-h-[44px]"
+            className="absolute -right-1 min-[360px]:right-0 sm:right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-main)] shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-[var(--surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-main)] active:scale-95 min-w-[44px] min-h-[44px]"
           >
             <i className="fa-solid fa-chevron-right text-xs sm:text-sm" />
           </button>
@@ -500,7 +498,7 @@ const CredentialsCarousel = () => {
                   zIndex: 35,
                 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute w-[calc(100vw-124px)] max-w-[275px] xs:max-w-[295px] sm:w-[305px] md:w-[325px] lg:w-[340px] h-[395px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-3.5 min-[380px]:p-4 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
+                className="absolute w-[calc(100%-116px)] max-w-[242px] sm:max-w-none sm:w-[305px] md:w-[325px] lg:w-[340px] h-[395px] sm:h-[415px] md:h-[435px] rounded-[24px] sm:rounded-[28px] credential-card-active p-3 min-[380px]:p-3.5 sm:p-5 shadow-2xl flex flex-col justify-between ring-1 ring-white/10"
               >
                 {renderCardContent(activeRecord, true)}
               </motion.div>
